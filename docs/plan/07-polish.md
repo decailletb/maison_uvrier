@@ -7,4 +7,4 @@ Benjamin has a French guide.
 - [x] Performance: on-demand frame loop in orbit mode (continuous in walk mode), shadow map 1536, `?stats=1` FPS overlay, draw-call count printed in the console once
 - [x] Room preset framing in small rooms: camera pulled to the corner, FOV 60 for rooms under 12 m²
 - [x] `docs/USER-GUIDE.md` (French): installation, lancement, navigation, niveaux, presets, édition, enregistrement, `/deco`, dépannage
-- [ ] Gates green, PR, squash-merge, STATE.md, CLAUDE.md
+- [x] Gates green, PR, squash-merge, STATE.md, CLAUDE.md
