@@ -19,4 +19,4 @@ Theme mode (`all`) filters the furniture list per room type (chambre / séjour /
 - [x] `scripts/deco-apply.ts` (`npm run deco:apply -- <proposal> <room|all> <theme>`), French console report, `docs/deco-log.md`
 - [x] `/deco` skill updated to the real commands; `deco-interpreter` agent checked against the schema
 - [x] Real run on a stand-in photo (no image in `inspiration/` yet): IMG_5505 → `chambre-2`, before / after screenshots, `visual-check`
-- [ ] Gates green, PR, squash-merge, STATE.md, CLAUDE.md
+- [x] Gates green, PR, squash-merge, STATE.md, CLAUDE.md

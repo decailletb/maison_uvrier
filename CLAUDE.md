@@ -32,11 +32,12 @@ zod 4; Vitest 5; Playwright 1.64 (Chromium, SwiftShader); ESLint 9 flat config.
 | `npm run build` | tsc + vite build to `dist/` |
 | `npm run screenshots -- [preset ...]` | One PNG per camera preset in `playwright/screenshots/` |
 | `npm run assets:fetch` | Download missing CC0 assets listed in `assets/manifest.json` (multi-file glTF included) |
+| `npm run deco:apply -- <proposal> <room\|all> <theme>` | Proposal JSON → `scenes/<room>-<theme>.json` + `docs/deco-log.md` (the `/deco` skill wraps it) |
 
 Viewer URL options: `?preset=<name>` (camera, level, ceilings), `&scene=<name>` loads
 `scenes/<name>.json`. In dev the browser saves scenes through `PUT /api/scenes/<name>`
 (Vite plugin in `scripts/vite-scenes-plugin.ts`); `VIEWER_SCENE=<name>` does the same
-for `npm run screenshots`. Screenshots take about a minute each under SwiftShader
+for `npm run screenshots` (`VIEWER_LABELS=0` hides room labels). Screenshots take about a minute each under SwiftShader
 (HDRI prefiltering); the script allows 90 s per shot.
 
 Run gates through the `build-check` agent, never inline. "All gates" = typecheck,
@@ -49,6 +50,7 @@ src/data       house schema (zod) and house/<level>.json in cm
 src/scene      geometry generation from the data (walls, floors, openings)
 src/viewer     React UI, Canvas, cameras, presets.ts (?preset=<name>)
 src/catalogue  manifest schema, material library, procedural furniture, glTF loader
+src/deco       proposal schema, catalogue matching, hint-driven auto-layout (/deco)
 assets/        CC0 models/textures/HDRI (git-ignored) + manifest.json
 scenes/        scene JSON files (furniture + finishes), single source of truth; base.json
 inspiration/   decoration images dropped by Benjamin, proposals next to them
