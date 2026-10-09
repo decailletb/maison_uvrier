@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "deny": [
+      "Read(./.git/**)",
+      "Read(./**/node_modules/**)",
+      "Read(./**/dist/**)",
+      "Read(./**/package-lock.json)",
+      "Read(./**/pnpm-lock.yaml)",
+      "Read(./**/*.glb)",
+      "Read(./**/*.gltf)",
+      "Read(./**/*.hdr)",
+      "Read(./**/*.fbx)",
+      "Read(./**/*.obj)"
+    ]
+  },
+  "enabledPlugins": {
+    "story-forge@agentic": false,
+    "agentic-optimization-audit@agentic": false,
+    "reports@power-bi-agentic-development": false,
+    "semantic-models@synced": false,
+    "pbip@synced": false,
+    "reports@synced": false
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/filter-verbose-output.js\"",
+            "timeout": 5,
+            "statusMessage": "Filtering verbose output..."
+          }
+        ]
+      }
+    ]
+  }
+}
