@@ -10,14 +10,14 @@ flights of boxes along an `ascent` vector; everything is computed by pure functi
 `src/scene/*.ts` (unit-tested) and rendered by thin R3F components in
 `src/scene/components/`.
 
-- [ ] Schema: `Stair.ascent` (plan unit vector); risers fixed (sous-sol → rez 16, rez → étage 14, section p. 9 "marches 12 à 30")
-- [ ] `src/scene/walls.ts`: wall pieces around openings (sill, lintel, piers) + tests
-- [ ] `src/scene/stairs.ts`: steps from polygon, risers and ascent + tests
-- [ ] `src/scene/shapes.ts`: polygon → Three Shape / extrude with holes
-- [ ] `src/scene/materials.ts`: finish string → colour / roughness (flat PBR for now)
-- [ ] Components: `LevelGroup` (slab with stair holes, room floors, walls, stairs, labels), `House`
-- [ ] Viewer: level mode (sous-sol / rez / etage / all), orbit + walk camera (`WalkControls`, WASD, eye 160 cm), French UI
-- [ ] Presets generated from the data: `<level>-top`, `<room-id>` from the doorway, `<room-id>-2` for large rooms; `?preset=` sets the level mode
-- [ ] Screenshot script and smoke test updated (one room preset must render)
+- [x] Schema: `Stair.ascent` (plan unit vector); risers fixed (sous-sol → rez 16, rez → étage 14, section p. 9 "marches 12 à 30")
+- [x] `src/scene/walls.ts`: wall pieces around openings (sill, lintel, piers) + tests
+- [x] `src/scene/stairs.ts`: steps from polygon, risers and ascent + tests
+- [x] `src/scene/shapes.ts`: polygon → Three Shape / extrude with holes
+- [x] `src/scene/materials.ts`: finish string → colour / roughness (flat PBR for now)
+- [x] Components: `LevelGroup` (slab with stair holes, room floors, walls, stairs, labels), `House`
+- [x] Viewer: level mode (sous-sol / rez / etage / all), orbit + walk camera (`WalkControls`, WASD, eye 160 cm), French UI
+- [x] Presets generated from the data: `<level>-top`, `<room-id>` from the doorway, `<room-id>-2` for large rooms; `?preset=` sets the level mode
+- [x] Screenshot script and smoke test updated (one room preset must render)
 - [ ] `visual-check`: each `<level>-top` against the house-plans description; `sejour-cuisine`, `chambre-parents`, `salle-de-bains`, `chambre-2` against IMG_5500, IMG_5508, IMG_5504, IMG_5505
 - [ ] Gates green, PR, squash-merge, STATE.md, next phase branch

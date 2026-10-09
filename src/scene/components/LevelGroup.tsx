@@ -1,4 +1,3 @@
-import { Html } from "@react-three/drei";
 import { useMemo } from "react";
 import { polygonCentroid } from "@/data/geometry";
 import { FOOTPRINT_CM } from "@/data/house";
@@ -8,6 +7,7 @@ import { flatGeometry, slabGeometry } from "../shapes";
 import { stairSteps } from "../stairs";
 import { CM, planToScene } from "../units";
 import { levelWallPieces, pieceFrame } from "../walls";
+import { RoomLabel } from "./RoomLabel";
 
 export interface LevelGroupProps {
   level: Level;
@@ -65,24 +65,7 @@ function Floors({ level, showLabels }: { level: Level; showLabels: boolean }) {
             <mesh geometry={geometry} position={[0, (level.floorLevel + 0.6) * CM, 0]} receiveShadow>
               <meshStandardMaterial color={mat.color} roughness={mat.roughness} />
             </mesh>
-            {showLabels && (
-              <Html position={planToScene(centroid, 2, level.floorLevel)} center zIndexRange={[10, 0]}>
-                <div
-                  data-room={room.id}
-                  style={{
-                    color: "#1d2024",
-                    background: "rgba(255,255,255,0.7)",
-                    padding: "1px 5px",
-                    borderRadius: 3,
-                    fontSize: 11,
-                    whiteSpace: "nowrap",
-                    pointerEvents: "none",
-                  }}
-                >
-                  {room.name}
-                </div>
-              </Html>
-            )}
+            {showLabels && <RoomLabel text={room.name} position={planToScene(centroid, 120, level.floorLevel)} />}
           </group>
         );
       })}
