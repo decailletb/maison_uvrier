@@ -59,7 +59,7 @@ export function Viewer({ preset, levelMode, cameraMode, showLabels, showCeilings
     <Canvas
       shadows
       dpr={[1, 1.5]}
-      camera={{ position: preset.position, fov: 60, near: 0.05, far: 300 }}
+      camera={{ position: preset.position, fov: 55, near: 0.05, far: 300 }}
       gl={{ antialias: true, powerPreference: "high-performance" }}
       style={{ width: "100%", height: "100%" }}
     >
@@ -78,7 +78,7 @@ export function Viewer({ preset, levelMode, cameraMode, showLabels, showCeilings
         shadow-bias={-0.0004}
       />
       <Ground />
-      <House mode={levelMode} showLabels={showLabels} showCeilings={showCeilings} />
+      <House mode={levelMode} showLabels={showLabels} labelRoomId={showCeilings ? preset.roomId : undefined} showCeilings={showCeilings} />
       {cameraMode === "orbit" ? <OrbitControls makeDefault target={preset.target} /> : <WalkControls eyeHeight={eyeHeight} />}
       <ReadySignal />
     </Canvas>

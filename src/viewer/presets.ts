@@ -18,6 +18,8 @@ export interface CameraPreset {
   target: [number, number, number];
   /** Level mode to show; `all` for exterior views. */
   level: LevelMode;
+  /** Room the preset stands in; its label is the only one drawn. */
+  roomId?: string;
 }
 
 const EYE = 155;
@@ -83,34 +85,56 @@ export function roomGlazing(room: Room, level: Level): { opening: Opening; mid: 
   return found.sort((a, b) => b.opening.width - a.opening.width);
 }
 
+function nearest(points: readonly Point[], to: Point): Point {
+  return points.reduce((best, p) => (Math.hypot(p[0] - to[0], p[1] - to[1]) < Math.hypot(best[0] - to[0], best[1] - to[1]) ? p : best));
+}
+
+function farthest(points: readonly Point[], from: Point): Point {
+  return points.reduce((best, p) => (Math.hypot(p[0] - from[0], p[1] - from[1]) > Math.hypot(best[0] - from[0], best[1] - from[1]) ? p : best));
+}
+
+/** Diagonal view: from the corner nearest the entrance toward the opposite corner. */
+export function cornerView(room: Room, level: Level): { position: Point; target: Point } {
+  const entrance = roomEntrance(room, level).point;
+  const corner = nearest(room.polygon, entrance);
+  const opposite = farthest(room.polygon, corner);
+  const dir = unit(corner, opposite);
+  let position: Point = [corner[0] + dir[0] * 55, corner[1] + dir[1] * 55];
+  if (!pointInPolygon(position, room.polygon)) position = entrance;
+  return { position, target: farPoint(position, opposite, room.polygon) };
+}
+
 function roomPresets(room: Room, level: Level): CameraPreset[] {
   const centroid = polygonCentroid(room.polygon);
-  const { point } = roomEntrance(room, level);
+  const corner = cornerView(room, level);
   const presets: CameraPreset[] = [
     {
       name: room.id,
       label: `${room.name} (${level.name})`,
-      position: planToScene(point, EYE, level.floorLevel),
-      target: planToScene(farPoint(point, centroid, room.polygon), LOOK, level.floorLevel),
+      position: planToScene(corner.position, EYE, level.floorLevel),
+      target: planToScene(corner.target, LOOK, level.floorLevel),
       level: level.id,
+      roomId: room.id,
     },
   ];
   const [glazing] = roomGlazing(room, level);
   if (glazing) {
-    // Second angle: from the far side of the room toward its widest window or bay.
-    const far = room.polygon.reduce((best, p) =>
-      Math.hypot(p[0] - glazing.mid[0], p[1] - glazing.mid[1]) > Math.hypot(best[0] - glazing.mid[0], best[1] - glazing.mid[1])
-        ? p
-        : best,
-    );
+    // Second angle: from the far side of the room toward its widest window or bay,
+    // stepping away from the wall and slightly toward the centre to avoid near walls.
+    const far = farthest(room.polygon, glazing.mid);
     const dir = unit(far, glazing.mid);
+    const position: Point = [
+      far[0] + dir[0] * 70 + (centroid[0] - far[0]) * 0.15,
+      far[1] + dir[1] * 70 + (centroid[1] - far[1]) * 0.15,
+    ];
     const lookHeight = Math.min(LOOK + 20, glazing.opening.sill + glazing.opening.height / 2);
     presets.push({
       name: `${room.id}-2`,
       label: `${room.name} — vers la fenêtre`,
-      position: planToScene([far[0] + dir[0] * 50, far[1] + dir[1] * 50], EYE, level.floorLevel),
+      position: planToScene(pointInPolygon(position, room.polygon) ? position : corner.position, EYE, level.floorLevel),
       target: planToScene(glazing.mid, lookHeight, level.floorLevel),
       level: level.id,
+      roomId: room.id,
     });
   }
   return presets;

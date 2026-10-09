@@ -19,6 +19,8 @@ export interface LevelGroupProps {
   /** Stair polygons of the level below that pierce this slab. */
   stairHoles: readonly (readonly Point[])[];
   showLabels: boolean;
+  /** When set, only this room gets a label. */
+  labelRoomId?: string;
   /** Draw each room's ceiling at the clear height (off for cut-away top views). */
   showCeilings: boolean;
 }
@@ -56,7 +58,7 @@ function Walls({ level }: { level: Level }) {
   );
 }
 
-function Floors({ level, showLabels }: { level: Level; showLabels: boolean }) {
+function Floors({ level, showLabels, labelRoomId }: { level: Level; showLabels: boolean; labelRoomId?: string }) {
   return (
     <group>
       {level.rooms.map((room) => {
@@ -68,7 +70,7 @@ function Floors({ level, showLabels }: { level: Level; showLabels: boolean }) {
             <mesh geometry={geometry} position={[0, (level.floorLevel + 0.6) * CM, 0]} receiveShadow>
               <meshStandardMaterial color={mat.color} roughness={mat.roughness} />
             </mesh>
-            {showLabels && <RoomLabel text={room.name} position={planToScene(centroid, 120, level.floorLevel)} />}
+            {showLabels && (!labelRoomId || labelRoomId === room.id) && <RoomLabel text={room.name} position={planToScene(centroid, 120, level.floorLevel)} />}
           </group>
         );
       })}
@@ -118,7 +120,7 @@ function Stairs({ level, riseAbove }: { level: Level; riseAbove: number }) {
   );
 }
 
-export function LevelGroup({ level, slabBelow, riseAbove, stairHoles, showLabels, showCeilings }: LevelGroupProps) {
+export function LevelGroup({ level, slabBelow, riseAbove, stairHoles, showLabels, labelRoomId, showCeilings }: LevelGroupProps) {
   const slab = useMemo(
     () => slabGeometry(FOOTPRINT_POLYGON, level.floorLevel - slabBelow, level.floorLevel, stairHoles),
     [level.floorLevel, slabBelow, stairHoles],
@@ -128,7 +130,7 @@ export function LevelGroup({ level, slabBelow, riseAbove, stairHoles, showLabels
       <mesh geometry={slab} receiveShadow castShadow>
         <meshStandardMaterial color={SLAB.color} roughness={SLAB.roughness} />
       </mesh>
-      <Floors level={level} showLabels={showLabels} />
+      <Floors level={level} showLabels={showLabels} labelRoomId={labelRoomId} />
       <Walls level={level} />
       <Stairs level={level} riseAbove={riseAbove} />
       {showCeilings && <Ceilings level={level} />}

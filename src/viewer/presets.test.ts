@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { pointInPolygon } from "@/data/geometry";
 import { house } from "@/data/house";
+import { sceneToPlan } from "@/scene/units";
 import { CAMERA_PRESETS, DEFAULT_PRESET, findPreset, presetFromSearch, roomEntrance, roomGlazing } from "./presets";
 
 describe("camera presets", () => {
@@ -35,8 +36,13 @@ describe("camera presets", () => {
       for (const room of level.rooms) {
         const { point } = roomEntrance(room, level);
         expect(pointInPolygon(point, room.polygon), `${room.id} entrance ${point}`).toBe(true);
-        const preset = findPreset(room.id)!;
-        expect(preset.position[1]).toBeCloseTo((level.floorLevel + 155) / 100, 5);
+        for (const name of [room.id, `${room.id}-2`]) {
+          const preset = findPreset(name);
+          if (!preset) continue;
+          expect(preset.roomId).toBe(room.id);
+          expect(preset.position[1]).toBeCloseTo((level.floorLevel + 155) / 100, 5);
+          expect(pointInPolygon(sceneToPlan(preset.position), room.polygon), `${name} camera`).toBe(true);
+        }
       }
     }
   });

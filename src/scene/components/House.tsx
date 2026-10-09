@@ -4,7 +4,17 @@ import type { LevelMode } from "@/viewer/presets";
 import { layoutLevels } from "../layout";
 import { LevelGroup } from "./LevelGroup";
 
-export function House({ mode, showLabels = true, showCeilings = false }: { mode: LevelMode; showLabels?: boolean; showCeilings?: boolean }) {
+export function House({
+  mode,
+  showLabels = true,
+  labelRoomId,
+  showCeilings = false,
+}: {
+  mode: LevelMode;
+  showLabels?: boolean;
+  labelRoomId?: string;
+  showCeilings?: boolean;
+}) {
   const layouts = useMemo(() => layoutLevels(house.levels), []);
   const visible = mode === "all" ? layouts : layouts.filter((l) => l.level.id === mode);
   return (
@@ -17,6 +27,7 @@ export function House({ mode, showLabels = true, showCeilings = false }: { mode:
           riseAbove={l.riseAbove}
           stairHoles={l.stairHoles}
           showLabels={showLabels}
+          labelRoomId={labelRoomId}
           showCeilings={showCeilings}
         />
       ))}
