@@ -70,6 +70,8 @@ export const Stair = z.object({
   risers: z.number().int().positive().optional(),
   direction: z.enum(["up", "down"]),
   toLevel: LevelId,
+  /** Plan direction of ascent (unit vector); defaults to the long axis of the polygon. */
+  ascent: Point.optional(),
   estimated: z.boolean().optional(),
   note: z.string().optional(),
 });

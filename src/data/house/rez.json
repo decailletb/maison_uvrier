@@ -468,11 +468,15 @@
           258
         ]
       ],
-      "risers": 19,
+      "risers": 14,
       "direction": "up",
       "toLevel": "etage",
       "estimated": true,
-      "note": "Winder flight, steps numbered 7 to 19 on this plan. Access to the sous-sol stair (porte peinte) is at the top of this well and is not drawn separately."
+      "note": "Winder flight, steps numbered 7 to 19 on this plan. Access to the sous-sol stair (porte peinte) is at the top of this well and is not drawn separately. Risers from section p.9 (marches 1-16 sous-sol→rez, 17-30 rez→étage); straight flight ascending toward plan +y assumed.",
+      "ascent": [
+        0,
+        1
+      ]
     }
   ]
 }
