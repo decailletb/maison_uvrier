@@ -3,6 +3,8 @@ import { house } from "@/data/house";
 import type { LevelMode } from "@/viewer/presets";
 import { layoutLevels } from "../layout";
 import { roofShell } from "../shell";
+import { useEditor } from "@/viewer/store";
+import { SceneItems } from "./SceneItems";
 import { Shell } from "./Shell";
 import { LevelGroup } from "./LevelGroup";
 
@@ -20,11 +22,14 @@ export function House({
   const layouts = useMemo(() => layoutLevels(house.levels), []);
   const visible = mode === "all" ? layouts : layouts.filter((l) => l.level.id === mode);
   const roof = useMemo(() => roofShell(), []);
+  const finishes = useEditor((s) => s.scene.roomFinishes);
+  const select = useEditor((s) => s.select);
   // The roof closes the house in the full view and in the étage view with ceilings on.
   const showRoof = mode === "all" || (mode === "etage" && showCeilings);
   return (
-    <group name="house">
+    <group name="house" onPointerMissed={() => select(null)}>
       {showRoof && <Shell data={roof} />}
+      <SceneItems levels={visible.map((l) => l.level.id)} />
       {visible.map((l) => (
         <LevelGroup
           key={l.level.id}
@@ -35,6 +40,7 @@ export function House({
           showLabels={showLabels}
           labelRoomId={labelRoomId}
           showCeilings={showCeilings}
+          finishes={finishes}
         />
       ))}
     </group>

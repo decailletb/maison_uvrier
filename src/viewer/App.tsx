@@ -3,6 +3,8 @@ import { house } from "@/data/house";
 import { CAMERA_PRESETS, findPreset, presetFromSearch, type CameraPreset, type LevelMode } from "./presets";
 import { publishPresets } from "./ready";
 import type { SunSettings } from "@/scene/components/Environment";
+import { EditorPanel } from "./EditorPanel";
+import { useEditor } from "./store";
 import { Viewer, type CameraMode } from "./Viewer";
 
 const LEVEL_LABELS: Record<LevelMode, string> = {
@@ -44,6 +46,38 @@ export function App() {
 
   useEffect(() => publishPresets(CAMERA_PRESETS.map((p) => p.name)), []);
 
+  // `?scene=<name>` loads a scene file on start.
+  useEffect(() => {
+    const name = new URLSearchParams(window.location.search).get("scene");
+    if (name) void useEditor.getState().loadScene(name);
+  }, []);
+
+  // Keyboard shortcuts of the editor (ignored while typing in a field).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement | null)?.tagName;
+      if (tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA") return;
+      const ed = useEditor.getState();
+      if (e.ctrlKey && e.key.toLowerCase() === "z") {
+        e.preventDefault();
+        ed.undo();
+      } else if (e.ctrlKey && e.key.toLowerCase() === "y") {
+        e.preventDefault();
+        ed.redo();
+      } else if (e.ctrlKey && e.key.toLowerCase() === "s") {
+        e.preventDefault();
+        void ed.saveScene();
+      } else if (e.key === "Delete" && ed.selectedId) {
+        ed.removeItem(ed.selectedId);
+      } else if (e.key.toLowerCase() === "r" && ed.selectedId) {
+        const item = ed.scene.items.find((it) => it.id === ed.selectedId);
+        if (item) ed.updateItem(item.id, { rotationY: (item.rotationY + (e.shiftKey ? -15 : 15) + 360) % 360 });
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   const choosePreset = (name: string) => {
     const next = findPreset(name);
     if (!next) return;
@@ -76,6 +110,7 @@ export function App() {
         showCeilings={showCeilings}
         sun={sun}
       />
+      <EditorPanel levelMode={levelMode} roomId={preset.roomId} />
       <div style={panel}>
         <div style={{ fontWeight: 600 }}>Villa F « LACAPELA »</div>
         <label>
