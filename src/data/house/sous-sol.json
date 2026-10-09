@@ -6,40 +6,332 @@
   "slabThickness": 22,
   "planPage": 3,
   "walls": [
-    {"id":"ext-south","points":[[0,10],[1055,10]],"thickness":20,"structural":true,"exterior":true},
-    {"id":"ext-east","points":[[1045,0],[1045,724]],"thickness":20,"structural":true,"exterior":true,"note":"Twin villa: party wall is on x=0 or x=1055, not determinable on this page; both sides are plain 20 cm walls with no openings."},
-    {"id":"ext-north","points":[[1055,715],[0,715]],"thickness":18,"structural":true,"exterior":true,"estimated":true,"note":"Sheet is cropped at the top; north wall (18 cm, y 706-724) is just inside the crop. Thickness read as 18 from the 686 interior dimension."},
-    {"id":"ext-west","points":[[10,724],[10,0]],"thickness":20,"structural":true,"exterior":true,"note":"Twin villa: possible party wall (see ext-east)."},
-    {"id":"wall-disponible-technique","points":[[635,20],[635,706]],"thickness":18,"structural":true,"exterior":false,"note":"Concrete wall between DISPONIBLE and the cave/technique side, two painted doors."},
-    {"id":"wall-stair-west","points":[[420,20],[420,264.8]],"thickness":18,"structural":false,"exterior":false,"estimated":true,"note":"Hatched wall west of the stair well; material read as brique ciment 13 cm + crepis in the cross-section note, thickness 18 from the 391+18+91+15+91 chain."},
-    {"id":"wall-cave-technique","points":[[769.5,362.5],[1035,362.5]],"thickness":11,"structural":false,"exterior":false,"note":"Brique ciment 10 cm + gypsage 1 cm."},
-    {"id":"wall-notch-east","points":[[769.5,362.5],[769.5,420.5]],"thickness":11,"structural":false,"exterior":false,"estimated":true},
-    {"id":"wall-notch-north","points":[[644,420.5],[775,420.5]],"thickness":11,"structural":false,"exterior":false,"estimated":true,"note":"Carries the pink 'tableau electrique' (25 cm deep) marking."}
+    {
+      "id": "ext-south",
+      "points": [
+        [
+          0,
+          10
+        ],
+        [
+          1055,
+          10
+        ]
+      ],
+      "thickness": 20,
+      "structural": true,
+      "exterior": true
+    },
+    {
+      "id": "ext-east",
+      "points": [
+        [
+          1045,
+          0
+        ],
+        [
+          1045,
+          724
+        ]
+      ],
+      "thickness": 20,
+      "structural": true,
+      "exterior": true,
+      "note": "Twin villa: party wall is on x=0 or x=1055, not determinable on this page; both sides are plain 20 cm walls with no openings."
+    },
+    {
+      "id": "ext-north",
+      "points": [
+        [
+          1055,
+          715
+        ],
+        [
+          0,
+          715
+        ]
+      ],
+      "thickness": 18,
+      "structural": true,
+      "exterior": true,
+      "estimated": true,
+      "note": "Sheet is cropped at the top; north wall (18 cm, y 706-724) is just inside the crop. Thickness read as 18 from the 686 interior dimension."
+    },
+    {
+      "id": "ext-west",
+      "points": [
+        [
+          10,
+          724
+        ],
+        [
+          10,
+          0
+        ]
+      ],
+      "thickness": 20,
+      "structural": true,
+      "exterior": true,
+      "note": "Twin villa: possible party wall (see ext-east)."
+    },
+    {
+      "id": "wall-disponible-technique",
+      "points": [
+        [
+          635,
+          20
+        ],
+        [
+          635,
+          706
+        ]
+      ],
+      "thickness": 18,
+      "structural": true,
+      "exterior": false,
+      "note": "Concrete wall between DISPONIBLE and the cave/technique side, two painted doors."
+    },
+    {
+      "id": "wall-stair-west",
+      "points": [
+        [
+          420,
+          20
+        ],
+        [
+          420,
+          264.8
+        ]
+      ],
+      "thickness": 18,
+      "structural": false,
+      "exterior": false,
+      "estimated": true,
+      "note": "Hatched wall west of the stair well; material read as brique ciment 13 cm + crepis in the cross-section note, thickness 18 from the 391+18+91+15+91 chain."
+    },
+    {
+      "id": "wall-cave-technique",
+      "points": [
+        [
+          769.5,
+          362.5
+        ],
+        [
+          1035,
+          362.5
+        ]
+      ],
+      "thickness": 11,
+      "structural": false,
+      "exterior": false,
+      "note": "Brique ciment 10 cm + gypsage 1 cm."
+    },
+    {
+      "id": "wall-notch-east",
+      "points": [
+        [
+          769.5,
+          362.5
+        ],
+        [
+          769.5,
+          420.5
+        ]
+      ],
+      "thickness": 11,
+      "structural": false,
+      "exterior": false,
+      "estimated": true
+    },
+    {
+      "id": "wall-notch-north",
+      "points": [
+        [
+          644,
+          420.5
+        ],
+        [
+          775,
+          420.5
+        ]
+      ],
+      "thickness": 11,
+      "structural": false,
+      "exterior": false,
+      "estimated": true,
+      "note": "Carries the pink 'tableau electrique' (25 cm deep) marking."
+    }
   ],
   "rooms": [
     {
-      "id":"disponible","name":"DISPONIBLE",
-      "polygon":[[20,20],[411,20],[411,264.8],[535,264.8],[535,20],[626,20],[626,706],[20,706]],
-      "printedArea":38.46,"floorFinish":"dalle brute","wallFinish":"murs bruts","ceilingFinish":"Schichtex",
-      "note":"Polygon excludes the stair flight (x 411-535); the right 91 lane beside the flight is counted in the room, which matches the printed area."
+      "id": "disponible",
+      "name": "DISPONIBLE",
+      "polygon": [
+        [
+          20,
+          20
+        ],
+        [
+          411,
+          20
+        ],
+        [
+          411,
+          264.8
+        ],
+        [
+          535,
+          264.8
+        ],
+        [
+          535,
+          20
+        ],
+        [
+          626,
+          20
+        ],
+        [
+          626,
+          706
+        ],
+        [
+          20,
+          706
+        ]
+      ],
+      "printedArea": 38.46,
+      "floorFinish": "dalle brute",
+      "wallFinish": "murs bruts",
+      "ceilingFinish": "Schichtex",
+      "note": "Polygon excludes the stair flight (x 411-535); the right 91 lane beside the flight is counted in the room, which matches the printed area."
     },
     {
-      "id":"cave","name":"CAVE",
-      "polygon":[[644,426],[775,426],[775,368],[1035,368],[1035,706],[644,706]],
-      "printedArea":12.52,"floorFinish":"dalle brute","wallFinish":"murs bruts","ceilingFinish":"Schichtex"
+      "id": "cave",
+      "name": "CAVE",
+      "polygon": [
+        [
+          644,
+          426
+        ],
+        [
+          775,
+          426
+        ],
+        [
+          775,
+          368
+        ],
+        [
+          1035,
+          368
+        ],
+        [
+          1035,
+          706
+        ],
+        [
+          644,
+          706
+        ]
+      ],
+      "printedArea": 12.52,
+      "floorFinish": "dalle brute",
+      "wallFinish": "murs bruts",
+      "ceilingFinish": "Schichtex"
     },
     {
-      "id":"technique-buanderie","name":"TECHNIQUE - BUANDERIE",
-      "polygon":[[644,20],[1035,20],[1035,357],[764,357],[764,415],[644,415]],
-      "printedArea":13.94,"floorFinish":"carrelage","wallFinish":"béton + dispersion","ceilingFinish":"Schichtex",
-      "note":"Contains boiler, chaudiere a gaz, pompe de relevage, bac a laver SANEO-TREND 55x45x23, laver and secher; reservation pour future piscine."
+      "id": "technique-buanderie",
+      "name": "TECHNIQUE - BUANDERIE",
+      "polygon": [
+        [
+          644,
+          20
+        ],
+        [
+          1035,
+          20
+        ],
+        [
+          1035,
+          357
+        ],
+        [
+          764,
+          357
+        ],
+        [
+          764,
+          415
+        ],
+        [
+          644,
+          415
+        ]
+      ],
+      "printedArea": 13.94,
+      "floorFinish": "carrelage",
+      "wallFinish": "béton + dispersion",
+      "ceilingFinish": "Schichtex",
+      "note": "Contains boiler, chaudiere a gaz, pompe de relevage, bac a laver SANEO-TREND 55x45x23, laver and secher; reservation pour future piscine."
     }
   ],
   "openings": [
-    {"id":"door-disponible-cave","kind":"door","wallId":"wall-disponible-technique","offset":581,"width":80,"height":200,"sill":0,"swing":"none","estimated":true,"note":"Porte peinte, 25 cm from the north inner face; swing not readable."},
-    {"id":"door-disponible-technique","kind":"door","wallId":"wall-disponible-technique","offset":301,"width":80,"height":200,"sill":0,"swing":"none","estimated":true,"note":"Porte peinte; position derived from the 25/80/175/25/80 dimension chain, which puts it across the cave/technique partition line."}
+    {
+      "id": "door-disponible-cave",
+      "kind": "door",
+      "wallId": "wall-disponible-technique",
+      "offset": 581,
+      "width": 80,
+      "height": 200,
+      "sill": 0,
+      "swing": "none",
+      "estimated": true,
+      "note": "Porte peinte, 25 cm from the north inner face; swing not readable."
+    },
+    {
+      "id": "door-disponible-technique",
+      "kind": "door",
+      "wallId": "wall-disponible-technique",
+      "offset": 301,
+      "width": 80,
+      "height": 200,
+      "sill": 0,
+      "swing": "none",
+      "estimated": true,
+      "note": "Porte peinte; position derived from the 25/80/175/25/80 dimension chain, which puts it across the cave/technique partition line."
+    }
   ],
   "stairs": [
-    {"id":"stair-rez","polygon":[[429,20],[520,20],[520,264.8],[429,264.8]],"direction":"up","toLevel":"rez","estimated":true,"note":"Flight 91 wide, straight part 132.8 long plus winder; riser count not readable."}
+    {
+      "id": "stair-rez",
+      "polygon": [
+        [
+          429,
+          20
+        ],
+        [
+          520,
+          20
+        ],
+        [
+          520,
+          264.8
+        ],
+        [
+          429,
+          264.8
+        ]
+      ],
+      "direction": "up",
+      "toLevel": "rez",
+      "estimated": true,
+      "note": "Flight 91 wide, straight part 132.8 long plus winder; riser count not readable. Risers from section p.9 (marches 1-16 sous-sol→rez, 17-30 rez→étage); straight flight ascending toward plan +y assumed.",
+      "risers": 16,
+      "ascent": [
+        0,
+        1
+      ]
+    }
   ]
 }
