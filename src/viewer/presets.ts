@@ -188,7 +188,7 @@ export function buildPresets(): CameraPreset[] {
     { name: "ouest", label: "Façade ouest", position: [-13, 3, cz], target: [-1, 2.6, cz], level: "all", labels: false },
     { name: "est", label: "Façade est", position: [FOOTPRINT_CM.width * 0.01 + 14, 3, cz + 1], target: [FOOTPRINT_CM.width * 0.01 + 2, 2.6, cz], level: "all", labels: false },
     { name: "aerial", label: "Vue aérienne", position: [-9, 14, 10], target: [cx, 1.5, cz], level: "all", labels: false },
-    { name: "catalogue", label: "Catalogue (aperçu)", position: [18, 6, 14], target: [17, 0.8, -1.5], level: "all", labels: false, showcase: true },
+    { name: "catalogue", label: "Catalogue (aperçu)", position: [16.8, 7, 24], target: [16.8, 0.6, -2], level: "all", labels: false, showcase: true },
   ];
   for (const level of house.levels) {
     presets.push(levelTop(level));
