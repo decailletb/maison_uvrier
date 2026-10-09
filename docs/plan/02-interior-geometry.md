@@ -20,4 +20,4 @@ flights of boxes along an `ascent` vector; everything is computed by pure functi
 - [x] Presets generated from the data: `<level>-top`, `<room-id>` from the doorway, `<room-id>-2` for large rooms; `?preset=` sets the level mode
 - [x] Screenshot script and smoke test updated (one room preset must render)
 - [x] `visual-check`: each `<level>-top` against the house-plans description; `sejour-cuisine`, `chambre-parents`, `salle-de-bains`, `chambre-2` against IMG_5500, IMG_5508, IMG_5504, IMG_5505
-- [ ] Gates green, PR, squash-merge, STATE.md, next phase branch
+- [x] Gates green, PR, squash-merge, STATE.md, next phase branch
