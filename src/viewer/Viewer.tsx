@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Grid, OrbitControls } from "@react-three/drei";
-import { useRef } from "react";
+import { OrbitControls } from "@react-three/drei";
+import { useEffect, useRef } from "react";
 import { FOOTPRINT_CM, levelById } from "@/data/house";
 import { flatGeometry } from "@/scene/shapes";
 import { EXTERIOR_ROOMS } from "@/scene/shell";
@@ -9,20 +9,23 @@ import { SceneEnvironment, type SunSettings } from "@/scene/components/Environme
 import { House } from "@/scene/components/House";
 import { CM } from "@/scene/units";
 import type { CameraPreset, LevelMode } from "./presets";
-import { markSceneReady } from "./ready";
+import { markSceneReady, resetSceneReady } from "./ready";
 import { WalkControls } from "./WalkControls";
 
 export type CameraMode = "orbit" | "walk";
 
-const FOOTPRINT = { x: FOOTPRINT_CM.width * CM, z: FOOTPRINT_CM.depth * CM };
 const EYE_HEIGHT_CM = 160;
 
 function ReadySignal() {
   const frames = useRef(0);
+  useEffect(() => {
+    resetSceneReady();
+    return () => resetSceneReady();
+  }, []);
   useFrame(() => {
     // A few frames so that controls, lights and labels have settled before a screenshot.
     frames.current += 1;
-    if (frames.current === 3) markSceneReady();
+    if (frames.current === 5) markSceneReady();
   });
   return null;
 }
@@ -34,7 +37,7 @@ function ReadySignal() {
 function Ground({ levelMode }: { levelMode: LevelMode }) {
   const y = levelMode === "sous-sol" ? -3.11 : -0.1;
   const geometry = useMemo(() => {
-    const half = 4000;
+    const half = 20000;
     const cx = FOOTPRINT_CM.width / 2;
     const cy = FOOTPRINT_CM.depth / 2;
     const outer: [number, number][] = [
@@ -59,16 +62,6 @@ function Ground({ levelMode }: { levelMode: LevelMode }) {
       <mesh geometry={geometry} position={[0, y, 0]} receiveShadow>
         <meshStandardMaterial color="#6f8a5c" roughness={1} />
       </mesh>
-      <Grid
-        position={[FOOTPRINT.x / 2, y + 0.005, -FOOTPRINT.z / 2]}
-        args={[80, 80]}
-        cellSize={1}
-        sectionSize={5}
-        cellColor="#8aa07e"
-        sectionColor="#c9d9bf"
-        fadeDistance={60}
-        infiniteGrid={false}
-      />
     </group>
   );
 }
@@ -90,7 +83,7 @@ export function Viewer({ preset, levelMode, cameraMode, showLabels, showCeilings
       shadows
       dpr={[1, 1.5]}
       camera={{ position: preset.position, fov: 55, near: 0.05, far: 300 }}
-      gl={{ antialias: true, powerPreference: "high-performance" }}
+      gl={{ antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: true }}
       style={{ width: "100%", height: "100%" }}
     >
       <color attach="background" args={["#9fb7cf"]} />
