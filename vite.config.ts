@@ -4,6 +4,8 @@ import { fileURLToPath, URL } from "node:url";
 
 export default defineConfig({
   plugins: [react()],
+  // CC0 assets (git-ignored, restored by `npm run assets:fetch`) are served at the site root.
+  publicDir: "assets",
   resolve: {
     alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
   },

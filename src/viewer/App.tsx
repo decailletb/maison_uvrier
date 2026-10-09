@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { house } from "@/data/house";
 import { CAMERA_PRESETS, findPreset, presetFromSearch, type CameraPreset, type LevelMode } from "./presets";
 import { publishPresets } from "./ready";
+import type { SunSettings } from "@/scene/components/Environment";
 import { Viewer, type CameraMode } from "./Viewer";
 
 const LEVEL_LABELS: Record<LevelMode, string> = {
@@ -35,8 +36,9 @@ export function App() {
   const [preset, setPreset] = useState<CameraPreset>(initial);
   const [levelMode, setLevelMode] = useState<LevelMode>(initial.level);
   const [cameraMode, setCameraMode] = useState<CameraMode>("orbit");
-  const [showLabels, setShowLabels] = useState(true);
+  const [showLabels, setShowLabels] = useState(initial.labels ?? true);
   const [showCeilings, setShowCeilings] = useState(isRoomView(initial));
+  const [sun, setSun] = useState<SunSettings>({ month: 6, hour: 15 });
   // Remount the canvas when the camera must jump.
   const [epoch, setEpoch] = useState(0);
 
@@ -48,6 +50,7 @@ export function App() {
     setPreset(next);
     setLevelMode(next.level);
     setShowCeilings(isRoomView(next));
+    setShowLabels(next.labels ?? true);
     setCameraMode("orbit");
     setEpoch((e) => e + 1);
   };
@@ -71,6 +74,7 @@ export function App() {
         cameraMode={cameraMode}
         showLabels={showLabels}
         showCeilings={showCeilings}
+        sun={sun}
       />
       <div style={panel}>
         <div style={{ fontWeight: 600 }}>Villa F « LACAPELA »</div>
@@ -117,6 +121,14 @@ export function App() {
         </label>
         <label>
           <input type="checkbox" checked={showCeilings} onChange={(e) => setShowCeilings(e.target.checked)} /> Plafonds
+        </label>
+        <label>
+          Mois {sun.month}{" "}
+          <input type="range" min={1} max={12} value={sun.month} onChange={(e) => setSun({ ...sun, month: Number(e.target.value) })} />
+        </label>
+        <label>
+          Heure {sun.hour}h{" "}
+          <input type="range" min={5} max={21} step={0.5} value={sun.hour} onChange={(e) => setSun({ ...sun, hour: Number(e.target.value) })} />
         </label>
       </div>
     </div>

@@ -10,6 +10,9 @@ import { stairSteps } from "../stairs";
 import { tileTexture } from "../textures";
 import { CM, planToScene } from "../units";
 import { levelWallPieces, pieceFrame } from "../walls";
+import { EXTERIOR_ROOMS, etageShell, rezShell } from "../shell";
+import { Glazing } from "./Glazing";
+import { Shell } from "./Shell";
 import { RoomLabel } from "./RoomLabel";
 
 export interface LevelGroupProps {
@@ -65,6 +68,11 @@ function Floors({ level, showLabels, labelRoomId }: { level: Level; showLabels: 
   return (
     <group>
       {level.rooms.map((room) => {
+        if (EXTERIOR_ROOMS.has(room.id)) {
+          return showLabels && (!labelRoomId || labelRoomId === room.id) ? (
+            <RoomLabel key={room.id} text={room.name} position={planToScene(polygonCentroid(room.polygon), 120, level.floorLevel)} />
+          ) : null;
+        }
         const mat = finishMaterial(room.floorFinish, DEFAULT_FLOOR);
         const geometry = flatGeometry(room.polygon);
         const centroid = polygonCentroid(room.polygon);
@@ -90,7 +98,7 @@ function Ceilings({ level }: { level: Level }) {
   return (
     <group>
       {level.rooms
-        .filter((room) => !["terrasse", "couvert", "balcon"].includes(room.id))
+        .filter((room) => !EXTERIOR_ROOMS.has(room.id))
         .map((room) => {
           const mat = finishMaterial(room.ceilingFinish, DEFAULT_CEILING);
           return (
@@ -129,6 +137,7 @@ function Stairs({ level, riseAbove }: { level: Level; riseAbove: number }) {
 }
 
 export function LevelGroup({ level, slabBelow, riseAbove, stairHoles, showLabels, labelRoomId, showCeilings }: LevelGroupProps) {
+  const shell = useMemo(() => (level.id === "rez" ? rezShell(level) : level.id === "etage" ? etageShell(level) : null), [level]);
   const slab = useMemo(
     () => slabGeometry(FOOTPRINT_POLYGON, level.floorLevel - slabBelow, level.floorLevel, stairHoles),
     [level.floorLevel, slabBelow, stairHoles],
@@ -140,6 +149,8 @@ export function LevelGroup({ level, slabBelow, riseAbove, stairHoles, showLabels
       </mesh>
       <Floors level={level} showLabels={showLabels} labelRoomId={labelRoomId} />
       <Walls level={level} />
+      <Glazing level={level} />
+      {shell && <Shell data={shell} />}
       <Stairs level={level} riseAbove={riseAbove} />
       {showCeilings && <Ceilings level={level} />}
     </group>

@@ -20,6 +20,8 @@ export interface CameraPreset {
   level: LevelMode;
   /** Room the preset stands in; its label is the only one drawn. */
   roomId?: string;
+  /** Room labels on by default; exterior views switch them off. */
+  labels?: boolean;
 }
 
 const EYE = 155;
@@ -174,9 +176,16 @@ function levelTop(level: Level): CameraPreset {
 }
 
 export function buildPresets(): CameraPreset[] {
+  const cx = (FOOTPRINT_CM.width / 2) * 0.01;
+  const cz = -(FOOTPRINT_CM.depth / 2) * 0.01;
   const presets: CameraPreset[] = [
-    { name: "overview", label: "Vue d'ensemble", position: [20, 12, 16], target: [5.3, 2, -3.6], level: "all" },
-    { name: "top", label: "Vue de dessus", position: [5.3, 28, -3.1], target: [5.3, 0, -3.6], level: "all" },
+    { name: "overview", label: "Vue d'ensemble", position: [18, 11, 14], target: [cx, 2, cz], level: "all", labels: false },
+    { name: "top", label: "Vue de dessus", position: [cx, 24, cz + 0.5], target: [cx, 0, cz], level: "all", labels: false },
+    // Elevations: the camera stands about 13 m out from the façade it names, 3 m up.
+    { name: "sud", label: "Façade sud", position: [cx + 1, 3, 13.5], target: [cx, 2.6, cz], level: "all", labels: false },
+    { name: "ouest", label: "Façade ouest", position: [-13, 3, cz], target: [-1, 2.6, cz], level: "all", labels: false },
+    { name: "est", label: "Façade est", position: [FOOTPRINT_CM.width * 0.01 + 14, 3, cz + 1], target: [FOOTPRINT_CM.width * 0.01 + 2, 2.6, cz], level: "all", labels: false },
+    { name: "aerial", label: "Vue aérienne", position: [-9, 14, 10], target: [cx, 1.5, cz], level: "all", labels: false },
   ];
   for (const level of house.levels) {
     presets.push(levelTop(level));
