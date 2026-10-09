@@ -1,24 +1,24 @@
-# État du projet — mis à jour 2026-10-09T16:25+01:00
+# État du projet — mis à jour 2026-10-09T16:40+01:00
 
-Session 1 démarrée le 2026-10-09 à 13:54. Phases 0 à 4a fusionnées (PR #1 à #5).
+Session 1 démarrée le 2026-10-09 à 13:54. Phases 0 à 4 fusionnées (PR #1 à #6).
 
 ## Phase en cours
-Phase 4b — Édition de scène (`feat/scene-editing`), en fin de phase. Plan : `docs/plan/05-scene-editing.md`.
+Phase 5 — Workflow décoration (`feat/deco-workflow`). Plan : `docs/plan/06-deco-workflow.md`.
 
 ## Fait (dernières étapes, 5 max)
-- Éditeur complet : sélection, glisser, aimantation, finitions par pièce, annuler/rétablir, enregistrement dans `scenes/`.
-- `scenes/base.json` : séjour-cuisine et chambre parents meublés ; `visual-check` : tous les objets reconnaissables, aucun ne flotte ni ne traverse un mur.
-- `?ui=0` masque les panneaux ; les captures l'utilisent. Preset `<pièce>-3` (diagonale retour).
-- 67 tests unitaires, 4 e2e (fumée + édition : placer, déplacer, enregistrer, charger).
+- `src/deco/` : schéma de proposition, appariement catalogue (catégorie + tags, matériaux par couleur), mise en place automatique (indices, périmètre, portes libres) ; 12 tests.
+- `npm run deco:apply -- <proposal> <pièce|all> <thème>` écrit `scenes/<pièce>-<thème>.json` et `docs/deco-log.md`.
+- Première exécution réelle : IMG_5505 (chambre d'enfant, photo de substitution) → `inspiration/chambre-enfant/proposal.json` → `scenes/chambre-2-enfant.json` (6 pièces placées).
+- Mode thème (`all`) testé à sec. Skill `/deco` réécrit avec les vraies commandes.
 
 ## En cours (étape exacte, fichier, ce qui reste)
-`build-check` (toutes les portes) en cours ; puis PR `feat/scene-editing`, squash-merge.
+`visual-check` avant / après sur `chambre-2`, `chambre-2-3`, `etage-top` ; corrections ; portes ; PR.
 
 ## Prochaine étape (une ligne : la première action de la prochaine session)
-Si la PR n'est pas fusionnée : `gh pr list`, `build-check`, merge ; puis `feat/deco-workflow` et `docs/plan/06-deco-workflow.md`.
+Lire le verdict `visual-check` (ou relancer `VIEWER_SCENE=chambre-2-enfant npm run screenshots -- chambre-2 chambre-2-3 etage-top`), corriger, `build-check`, PR `feat/deco-workflow`.
 
 ## Bloqué / questions pour Benjamin
-Aucune. À polir en phase 6 : cadrage des presets de pièce (trop serrés dans les petites pièces), teinte du parquet.
+Aucune. Aucune image dans `inspiration/` : la photo IMG_5505 a servi de substitut (le brief le prévoit).
 
 ## Branche active, dernier commit, PR ouverte
-Branche `feat/scene-editing`, pas encore de PR.
+Branche `feat/deco-workflow`, pas de PR.

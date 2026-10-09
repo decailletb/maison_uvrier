@@ -13,4 +13,3 @@ Scène écrite : scenes/chambre-2-enfant.json (base : base)
 - chambre-2 : rug → forme paramétrique rug (fabric-pink)
 - chambre-2 : lamp → forme paramétrique lamp (fabric-white)
 - chambre-2 : sol parquet-oak, murs paint-white, plafond ceiling-white
-
