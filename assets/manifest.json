@@ -12,6 +12,114 @@
         "exterieur"
       ],
       "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "modern-arm-chair-01",
+      "category": "armchair",
+      "file": "models/modern_arm_chair_01/modern_arm_chair_01_1k.gltf",
+      "files": [
+        "models/modern_arm_chair_01/modern_arm_chair_01_1k.gltf",
+        "models/modern_arm_chair_01/modern_arm_chair_01.bin",
+        "models/modern_arm_chair_01/textures/modern_arm_chair_01_legs_arm_1k.jpg",
+        "models/modern_arm_chair_01/textures/modern_arm_chair_01_legs_diff_1k.jpg",
+        "models/modern_arm_chair_01/textures/modern_arm_chair_01_legs_nor_gl_1k.jpg",
+        "models/modern_arm_chair_01/textures/modern_arm_chair_01_pillow_arm_1k.jpg",
+        "models/modern_arm_chair_01/textures/modern_arm_chair_01_pillow_diff_1k.jpg",
+        "models/modern_arm_chair_01/textures/modern_arm_chair_01_pillow_nor_gl_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modern_arm_chair_01/modern_arm_chair_01_1k.gltf",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "dimensionsCm": {
+        "w": 82,
+        "d": 99,
+        "h": 102
+      },
+      "tags": [
+        "moderne",
+        "contemporain",
+        "bois-clair",
+        "noir",
+        "sejour"
+      ],
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "sofa-02",
+      "category": "sofa",
+      "file": "models/sofa_02/sofa_02_1k.gltf",
+      "files": [
+        "models/sofa_02/sofa_02_1k.gltf",
+        "models/sofa_02/sofa_02.bin",
+        "models/sofa_02/textures/sofa_02_diff_1k.jpg",
+        "models/sofa_02/textures/sofa_02_arm_1k.jpg",
+        "models/sofa_02/textures/sofa_02_nor_gl_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/sofa_02/sofa_02_1k.gltf",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "dimensionsCm": {
+        "w": 181,
+        "d": 82,
+        "h": 71
+      },
+      "tags": [
+        "classique",
+        "bois-fonce",
+        "sejour"
+      ],
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "sofa-03",
+      "category": "sofa",
+      "file": "models/sofa_03/sofa_03_1k.gltf",
+      "files": [
+        "models/sofa_03/sofa_03_1k.gltf",
+        "models/sofa_03/sofa_03.bin",
+        "models/sofa_03/textures/sofa_03_diff_1k.jpg",
+        "models/sofa_03/textures/sofa_03_nor_gl_1k.jpg",
+        "models/sofa_03/textures/sofa_03_rough_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/sofa_03/sofa_03_1k.gltf",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "dimensionsCm": {
+        "w": 273,
+        "d": 93,
+        "h": 112
+      },
+      "tags": [
+        "classique",
+        "sejour"
+      ],
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "wooden-table-02",
+      "category": "table",
+      "file": "models/wooden_table_02/wooden_table_02_1k.gltf",
+      "files": [
+        "models/wooden_table_02/wooden_table_02_1k.gltf",
+        "models/wooden_table_02/wooden_table_02.bin",
+        "models/wooden_table_02/textures/wooden_table_02_diff_1k.jpg",
+        "models/wooden_table_02/textures/wooden_table_02_nor_gl_1k.jpg",
+        "models/wooden_table_02/textures/wooden_table_02_arm_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_table_02/wooden_table_02_1k.gltf",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "dimensionsCm": {
+        "w": 113,
+        "d": 71,
+        "h": 80
+      },
+      "tags": [
+        "rustique",
+        "bois-fonce",
+        "sejour"
+      ],
+      "fetchedAt": "2026-10-09"
     }
   ]
 }

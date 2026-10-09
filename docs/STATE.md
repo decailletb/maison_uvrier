@@ -1,24 +1,24 @@
-# État du projet — mis à jour 2026-10-09T15:35+01:00
+# État du projet — mis à jour 2026-10-09T15:50+01:00
 
-Session 1 démarrée le 2026-10-09 à 13:54. Phases 0, 1, 2 fusionnées (PR #1, #2, #3).
+Session 1 démarrée le 2026-10-09 à 13:54. Phases 0 à 3 fusionnées (PR #1 à #4).
 
 ## Phase en cours
-Phase 3 — Enveloppe extérieure et lumière (`feat/exterior-shell`), en fin de phase.
+Phase 4a — Catalogue (`feat/furniture-catalogue`), PR en cours de fusion. Plan : `docs/plan/04-catalogue.md`.
 
 ## Fait (dernières étapes, 5 max)
-- Enveloppe complète (terrasse, couvert sur poteaux, balcon + balustrade + couvert balcon, toiture + acrotère), vitrages, porte d'entrée.
-- Ciel HDRI CC0 + repli `Sky`, soleil réel (modèle NOAA, curseurs mois/heure), ombres.
-- Presets extérieurs `sud ouest est aerial` ; `visual-check` PASS sur les quatre (massing, ouvertures, balcon, couvert, ciel, ombres).
-- Captures headless fiabilisées (`preserveDrawingBuffer`), verre simple, sol 400 m sans grille.
+- Schéma du manifeste, bibliothèque de matériaux (ids stables), 13 meubles procéduraux, chargeur glTF normalisé en cm.
+- 4 modèles CC0 Poly Haven (2 canapés, fauteuil, table) ; `npm run assets:fetch` restaure les glTF multi-fichiers.
+- Preset `catalogue` vérifié par `visual-check` (pièces reconnaissables, modèles texturés, rien ne flotte).
+- 58 tests unitaires, 2 e2e, portes vertes.
 
 ## En cours (étape exacte, fichier, ce qui reste)
-`build-check` (toutes les portes) en cours ; puis PR `feat/exterior-shell` et squash-merge.
+Fusion de la PR, puis phase 4b `feat/scene-editing` (plan `docs/plan/05-scene-editing.md`).
 
 ## Prochaine étape (une ligne : la première action de la prochaine session)
-Si la PR n'est pas fusionnée : `gh pr list`, `build-check`, merge ; puis `feat/furniture-catalogue` et `docs/plan/04-catalogue.md`.
+`gh pr list` ; si `feat/furniture-catalogue` est fusionnée, créer `feat/scene-editing` et écrire `docs/plan/05-scene-editing.md`.
 
 ## Bloqué / questions pour Benjamin
-Aucune. Note : façade ouest sombre à 15 h en juin (soleil au sud-ouest, incidence rasante) ; à revoir en phase 6.
+Aucune. Les canapés Poly Haven sont de style ancien (cuir capitonné) ; le canapé moderne reste procédural tant qu'aucun modèle CC0 moderne n'est trouvé.
 
 ## Branche active, dernier commit, PR ouverte
-Branche `feat/exterior-shell`, pas encore de PR.
+Branche `feat/furniture-catalogue`.
