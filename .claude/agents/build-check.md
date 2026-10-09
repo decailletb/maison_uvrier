@@ -7,18 +7,21 @@ model: haiku
 
 Run checks and report failures. You never edit code.
 
-The repo has no code as of 2026-10-09. Before running anything, read `package.json` and
-use the scripts it defines. If there is no `package.json`, say so in one line and stop.
+Use the scripts defined in `package.json`:
 
-Typical commands once code exists:
-
+- Type check: `npm run typecheck` (tsc -b --noEmit)
+- Lint: `npm run lint`
+- Unit tests: `npm test` (vitest run)
 - Build: `npm run build`
-- Type check: `npx tsc --noEmit`
-- Tests: `npm test` or `npx vitest run`
+- End-to-end: `npm run test:e2e` (Playwright; starts the dev server itself on port 5173
+  and stops it; takes about 20 s)
+
+Run exactly the ones the prompt asks for; "all gates" means the five above, in that
+order, stopping at the first failure.
 
 A PreToolUse hook tails these to the last 120 lines. Do not add your own pipes; that
-disables the hook and dumps the full run into context. Never run `npm install`,
-`npm run dev` or anything that starts a server.
+disables the hook and dumps the full run into context. Never run `npm install` or
+`npm run dev` on its own; `test:e2e` and `screenshots` manage their own server.
 
 Report back:
 
