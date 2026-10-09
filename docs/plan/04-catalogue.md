@@ -11,4 +11,4 @@ scale normalisation, procedural fallbacks for every category, and a material lib
 - [x] `scripts/fetch-assets.ts` handles multi-file glTF (gltf + bin + textures) from manifest `files[]`
 - [x] Catalogue preview preset `catalogue` showing every procedural kind in a row, `visual-check` on it
 - [x] Unit tests: manifest validation, procedural dimensions, material ids unique
-- [ ] Gates green, PR, squash-merge, STATE.md, then `feat/scene-editing` (plan `05-scene-editing.md`)
+- [x] Gates green, PR, squash-merge, STATE.md, then `feat/scene-editing` (plan `05-scene-editing.md`)
