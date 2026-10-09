@@ -22,7 +22,7 @@ async function serverUp(): Promise<boolean> {
 }
 
 async function startServer(): Promise<ChildProcess> {
-  const child = spawn("npm", ["run", "dev"], { shell: true, stdio: "ignore" });
+  const child = spawn("npm run dev", { shell: true, stdio: "ignore" });
   for (let i = 0; i < 60; i++) {
     if (await serverUp()) return child;
     await new Promise((r) => setTimeout(r, 500));
@@ -43,7 +43,7 @@ async function main() {
   try {
     for (const p of presets) {
       await page.goto(`${BASE}/?preset=${p.name}`);
-      await page.waitForFunction(() => window.__sceneReady === true, null, { timeout: 30_000 });
+      await page.waitForFunction(() => (window as Window & { __sceneReady?: boolean }).__sceneReady === true, null, { timeout: 30_000 });
       await page.waitForTimeout(300);
       const file = resolve(OUT, `${p.name}.png`);
       await page.screenshot({ path: file });
