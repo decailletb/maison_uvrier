@@ -125,12 +125,15 @@ export function cornerView(room: Room, level: Level): { position: Point; target:
 function roomPresets(room: Room, level: Level): CameraPreset[] {
   const centroid = polygonCentroid(room.polygon);
   const corner = cornerView(room, level);
+  // Pitch down about 14° so that small rooms show their floor; never below 60 cm.
+  const diagonal = Math.hypot(corner.target[0] - corner.position[0], corner.target[1] - corner.position[1]);
+  const cornerLook = Math.max(60, Math.min(LOOK, EYE - 0.25 * diagonal));
   const presets: CameraPreset[] = [
     {
       name: room.id,
       label: `${room.name} (${level.name})`,
       position: planToScene(corner.position, EYE, level.floorLevel),
-      target: planToScene(corner.target, LOOK, level.floorLevel),
+      target: planToScene(corner.target, cornerLook, level.floorLevel),
       level: level.id,
       roomId: room.id,
     },
