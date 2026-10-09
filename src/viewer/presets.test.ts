@@ -36,7 +36,7 @@ describe("camera presets", () => {
       for (const room of level.rooms) {
         const { point } = roomEntrance(room, level);
         expect(pointInPolygon(point, room.polygon), `${room.id} entrance ${point}`).toBe(true);
-        for (const name of [room.id, `${room.id}-2`]) {
+        for (const name of [room.id, `${room.id}-2`, `${room.id}-3`]) {
           const preset = findPreset(name);
           if (!preset) continue;
           expect(preset.roomId).toBe(room.id);
