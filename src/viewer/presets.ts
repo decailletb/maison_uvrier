@@ -24,7 +24,7 @@ export interface CameraPreset {
 
 const EYE = 155;
 const LOOK = 120;
-const DOOR_KINDS = new Set(["door", "passage", "slidingDoor", "frenchWindow"]);
+const DOOR_KINDS = new Set(["door", "passage"]);
 const GLAZED_KINDS = new Set(["window", "frenchWindow", "slidingDoor"]);
 
 function unit(from: Point, to: Point): Point {
@@ -47,7 +47,8 @@ export function roomEntrance(room: Room, level: Level): { point: Point; fromDoor
   for (const opening of level.openings) {
     if (!DOOR_KINDS.has(opening.kind)) continue;
     const wall = level.walls.find((w) => w.id === opening.wallId);
-    if (!wall) continue;
+    // Interior doors only: a bay or porte-fenêtre leads outside, not into the room.
+    if (!wall || wall.exterior) continue;
     const mid = pointAlong(wall.points, opening.offset + opening.width / 2).point;
     if (!onBoundary(mid, room.polygon, wall.thickness / 2 + 6)) continue;
     const dir = unit(mid, centroid);
@@ -85,23 +86,40 @@ export function roomGlazing(room: Room, level: Level): { opening: Opening; mid: 
   return found.sort((a, b) => b.opening.width - a.opening.width);
 }
 
-function nearest(points: readonly Point[], to: Point): Point {
-  return points.reduce((best, p) => (Math.hypot(p[0] - to[0], p[1] - to[1]) < Math.hypot(best[0] - to[0], best[1] - to[1]) ? p : best));
-}
-
 function farthest(points: readonly Point[], from: Point): Point {
   return points.reduce((best, p) => (Math.hypot(p[0] - from[0], p[1] - from[1]) > Math.hypot(best[0] - from[0], best[1] - from[1]) ? p : best));
 }
 
-/** Diagonal view: from the corner nearest the entrance toward the opposite corner. */
+/** True when the segment a-b stays inside the polygon (sampled every 10 cm). */
+function clearLine(a: Point, b: Point, polygon: readonly Point[]): boolean {
+  const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+  const n = Math.max(1, Math.ceil(len / 10));
+  for (let i = 0; i <= n; i++) {
+    const t = i / n;
+    if (!pointInPolygon([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t], polygon, 0.5)) return false;
+  }
+  return true;
+}
+
+/**
+ * Diagonal view: from a corner near the entrance toward the opposite corner, choosing
+ * the first corner (nearest the entrance first) whose diagonal is not blocked by a
+ * concave part of the room.
+ */
 export function cornerView(room: Room, level: Level): { position: Point; target: Point } {
   const entrance = roomEntrance(room, level).point;
-  const corner = nearest(room.polygon, entrance);
-  const opposite = farthest(room.polygon, corner);
-  const dir = unit(corner, opposite);
-  let position: Point = [corner[0] + dir[0] * 55, corner[1] + dir[1] * 55];
-  if (!pointInPolygon(position, room.polygon)) position = entrance;
-  return { position, target: farPoint(position, opposite, room.polygon) };
+  const corners = [...room.polygon].sort(
+    (a, b) => Math.hypot(a[0] - entrance[0], a[1] - entrance[1]) - Math.hypot(b[0] - entrance[0], b[1] - entrance[1]),
+  );
+  for (const corner of corners) {
+    const opposite = farthest(room.polygon, corner);
+    const dir = unit(corner, opposite);
+    const position: Point = [corner[0] + dir[0] * 55, corner[1] + dir[1] * 55];
+    const target: Point = [opposite[0] - dir[0] * 30, opposite[1] - dir[1] * 30];
+    if (pointInPolygon(position, room.polygon) && clearLine(position, target, room.polygon)) return { position, target };
+  }
+  const centroid = polygonCentroid(room.polygon);
+  return { position: entrance, target: farPoint(entrance, centroid, room.polygon) };
 }
 
 function roomPresets(room: Room, level: Level): CameraPreset[] {

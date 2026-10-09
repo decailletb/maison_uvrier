@@ -1,3 +1,4 @@
+import { Edges } from "@react-three/drei";
 import { useMemo } from "react";
 import { DoubleSide } from "three";
 import { polygonCentroid } from "@/data/geometry";
@@ -51,6 +52,7 @@ function Walls({ level }: { level: Level }) {
           >
             <boxGeometry args={[length * CM, (piece.top - piece.bottom) * CM, piece.thickness * CM]} />
             <meshStandardMaterial color={mat.color} roughness={mat.roughness} />
+            <Edges color="#6a6a66" threshold={30} />
           </mesh>
         );
       })}

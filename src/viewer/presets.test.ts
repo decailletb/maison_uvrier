@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { pointInPolygon } from "@/data/geometry";
 import { house } from "@/data/house";
 import { sceneToPlan } from "@/scene/units";
-import { CAMERA_PRESETS, DEFAULT_PRESET, findPreset, presetFromSearch, roomEntrance, roomGlazing } from "./presets";
+import { CAMERA_PRESETS, DEFAULT_PRESET, cornerView, findPreset, presetFromSearch, roomEntrance, roomGlazing } from "./presets";
 
 describe("camera presets", () => {
   it("have unique names", () => {
@@ -47,10 +47,26 @@ describe("camera presets", () => {
     }
   });
 
-  it("find doors for the rooms that have one", () => {
+  it("find interior doors, never exterior bays", () => {
     const etage = house.levels[2];
     const parents = etage.rooms.find((r) => r.id === "chambre-parents")!;
-    expect(roomEntrance(parents, etage).fromDoor).toBe(true);
+    const entrance = roomEntrance(parents, etage);
+    expect(entrance.fromDoor).toBe(true);
+    expect(entrance.point[1]).toBeGreaterThan(240); // near the door in the north partition, not the west porte-fenêtre
+    const rez = house.levels[1];
+    const sejour = rez.rooms.find((r) => r.id === "sejour-cuisine")!;
+    // The stairwell door (porte peinte) opens into the séjour; the bay 006 must not count.
+    const sejourEntrance = roomEntrance(sejour, rez);
+    expect(sejourEntrance.fromDoor).toBe(true);
+    expect(sejourEntrance.point[0]).toBeGreaterThan(500);
+  });
+
+  it("keeps the diagonal of the L-shaped séjour out of the stairwell", () => {
+    const rez = house.levels[1];
+    const sejour = rez.rooms.find((r) => r.id === "sejour-cuisine")!;
+    const view = cornerView(sejour, rez);
+    // Stairwell block is x 420-656, y 30-258: the camera must not stand in the south-west pocket aiming through it.
+    expect(view.position[0] > 656 || view.position[1] > 258).toBe(true);
   });
 
   it("resolve by name and fall back from a query string", () => {
