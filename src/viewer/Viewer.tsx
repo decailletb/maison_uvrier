@@ -2,6 +2,9 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Grid, OrbitControls } from "@react-three/drei";
 import { useRef } from "react";
 import { FOOTPRINT_CM, levelById } from "@/data/house";
+import { flatGeometry } from "@/scene/shapes";
+import { EXTERIOR_ROOMS } from "@/scene/shell";
+import { useMemo } from "react";
 import { SceneEnvironment, type SunSettings } from "@/scene/components/Environment";
 import { House } from "@/scene/components/House";
 import { CM } from "@/scene/units";
@@ -24,13 +27,36 @@ function ReadySignal() {
   return null;
 }
 
-/** Terrain aménagé at −0.10; lowered to the excavation floor when the sous-sol is viewed alone. */
+/**
+ * Terrain aménagé at −0.10 with holes for the house footprint, the terrasse (−0.17) and
+ * the couvert (−0.14); lowered to the excavation floor when the sous-sol is viewed alone.
+ */
 function Ground({ levelMode }: { levelMode: LevelMode }) {
   const y = levelMode === "sous-sol" ? -3.11 : -0.1;
+  const geometry = useMemo(() => {
+    const half = 4000;
+    const cx = FOOTPRINT_CM.width / 2;
+    const cy = FOOTPRINT_CM.depth / 2;
+    const outer: [number, number][] = [
+      [cx - half, cy - half],
+      [cx + half, cy - half],
+      [cx + half, cy + half],
+      [cx - half, cy + half],
+    ];
+    const holes = [
+      [
+        [0, 0],
+        [FOOTPRINT_CM.width, 0],
+        [FOOTPRINT_CM.width, FOOTPRINT_CM.depth],
+        [0, FOOTPRINT_CM.depth],
+      ] as [number, number][],
+      ...levelById("rez").rooms.filter((r) => EXTERIOR_ROOMS.has(r.id)).map((r) => r.polygon),
+    ];
+    return flatGeometry(outer, levelMode === "sous-sol" ? [] : holes);
+  }, [levelMode]);
   return (
     <group>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[FOOTPRINT.x / 2, y, -FOOTPRINT.z / 2]} receiveShadow>
-        <planeGeometry args={[80, 80]} />
+      <mesh geometry={geometry} position={[0, y, 0]} receiveShadow>
         <meshStandardMaterial color="#6f8a5c" roughness={1} />
       </mesh>
       <Grid

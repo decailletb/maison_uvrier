@@ -38,7 +38,7 @@ export function Glazing({ level }: { level: Level }) {
             <>
               <mesh>
                 <boxGeometry args={[(it.width - 2 * FRAME) * CM, (it.height - 2 * FRAME) * CM, PANE * CM]} />
-                <meshPhysicalMaterial color="#cfe3ee" transmission={0.85} roughness={0.05} thickness={0.01} transparent opacity={0.5} />
+                <meshStandardMaterial color="#9fc4d8" roughness={0.1} metalness={0.1} transparent opacity={0.35} depthWrite={false} />
               </mesh>
               <mesh castShadow>
                 <boxGeometry args={[it.width * CM, it.height * CM, (PANE + 1) * CM]} />

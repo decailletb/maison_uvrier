@@ -14,7 +14,7 @@ const MATERIALS: Record<ShellMaterial, { color: string; roughness: number; metal
 
 function ShellMaterialNode({ material }: { material: ShellMaterial }) {
   const m = MATERIALS[material];
-  if (m.glass) return <meshPhysicalMaterial color={m.color} transmission={0.8} roughness={m.roughness} transparent opacity={0.45} />;
+  if (m.glass) return <meshStandardMaterial color={m.color} roughness={m.roughness} transparent opacity={0.35} depthWrite={false} />;
   return <meshStandardMaterial color={m.color} roughness={m.roughness} metalness={m.metalness ?? 0} />;
 }
 
