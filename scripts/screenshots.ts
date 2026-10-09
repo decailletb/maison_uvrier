@@ -1,13 +1,13 @@
 /**
  * Writes one PNG per camera preset to playwright/screenshots/<preset>.png.
- * Usage: npm run screenshots [-- overview top]   (no args = all presets)
+ * Usage: npm run screenshots [-- overview rez-top sejour-cuisine]   (no args = all presets)
+ * Preset names come from the running app (`window.__presets`).
  * Requires the dev server on http://localhost:5173 (started automatically if absent).
  */
 import { chromium } from "@playwright/test";
 import { execSync, spawn, type ChildProcess } from "node:child_process";
 import { mkdirSync } from "node:fs";
 import { resolve } from "node:path";
-import { CAMERA_PRESETS } from "../src/viewer/presets";
 
 const BASE = process.env.VIEWER_URL ?? "http://localhost:5173";
 const OUT = resolve("playwright/screenshots");
@@ -43,21 +43,24 @@ function stopServer(child: ChildProcess | null): void {
 
 async function main() {
   const wanted = process.argv.slice(2);
-  const presets = wanted.length ? CAMERA_PRESETS.filter((p) => wanted.includes(p.name)) : CAMERA_PRESETS;
-  if (!presets.length) throw new Error(`no preset matches ${wanted.join(", ")}`);
 
   mkdirSync(OUT, { recursive: true });
   const ownServer = (await serverUp()) ? null : await startServer();
   const browser = await chromium.launch({ args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"] });
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   try {
-    for (const p of presets) {
-      await page.goto(`${BASE}/?preset=${p.name}`);
+    await page.goto(`${BASE}/`);
+    await page.waitForFunction(() => (window as Window & { __presets?: string[] }).__presets !== undefined, null, { timeout: 30_000 });
+    const available = (await page.evaluate(() => (window as Window & { __presets?: string[] }).__presets)) ?? [];
+    const presets = wanted.length ? available.filter((n) => wanted.includes(n)) : available;
+    if (!presets.length) throw new Error(`no preset matches ${wanted.join(", ")}; available: ${available.join(", ")}`);
+    for (const name of presets) {
+      await page.goto(`${BASE}/?preset=${name}`);
       await page.waitForFunction(() => (window as Window & { __sceneReady?: boolean }).__sceneReady === true, null, { timeout: 30_000 });
       await page.waitForTimeout(300);
-      const file = resolve(OUT, `${p.name}.png`);
+      const file = resolve(OUT, `${name}.png`);
       await page.screenshot({ path: file });
-      console.log(`${p.name} -> ${file}`);
+      console.log(`${name} -> ${file}`);
     }
   } finally {
     await browser.close();

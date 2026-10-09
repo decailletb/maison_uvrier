@@ -1,18 +1,24 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Grid, OrbitControls } from "@react-three/drei";
 import { useRef } from "react";
-import type { CameraPreset } from "./presets";
+import { FOOTPRINT_CM, levelById } from "@/data/house";
+import { House } from "@/scene/components/House";
+import { CM } from "@/scene/units";
+import type { CameraPreset, LevelMode } from "./presets";
 import { markSceneReady } from "./ready";
+import { WalkControls } from "./WalkControls";
 
-/** Footprint of the villa in metres (1055 x 724 cm), used to size the ground. */
-const FOOTPRINT = { x: 10.55, z: 7.24 };
+export type CameraMode = "orbit" | "walk";
+
+const FOOTPRINT = { x: FOOTPRINT_CM.width * CM, z: FOOTPRINT_CM.depth * CM };
+const EYE_HEIGHT_CM = 160;
 
 function ReadySignal() {
   const frames = useRef(0);
   useFrame(() => {
-    // Two frames so that controls and lights have settled before a screenshot.
+    // A few frames so that controls, lights and labels have settled before a screenshot.
     frames.current += 1;
-    if (frames.current === 2) markSceneReady();
+    if (frames.current === 3) markSceneReady();
   });
   return null;
 }
@@ -20,47 +26,58 @@ function ReadySignal() {
 function Ground() {
   return (
     <group>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[FOOTPRINT.x / 2, -0.001, FOOTPRINT.z / 2]} receiveShadow>
-        <planeGeometry args={[40, 40]} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[FOOTPRINT.x / 2, -3.1, -FOOTPRINT.z / 2]} receiveShadow>
+        <planeGeometry args={[60, 60]} />
         <meshStandardMaterial color="#5f6b5a" />
       </mesh>
       <Grid
-        position={[FOOTPRINT.x / 2, 0, FOOTPRINT.z / 2]}
-        args={[40, 40]}
+        position={[FOOTPRINT.x / 2, -3.09, -FOOTPRINT.z / 2]}
+        args={[60, 60]}
         cellSize={1}
         sectionSize={5}
         cellColor="#8a9a86"
         sectionColor="#d8e3d2"
-        fadeDistance={60}
+        fadeDistance={80}
         infiniteGrid={false}
       />
-      {/* Villa footprint, so the empty scene already shows the house extents. */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[FOOTPRINT.x / 2, 0.002, FOOTPRINT.z / 2]}>
-        <planeGeometry args={[FOOTPRINT.x, FOOTPRINT.z]} />
-        <meshStandardMaterial color="#c9c2b4" />
-      </mesh>
     </group>
   );
 }
 
 export interface ViewerProps {
   preset: CameraPreset;
+  levelMode: LevelMode;
+  cameraMode: CameraMode;
+  showLabels: boolean;
 }
 
-export function Viewer({ preset }: ViewerProps) {
+export function Viewer({ preset, levelMode, cameraMode, showLabels }: ViewerProps) {
+  const walkLevel = levelMode === "all" ? "rez" : levelMode;
+  const eyeHeight = (levelById(walkLevel).floorLevel + EYE_HEIGHT_CM) * CM;
   return (
     <Canvas
       shadows
       dpr={[1, 1.5]}
-      camera={{ position: preset.position, fov: 50, near: 0.05, far: 200 }}
+      camera={{ position: preset.position, fov: 60, near: 0.05, far: 300 }}
       gl={{ antialias: true, powerPreference: "high-performance" }}
       style={{ width: "100%", height: "100%" }}
     >
       <color attach="background" args={["#202830"]} />
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[10, 15, 5]} intensity={1.6} castShadow />
+      <hemisphereLight args={["#dfe8f5", "#5a5243", 0.7]} />
+      <directionalLight
+        position={[6, 18, 12]}
+        intensity={1.8}
+        castShadow
+        shadow-mapSize={[2048, 2048]}
+        shadow-camera-left={-15}
+        shadow-camera-right={15}
+        shadow-camera-top={15}
+        shadow-camera-bottom={-15}
+        shadow-bias={-0.0004}
+      />
       <Ground />
-      <OrbitControls makeDefault target={preset.target} />
+      <House mode={levelMode} showLabels={showLabels} />
+      {cameraMode === "orbit" ? <OrbitControls makeDefault target={preset.target} /> : <WalkControls eyeHeight={eyeHeight} />}
       <ReadySignal />
     </Canvas>
   );

@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { CAMERA_PRESETS, DEFAULT_PRESET, findPreset, presetFromSearch } from "./presets";
+import { pointInPolygon } from "@/data/geometry";
+import { house } from "@/data/house";
+import { CAMERA_PRESETS, DEFAULT_PRESET, findPreset, presetFromSearch, roomEntrance } from "./presets";
 
 describe("camera presets", () => {
   it("have unique names", () => {
@@ -7,14 +9,38 @@ describe("camera presets", () => {
     expect(new Set(names).size).toBe(names.length);
   });
 
-  it("resolve by name", () => {
+  it("cover every level and every room", () => {
+    for (const level of house.levels) {
+      expect(findPreset(`${level.id}-top`)?.level).toBe(level.id);
+      for (const room of level.rooms) {
+        expect(findPreset(room.id)?.level, room.id).toBe(level.id);
+      }
+    }
+    expect(findPreset("sejour-cuisine-2")).toBeDefined();
+  });
+
+  it("start room views inside the room, at eye height", () => {
+    for (const level of house.levels) {
+      for (const room of level.rooms) {
+        const { point } = roomEntrance(room, level);
+        expect(pointInPolygon(point, room.polygon), `${room.id} entrance ${point}`).toBe(true);
+        const preset = findPreset(room.id)!;
+        expect(preset.position[1]).toBeCloseTo((level.floorLevel + 155) / 100, 5);
+      }
+    }
+  });
+
+  it("find doors for the rooms that have one", () => {
+    const etage = house.levels[2];
+    const parents = etage.rooms.find((r) => r.id === "chambre-parents")!;
+    expect(roomEntrance(parents, etage).fromDoor).toBe(true);
+  });
+
+  it("resolve by name and fall back from a query string", () => {
     expect(findPreset("top")?.label).toBe("Vue de dessus");
     expect(findPreset("nope")).toBeUndefined();
     expect(findPreset(null)).toBeUndefined();
-  });
-
-  it("fall back to the default preset from a query string", () => {
-    expect(presetFromSearch("?preset=top").name).toBe("top");
+    expect(presetFromSearch("?preset=rez-top").name).toBe("rez-top");
     expect(presetFromSearch("?preset=unknown")).toBe(DEFAULT_PRESET);
     expect(presetFromSearch("")).toBe(DEFAULT_PRESET);
   });

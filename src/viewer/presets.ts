@@ -1,19 +1,114 @@
 /**
- * Named camera presets. Positions and targets in metres (scene units).
- * Playwright selects one with `?preset=<name>`; the viewer UI lists them.
+ * Named camera presets, generated from the house data. Positions and targets in
+ * metres (scene units). Playwright selects one with `?preset=<name>`; the UI lists
+ * them. Names: `overview`, `top`, `<level>-top`, `<room-id>`, `<room-id>-2`.
  */
+import { distanceToSegment, pointAlong, polygonAreaM2, polygonCentroid } from "@/data/geometry";
+import { FOOTPRINT_CM, house } from "@/data/house";
+import type { Level, LevelId, Point, Room } from "@/data/schema";
+import { planToScene } from "@/scene/units";
+
+export type LevelMode = LevelId | "all";
+
 export interface CameraPreset {
   name: string;
   /** French label shown in the UI. */
   label: string;
   position: [number, number, number];
   target: [number, number, number];
+  /** Level mode to show; `all` for exterior views. */
+  level: LevelMode;
 }
 
-export const CAMERA_PRESETS: readonly CameraPreset[] = [
-  { name: "overview", label: "Vue d'ensemble", position: [14, 10, 14], target: [5.3, 1.5, 3.6] },
-  { name: "top", label: "Vue de dessus", position: [5.3, 25, 3.7], target: [5.3, 0, 3.6] },
-];
+const EYE = 155;
+const LOOK = 120;
+const DOOR_KINDS = new Set(["door", "passage", "slidingDoor", "frenchWindow"]);
+
+function unit(from: Point, to: Point): Point {
+  const dx = to[0] - from[0];
+  const dy = to[1] - from[1];
+  const len = Math.hypot(dx, dy) || 1;
+  return [dx / len, dy / len];
+}
+
+function onBoundary(p: Point, polygon: readonly Point[], tolerance: number): boolean {
+  for (let i = 0; i < polygon.length; i++) {
+    if (distanceToSegment(p, polygon[i], polygon[(i + 1) % polygon.length]) <= tolerance) return true;
+  }
+  return false;
+}
+
+/** Plan point just inside the room at its first door, or at its farthest corner. */
+export function roomEntrance(room: Room, level: Level): { point: Point; fromDoor: boolean } {
+  const centroid = polygonCentroid(room.polygon);
+  for (const opening of level.openings) {
+    if (!DOOR_KINDS.has(opening.kind)) continue;
+    const wall = level.walls.find((w) => w.id === opening.wallId);
+    if (!wall) continue;
+    const mid = pointAlong(wall.points, opening.offset + opening.width / 2).point;
+    if (!onBoundary(mid, room.polygon, wall.thickness / 2 + 6)) continue;
+    const dir = unit(mid, centroid);
+    return { point: [mid[0] + dir[0] * 70, mid[1] + dir[1] * 70], fromDoor: true };
+  }
+  const far = room.polygon.reduce((best, p) =>
+    Math.hypot(p[0] - centroid[0], p[1] - centroid[1]) > Math.hypot(best[0] - centroid[0], best[1] - centroid[1]) ? p : best,
+  );
+  const dir = unit(far, centroid);
+  return { point: [far[0] + dir[0] * 60, far[1] + dir[1] * 60], fromDoor: false };
+}
+
+function roomPresets(room: Room, level: Level): CameraPreset[] {
+  const centroid = polygonCentroid(room.polygon);
+  const { point } = roomEntrance(room, level);
+  const presets: CameraPreset[] = [
+    {
+      name: room.id,
+      label: `${room.name} (${level.name})`,
+      position: planToScene(point, EYE, level.floorLevel),
+      target: planToScene(centroid, LOOK, level.floorLevel),
+      level: level.id,
+    },
+  ];
+  if (polygonAreaM2(room.polygon) >= 20) {
+    // Second angle from the corner opposite the entrance.
+    const opposite: Point = [2 * centroid[0] - point[0], 2 * centroid[1] - point[1]];
+    const dir = unit(opposite, centroid);
+    presets.push({
+      name: `${room.id}-2`,
+      label: `${room.name} — vue 2`,
+      position: planToScene([opposite[0] + dir[0] * 40, opposite[1] + dir[1] * 40], EYE, level.floorLevel),
+      target: planToScene(centroid, LOOK, level.floorLevel),
+      level: level.id,
+    });
+  }
+  return presets;
+}
+
+function levelTop(level: Level): CameraPreset {
+  const centre: Point = [FOOTPRINT_CM.width / 2, FOOTPRINT_CM.depth / 2];
+  const target = planToScene(centre, 0, level.floorLevel);
+  return {
+    name: `${level.id}-top`,
+    label: `${level.name} — dessus`,
+    position: [target[0], target[1] + 16, target[2] + 0.5],
+    target,
+    level: level.id,
+  };
+}
+
+export function buildPresets(): CameraPreset[] {
+  const presets: CameraPreset[] = [
+    { name: "overview", label: "Vue d'ensemble", position: [20, 12, 16], target: [5.3, 2, -3.6], level: "all" },
+    { name: "top", label: "Vue de dessus", position: [5.3, 28, -3.1], target: [5.3, 0, -3.6], level: "all" },
+  ];
+  for (const level of house.levels) {
+    presets.push(levelTop(level));
+    for (const room of level.rooms) presets.push(...roomPresets(room, level));
+  }
+  return presets;
+}
+
+export const CAMERA_PRESETS: readonly CameraPreset[] = buildPresets();
 
 export const DEFAULT_PRESET = CAMERA_PRESETS[0];
 
