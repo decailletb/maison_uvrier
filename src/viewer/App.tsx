@@ -37,6 +37,7 @@ export function App() {
   const initial = useMemo(() => presetFromSearch(window.location.search), []);
   // `?ui=0` hides both panels (screenshots and exports).
   const showUi = useMemo(() => new URLSearchParams(window.location.search).get("ui") !== "0", []);
+  const showStats = useMemo(() => new URLSearchParams(window.location.search).get("stats") === "1", []);
   const [preset, setPreset] = useState<CameraPreset>(initial);
   const [levelMode, setLevelMode] = useState<LevelMode>(initial.level);
   const [cameraMode, setCameraMode] = useState<CameraMode>("orbit");
@@ -111,6 +112,7 @@ export function App() {
         showLabels={showLabels}
         showCeilings={showCeilings}
         sun={sun}
+        showStats={showStats}
       />
       {showUi && <EditorPanel levelMode={levelMode} roomId={preset.roomId} />}
       <div style={{ ...panel, display: showUi ? "grid" : "none" }}>

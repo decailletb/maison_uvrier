@@ -35,7 +35,8 @@ zod 4; Vitest 5; Playwright 1.64 (Chromium, SwiftShader); ESLint 9 flat config.
 | `npm run deco:apply -- <proposal> <room\|all> <theme>` | Proposal JSON → `scenes/<room>-<theme>.json` + `docs/deco-log.md` (the `/deco` skill wraps it) |
 
 Viewer URL options: `?preset=<name>` (camera, level, ceilings), `&scene=<name>` loads
-`scenes/<name>.json`. In dev the browser saves scenes through `PUT /api/scenes/<name>`
+`scenes/<name>.json`, `&ui=0` hides the panels, `&labels=0` the room labels, `&stats=1`
+shows FPS. User documentation (French): `docs/USER-GUIDE.md`. In dev the browser saves scenes through `PUT /api/scenes/<name>`
 (Vite plugin in `scripts/vite-scenes-plugin.ts`); `VIEWER_SCENE=<name>` does the same
 for `npm run screenshots` (`VIEWER_LABELS=0` hides room labels). Screenshots take about a minute each under SwiftShader
 (HDRI prefiltering); the script allows 90 s per shot.

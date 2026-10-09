@@ -36,20 +36,22 @@ export function SceneEnvironment({ sun, hdri = DEFAULT_HDRI }: { sun: SunSetting
   return (
     <>
       {hasHdri ? (
-        <DreiEnvironment files={hdri} background environmentIntensity={0.85} backgroundBlurriness={0} />
+        <DreiEnvironment files={hdri} background environmentIntensity={1.0} backgroundBlurriness={0} />
       ) : (
         <>
           <Sky sunPosition={lightPos} turbidity={6} rayleigh={1.5} />
           <hemisphereLight args={["#cfe0f5", "#6e6a5e", 0.9]} />
         </>
       )}
-      <ambientLight intensity={hasHdri ? 0.35 : 0.4} />
+      <ambientLight intensity={hasHdri ? 0.35 : 0.4} color="#fff6ea" />
+      {/* Warm neutral fill for shaded walls and ceilings, which the blue sky HDRI tints otherwise. */}
+      <hemisphereLight args={["#fff1dd", "#efe4d4", hasHdri ? 0.85 : 0.55]} />
       <directionalLight
         position={lightPos}
         intensity={3.2 * daylight}
         color="#fff4e0"
         castShadow
-        shadow-mapSize={[2048, 2048]}
+        shadow-mapSize={[1536, 1536]}
         shadow-camera-left={-16}
         shadow-camera-right={16}
         shadow-camera-top={16}
@@ -57,7 +59,8 @@ export function SceneEnvironment({ sun, hdri = DEFAULT_HDRI }: { sun: SunSetting
         shadow-camera-near={1}
         shadow-camera-far={150}
         shadow-bias={-0.0003}
-        shadow-normalBias={0.02}
+        shadow-normalBias={0.03}
+        shadow-radius={4}
       />
     </>
   );
