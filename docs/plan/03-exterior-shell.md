@@ -10,4 +10,4 @@ shadows at the real orientation (north = top of the plan sheet, DECISIONS.md).
 - [x] Sky and light: HDRI from Poly Haven via `asset-fetcher` (`assets/hdri/`, served through Vite `publicDir`), fallback to drei `Sky` when the file is missing; directional sun from `sun.ts`, soft shadows; UI: month and hour sliders
 - [x] Exterior presets `sud`, `ouest`, `est`, `aerial` (level `all`, no ceilings)
 - [x] `visual-check`: `sud` / `ouest` / `est` against the house-plans elevation descriptions (pages 6-8), `aerial` and `est` against IMG_5497 and IMG_5510
-- [ ] Gates green, PR, squash-merge, STATE.md, next phase branch
+- [x] Gates green, PR, squash-merge, STATE.md, next phase branch
