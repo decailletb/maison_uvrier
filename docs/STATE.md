@@ -1,24 +1,24 @@
-# État du projet — mis à jour 2026-10-09T15:50+01:00
+# État du projet — mis à jour 2026-10-09T16:25+01:00
 
-Session 1 démarrée le 2026-10-09 à 13:54. Phases 0 à 3 fusionnées (PR #1 à #4).
+Session 1 démarrée le 2026-10-09 à 13:54. Phases 0 à 4a fusionnées (PR #1 à #5).
 
 ## Phase en cours
-Phase 4a — Catalogue (`feat/furniture-catalogue`), PR en cours de fusion. Plan : `docs/plan/04-catalogue.md`.
+Phase 4b — Édition de scène (`feat/scene-editing`), en fin de phase. Plan : `docs/plan/05-scene-editing.md`.
 
 ## Fait (dernières étapes, 5 max)
-- Schéma du manifeste, bibliothèque de matériaux (ids stables), 13 meubles procéduraux, chargeur glTF normalisé en cm.
-- 4 modèles CC0 Poly Haven (2 canapés, fauteuil, table) ; `npm run assets:fetch` restaure les glTF multi-fichiers.
-- Preset `catalogue` vérifié par `visual-check` (pièces reconnaissables, modèles texturés, rien ne flotte).
-- 58 tests unitaires, 2 e2e, portes vertes.
+- Éditeur complet : sélection, glisser, aimantation, finitions par pièce, annuler/rétablir, enregistrement dans `scenes/`.
+- `scenes/base.json` : séjour-cuisine et chambre parents meublés ; `visual-check` : tous les objets reconnaissables, aucun ne flotte ni ne traverse un mur.
+- `?ui=0` masque les panneaux ; les captures l'utilisent. Preset `<pièce>-3` (diagonale retour).
+- 67 tests unitaires, 4 e2e (fumée + édition : placer, déplacer, enregistrer, charger).
 
 ## En cours (étape exacte, fichier, ce qui reste)
-Fusion de la PR, puis phase 4b `feat/scene-editing` (plan `docs/plan/05-scene-editing.md`).
+`build-check` (toutes les portes) en cours ; puis PR `feat/scene-editing`, squash-merge.
 
 ## Prochaine étape (une ligne : la première action de la prochaine session)
-`gh pr list` ; si `feat/furniture-catalogue` est fusionnée, créer `feat/scene-editing` et écrire `docs/plan/05-scene-editing.md`.
+Si la PR n'est pas fusionnée : `gh pr list`, `build-check`, merge ; puis `feat/deco-workflow` et `docs/plan/06-deco-workflow.md`.
 
 ## Bloqué / questions pour Benjamin
-Aucune. Les canapés Poly Haven sont de style ancien (cuir capitonné) ; le canapé moderne reste procédural tant qu'aucun modèle CC0 moderne n'est trouvé.
+Aucune. À polir en phase 6 : cadrage des presets de pièce (trop serrés dans les petites pièces), teinte du parquet.
 
 ## Branche active, dernier commit, PR ouverte
-Branche `feat/furniture-catalogue`.
+Branche `feat/scene-editing`, pas encore de PR.

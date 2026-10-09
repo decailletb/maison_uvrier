@@ -24,7 +24,7 @@ const defs: MaterialDef[] = [
   { id: "tile-light", kind: "floor", label: "Carrelage clair", color: "#d9d4cc", roughness: 0.35, tile: 0.6, grout: "#b9b3a8" },
   { id: "tile-grey", kind: "floor", label: "Carrelage gris pierre", color: "#9c9a95", roughness: 0.4, tile: 0.6, grout: "#7f7d78" },
   { id: "tile-white", kind: "floor", label: "Carrelage blanc", color: "#ebe9e4", roughness: 0.3, tile: 0.6, grout: "#cfccc5" },
-  { id: "parquet-oak", kind: "floor", label: "Parquet chêne clair", color: "#c9a06a", roughness: 0.55, tile: 0.2, grout: "#b08a58" },
+  { id: "parquet-oak", kind: "floor", label: "Parquet chêne clair", color: "#b9a080", roughness: 0.6, tile: 0.2, grout: "#a08a6c" },
   { id: "parquet-walnut", kind: "floor", label: "Parquet noyer foncé", color: "#6f4a30", roughness: 0.55, tile: 0.2, grout: "#5a3a24" },
   { id: "laminate-grey", kind: "floor", label: "Stratifié gris-brun", color: "#9a8a7a", roughness: 0.5, tile: 0.2, grout: "#857664" },
   { id: "concrete-raw", kind: "floor", label: "Béton brut", color: "#a8a6a1", roughness: 0.9 },

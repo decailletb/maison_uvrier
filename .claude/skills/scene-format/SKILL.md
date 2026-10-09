@@ -55,30 +55,40 @@ its first point to the opening's near edge.
 
 ## Scene file (`scenes/<name>.json`)
 
-The single source of truth for furniture and finishes; `/deco` edits it and the viewer
-loads it.
+The single source of truth for furniture and finishes; the editor and `/deco` write
+it, the viewer loads it with `?scene=<name>`. Zod schema: `src/scene/sceneFile.ts`.
+In dev the Vite plugin `scripts/vite-scenes-plugin.ts` serves `GET /api/scenes`,
+`GET|PUT /api/scenes/<name>`, so the browser writes straight into `scenes/`.
 
 ```
 Scene {
   version: 1
   name: string
-  base?: string                            // another scene this one started from
+  base?: string                            // scene this one started from
   roomFinishes: { [roomId]: { floor?: MaterialId, wall?: MaterialId, ceiling?: MaterialId } }
   items: SceneItem[]
 }
 SceneItem {
-  id: string                               // unique in the scene
-  asset: AssetId | { procedural: ProceduralKind, params: {...} }
+  id: string                               // kebab-case, unique in the scene
+  asset: AssetId | { procedural: ProceduralKind, params: { w?, d?, h?, material?, accent? } }
+  levelId: "sous-sol" | "rez" | "etage"
   roomId: string
-  position: [x, y, z]                      // cm, plan coordinates, y = height above floor
-  rotationY: number                        // degrees, 0 = asset front facing plan −y
+  position: [x, y, z]                      // plan cm; z = height above the level floor
+  rotationY: number                        // degrees, 0 = front toward plan −y (south); 90 = front toward +x (east)
   scale?: number                           // uniform, default 1
-  materialOverrides?: { [slot]: MaterialId }
+  materialOverrides?: { material?: MaterialId, accent?: MaterialId }   // procedural items
 }
 ```
 
-Procedural kinds (phase 4): `bed`, `table`, `chair`, `sofa`, `wardrobe`, `shelf`,
-`desk`, `kitchenBlock`, `rug`, `lamp`.
+Procedural kinds (`src/catalogue/procedural.ts`): `bed`, `nightstand`, `wardrobe`,
+`dresser`, `table`, `chair`, `sofa`, `coffeeTable`, `shelf`, `desk`, `kitchenBlock`,
+`rug`, `lamp`. Their origin is on the floor at the centre of the footprint; the
+headboard / backrest is at the back. Material ids come from
+`src/catalogue/materials.ts` (`tile-light`, `parquet-oak`, `paint-white`,
+`fabric-navy`, `wood-white`, `metal-black`, `stone-black`, …); `materialForFinish`
+maps the finishes printed on the plans to ids. Placement helpers
+(`src/scene/placement.ts`): `roomAt`, `snapGrid` (5 cm), `snapToWall` (pushes the back
+of an item against the nearest wall and turns it), `itemFootprint`.
 
 ## Catalogue manifest (`assets/manifest.json`)
 
@@ -87,8 +97,9 @@ Procedural kinds (phase 4): `bed`, `table`, `chair`, `sofa`, `wardrobe`, `shelf`
 AssetEntry {
   id: string                 // kebab-case, unique, e.g. "sofa-modern-3seat"
   category: Category
-  file: string               // relative to assets/, e.g. "models/sofa-modern-3seat/model.glb"
-  url: string                // direct download URL used by scripts/fetch-assets.ts
+  file: string               // relative to assets/, e.g. "models/sofa_02/sofa_02_1k.gltf"
+  files?: string[]           // every file of a multi-file glTF, relative to assets/ (restored by scripts/fetch-assets.ts through the Poly Haven include map)
+  url: string                // direct download URL of `file`
   source: "polyhaven" | "ambientcg" | "kenney" | "sketchfab"
   license: "CC0-1.0"
   dimensionsCm?: { w, d, h } // models only, after unit normalisation
@@ -134,6 +145,8 @@ Defined in `src/viewer/presets.ts`, selected with `?preset=<name>`, one PNG each
 - Per level (phase 2): `<level>-top` (cut-away ceiling, from above), e.g. `rez-top`.
 - Per room (phase 2): `<room-id>` from the doorway, `<room-id>-2` for a second angle
   when a photo exists from a different viewpoint.
-- Exterior (phase 3): `sud`, `ouest`, `est`, `aerial`.
+- Exterior: `sud`, `ouest`, `est`, `aerial` (labels off). `catalogue` shows the showcase
+  instead of the house.
+- `npm run screenshots -- <presets>` with `VIEWER_SCENE=<name>` loads `scenes/<name>.json`.
 
 Keep this list in sync when adding presets.

@@ -31,7 +31,13 @@ zod 4; Vitest 5; Playwright 1.64 (Chromium, SwiftShader); ESLint 9 flat config.
 | `npm run test:e2e` | Playwright smoke test (`e2e/`), starts its own dev server |
 | `npm run build` | tsc + vite build to `dist/` |
 | `npm run screenshots -- [preset ...]` | One PNG per camera preset in `playwright/screenshots/` |
-| `npm run assets:fetch` | Download missing CC0 assets listed in `assets/manifest.json` |
+| `npm run assets:fetch` | Download missing CC0 assets listed in `assets/manifest.json` (multi-file glTF included) |
+
+Viewer URL options: `?preset=<name>` (camera, level, ceilings), `&scene=<name>` loads
+`scenes/<name>.json`. In dev the browser saves scenes through `PUT /api/scenes/<name>`
+(Vite plugin in `scripts/vite-scenes-plugin.ts`); `VIEWER_SCENE=<name>` does the same
+for `npm run screenshots`. Screenshots take about a minute each under SwiftShader
+(HDRI prefiltering); the script allows 90 s per shot.
 
 Run gates through the `build-check` agent, never inline. "All gates" = typecheck,
 lint, test, build, test:e2e.
@@ -42,9 +48,9 @@ lint, test, build, test:e2e.
 src/data       house schema (zod) and house/<level>.json in cm
 src/scene      geometry generation from the data (walls, floors, openings)
 src/viewer     React UI, Canvas, cameras, presets.ts (?preset=<name>)
-src/catalogue  asset loader, procedural furniture, materials
+src/catalogue  manifest schema, material library, procedural furniture, glTF loader
 assets/        CC0 models/textures/HDRI (git-ignored) + manifest.json
-scenes/        scene JSON files (furniture + finishes), single source of truth
+scenes/        scene JSON files (furniture + finishes), single source of truth; base.json
 inspiration/   decoration images dropped by Benjamin, proposals next to them
 scripts/       screenshots.ts, fetch-assets.ts (tsx)
 e2e/           Playwright specs

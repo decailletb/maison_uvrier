@@ -142,6 +142,15 @@ function roomPresets(room: Room, level: Level): CameraPreset[] {
       roomId: room.id,
     },
   ];
+  // Reverse diagonal: from the far corner back toward the entrance corner.
+  presets.push({
+    name: `${room.id}-3`,
+    label: `${room.name} — retour`,
+    position: planToScene(corner.target, EYE, level.floorLevel),
+    target: planToScene(corner.position, cornerLook, level.floorLevel),
+    level: level.id,
+    roomId: room.id,
+  });
   const [glazing] = roomGlazing(room, level);
   if (glazing) {
     // Second angle: from the far side of the room toward its widest window or bay,
