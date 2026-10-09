@@ -1,0 +1,478 @@
+{
+  "id": "rez",
+  "name": "REZ DE CHAUSSEE",
+  "floorLevel": 0,
+  "clearHeight": 250,
+  "slabThickness": 22,
+  "planPage": 4,
+  "walls": [
+    {
+      "id": "ext-south",
+      "points": [
+        [
+          20,
+          15
+        ],
+        [
+          1040,
+          15
+        ]
+      ],
+      "thickness": 30,
+      "structural": true,
+      "exterior": true,
+      "estimated": true,
+      "note": "Thickness estimated from the plan (printed layers: brique ciment 8 + vide 1 + isolation 14 + beton 18 = 41 on the south side)."
+    },
+    {
+      "id": "ext-east",
+      "points": [
+        [
+          1040,
+          15
+        ],
+        [
+          1040,
+          707.5
+        ]
+      ],
+      "thickness": 30,
+      "structural": true,
+      "exterior": true,
+      "estimated": true,
+      "note": "Entry door side (elevation EST). Thickness estimated."
+    },
+    {
+      "id": "ext-north",
+      "points": [
+        [
+          20,
+          707.5
+        ],
+        [
+          1040,
+          707.5
+        ]
+      ],
+      "thickness": 33,
+      "structural": true,
+      "exterior": true,
+      "estimated": true,
+      "note": "Looks like the party wall of the twin villa (thick, green isolation phonique 4 cm line, no openings). Top of sheet is cropped; thickness deduced from sejour 662 depth."
+    },
+    {
+      "id": "ext-west",
+      "points": [
+        [
+          20,
+          15
+        ],
+        [
+          20,
+          707.5
+        ]
+      ],
+      "thickness": 40,
+      "structural": true,
+      "exterior": true,
+      "estimated": true,
+      "note": "Garden side with terrasse (elevation OUEST). Layers alba 6 + vide 1 + isolation 16 + beton 18 = 41."
+    },
+    {
+      "id": "wall-stair-west",
+      "points": [
+        [
+          430,
+          30
+        ],
+        [
+          430,
+          258
+        ]
+      ],
+      "thickness": 20,
+      "structural": true,
+      "exterior": false,
+      "estimated": true
+    },
+    {
+      "id": "wall-stair-east",
+      "points": [
+        [
+          648,
+          30
+        ],
+        [
+          648,
+          258
+        ]
+      ],
+      "thickness": 16,
+      "structural": true,
+      "exterior": false,
+      "estimated": true
+    },
+    {
+      "id": "wall-reduit-wc",
+      "points": [
+        [
+          869.5,
+          30
+        ],
+        [
+          869.5,
+          243.5
+        ]
+      ],
+      "thickness": 13,
+      "structural": false,
+      "exterior": false,
+      "estimated": true
+    },
+    {
+      "id": "wall-block-north",
+      "points": [
+        [
+          656,
+          250.75
+        ],
+        [
+          1025,
+          250.75
+        ]
+      ],
+      "thickness": 14.5,
+      "structural": false,
+      "exterior": false,
+      "estimated": true,
+      "note": "North wall of reduit and WC, with their two doors."
+    },
+    {
+      "id": "wall-stair-north",
+      "points": [
+        [
+          430,
+          258
+        ],
+        [
+          648,
+          258
+        ]
+      ],
+      "thickness": 14,
+      "structural": false,
+      "exterior": false,
+      "estimated": true,
+      "note": "Head of the stair to the sous-sol; 'porte peinte' drawn at x 540-630 (plans-reader, measured)."
+    }
+  ],
+  "rooms": [
+    {
+      "id": "sejour-cuisine",
+      "name": "SEJOUR - CUISINE",
+      "polygon": [
+        [
+          40,
+          30
+        ],
+        [
+          420,
+          30
+        ],
+        [
+          420,
+          258
+        ],
+        [
+          656,
+          258
+        ],
+        [
+          656,
+          379
+        ],
+        [
+          1025,
+          379
+        ],
+        [
+          1025,
+          691
+        ],
+        [
+          40,
+          691
+        ]
+      ],
+      "printedArea": 46.62,
+      "floorFinish": "carrelage",
+      "wallFinish": "crépis",
+      "ceilingFinish": "dispersion",
+      "estimated": true,
+      "note": "Open plan; sejour 676 x 662 and kitchen along the east wall. Polygon deduced from printed chains (367, 676, 295, 392). Open to the entree (no wall drawn)."
+    },
+    {
+      "id": "entree",
+      "name": "ENTREE",
+      "polygon": [
+        [
+          656,
+          258
+        ],
+        [
+          1025,
+          258
+        ],
+        [
+          1025,
+          379
+        ],
+        [
+          656,
+          379
+        ]
+      ],
+      "printedArea": 4.46,
+      "floorFinish": "carrelage",
+      "wallFinish": "crépis",
+      "ceilingFinish": "dispersion",
+      "estimated": true,
+      "note": "North edge y=258 from wall; south edge y=379 deduced from printed area (open to sejour)."
+    },
+    {
+      "id": "wc",
+      "name": "WC",
+      "polygon": [
+        [
+          876,
+          30
+        ],
+        [
+          1025,
+          30
+        ],
+        [
+          1025,
+          243.5
+        ],
+        [
+          876,
+          243.5
+        ]
+      ],
+      "printedArea": 3.23,
+      "floorFinish": "carrelage",
+      "wallFinish": "carrelage",
+      "ceilingFinish": "dispersion"
+    },
+    {
+      "id": "reduit",
+      "name": "REDUIT",
+      "polygon": [
+        [
+          656,
+          30
+        ],
+        [
+          863,
+          30
+        ],
+        [
+          863,
+          243.5
+        ],
+        [
+          656,
+          243.5
+        ]
+      ],
+      "printedArea": 4.42,
+      "floorFinish": "carrelage",
+      "wallFinish": "crépis",
+      "ceilingFinish": "dispersion"
+    },
+    {
+      "id": "terrasse",
+      "name": "TERRASSE",
+      "polygon": [
+        [
+          -250,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          724
+        ],
+        [
+          -250,
+          724
+        ]
+      ],
+      "printedArea": 18.95,
+      "floorFinish": "béton brut",
+      "wallFinish": "crépis",
+      "ceilingFinish": "glacis béton",
+      "estimated": true,
+      "note": "Outside the heated footprint, west of ext-west, depth 250. Y extent estimated (printed 18.95 m2 would need about 758 cm); level -0.17."
+    },
+    {
+      "id": "couvert",
+      "name": "COUVERT",
+      "polygon": [
+        [
+          1055,
+          270
+        ],
+        [
+          1555,
+          270
+        ],
+        [
+          1555,
+          720
+        ],
+        [
+          1055,
+          720
+        ]
+      ],
+      "printedArea": 22.5,
+      "floorFinish": "goudron",
+      "wallFinish": "crépis",
+      "ceilingFinish": "glacis béton",
+      "estimated": true,
+      "note": "Outside the footprint, east of ext-east, depth 500 x 450 = 22.50 m2. Y position estimated."
+    }
+  ],
+  "openings": [
+    {
+      "id": "op-005-fixed-west",
+      "kind": "window",
+      "wallId": "ext-west",
+      "offset": 491,
+      "width": 150,
+      "height": 210,
+      "sill": 0,
+      "swing": "none",
+      "ref": "005",
+      "note": "Fixed window, seuil granit, store a lamelles electrique.",
+      "estimated": true
+    },
+    {
+      "id": "op-006-sliding-west",
+      "kind": "slidingDoor",
+      "wallId": "ext-west",
+      "offset": 60,
+      "width": 320,
+      "height": 212,
+      "sill": 0,
+      "swing": "sliding",
+      "ref": "006",
+      "note": "Coulissante type GU, store a lamelles electrique."
+    },
+    {
+      "id": "op-001-window-east",
+      "kind": "window",
+      "wallId": "ext-east",
+      "offset": 70,
+      "width": 60,
+      "height": 80,
+      "sill": 130,
+      "swing": "none",
+      "ref": "001",
+      "note": "WC, verre Satinato, tablette granit. Sill 130 deduced from cc+1.30.",
+      "estimated": true
+    },
+    {
+      "id": "op-002-door-east",
+      "kind": "door",
+      "wallId": "ext-east",
+      "offset": 265,
+      "width": 90,
+      "height": 206,
+      "sill": 0,
+      "ref": "002",
+      "note": "Entry door, 3 narrow vertical glazings.",
+      "estimated": true
+    },
+    {
+      "id": "op-003-window-east",
+      "kind": "window",
+      "wallId": "ext-east",
+      "offset": 520,
+      "width": 120,
+      "height": 80,
+      "sill": 130,
+      "swing": "none",
+      "ref": "003",
+      "note": "Kitchen, tablette granit, store a lamelles.",
+      "estimated": true
+    },
+    {
+      "id": "door-reduit",
+      "kind": "door",
+      "wallId": "wall-block-north",
+      "offset": 15,
+      "width": 70,
+      "height": 200,
+      "sill": 0,
+      "note": "porte peinte",
+      "estimated": true
+    },
+    {
+      "id": "door-wc",
+      "kind": "door",
+      "wallId": "wall-block-north",
+      "offset": 274,
+      "width": 80,
+      "height": 200,
+      "sill": 0,
+      "note": "porte peinte",
+      "estimated": true
+    },
+    {
+      "id": "door-stair-sous-sol",
+      "kind": "door",
+      "wallId": "wall-stair-north",
+      "offset": 110,
+      "width": 90,
+      "height": 200,
+      "sill": 0,
+      "swing": "none",
+      "estimated": true,
+      "note": "Porte peinte at the head of the sous-sol stair, position measured on the render."
+    }
+  ],
+  "stairs": [
+    {
+      "id": "stair-etage",
+      "polygon": [
+        [
+          440,
+          30
+        ],
+        [
+          640,
+          30
+        ],
+        [
+          640,
+          258
+        ],
+        [
+          440,
+          258
+        ]
+      ],
+      "risers": 19,
+      "direction": "up",
+      "toLevel": "etage",
+      "estimated": true,
+      "note": "Winder flight, steps numbered 7 to 19 on this plan. Access to the sous-sol stair (porte peinte) is at the top of this well and is not drawn separately."
+    }
+  ]
+}

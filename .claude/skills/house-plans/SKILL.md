@@ -15,7 +15,7 @@ une seule page ou une seule photo à l'agent `plans-reader`, jamais le PDF entie
 | Niveau | Niveau fini | Locaux (m²) |
 |---|---|---|
 | Sous-sol | −2.86 | Disponible 38.46 · Cave 12.52 · Technique-buanderie 13.94 |
-| Rez | ±0.00 (alt. 497.72) | Séjour-cuisine 46.62 · Entrée 4.46 · WC 3.23 · Réduit 4.42 · local tronqué 3.35 · Terrasse 18.95 · Couvert 22.50 |
+| Rez | ±0.00 (alt. 497.72) | Séjour-cuisine 46.62 · Entrée 4.46 · WC 3.23 · Réduit 4.42 · Terrasse 18.95 · Couvert 22.50 (la cartouche « 3.35 m2 » en marge appartient à la villa voisine) |
 | Étage | +2.85 | Chambre parents 10.85 · Chambre 2 11.24 · Chambre 3 11.18 · Dressing 8.05 · Douche 5.61 · Hall 3.76 · Salle de bains (sans cartouche) · Balcon 14.98 |
 
 Emprise villa 1055 × 724 cm, hauteur libre 250 (240 au sous-sol), acrotère +6.06.
@@ -67,7 +67,8 @@ Contexte : projet « CONSTRUCTION DE 6 VILLAS JUMELLES », commune d'UVRIER, par
   - ENTREE : 4.46 m2 ; carrelage ; crépis ; dispersion.
   - WC : 3.23 m2 ; carrelage / carrelage ; dispersion ; lavabo SANEO HARMONY FORM 62X15X50 CM, WC suspendu.
   - REDUIT : 4.42 m2 ; carrelage ; crépis ; dispersion.
-  - Un local en haut à droite : surface partiellement coupée « 3.35 m2 » (sol carrelage, parois crépis, plafond dispersion) ; nom non lisible (page tronquée).
+  - La cartouche « 3.35 m2 » (carrelage / crépis / dispersion) est dans la marge droite, au-dessus de COUVERT, hors de l'emprise de la villa F (x ≈ 1470, y ≈ 745-800 cm) ; elle concerne probablement un local de la villa voisine au nord (bac douche 90x90x3 visible au-dessus du mur mitoyen) ; nom coupé par la feuille.
+  - Mur mitoyen avec isolation phonique (vert) = côté haut de la feuille (nord de la feuille, y = 724). Escalier x ≈ 415-640, y ≈ 20-270 cm contre le mur bas (sud de la feuille), « porte peinte » en tête de la volée vers le sous-sol (x ≈ 540-630, y ≈ 270). Entrée ouverte sur le séjour (pas de cloison dessinée). Terrasse côté gauche (x < 0), couvert côté droit (x > 1055).
   - Escalier vers l'étage et vers le sous-sol ; coffret alu UP 85x80x23 mm.
 - Fenêtres/portes : stores à lamelles, tablettes granit, seuils granit (repères 001 à 006), coulissante type GU côté séjour.
 
@@ -151,7 +152,7 @@ Hypothèses de lecture, non vérifiées (les photos n'indiquent pas de quelle vi
 - Le PDF n'a pas de couche texte hors page 2 ; les pages ont été rendues en PNG (PyMuPDF, 110 dpi) puis lues visuellement. Petits textes, cotes secondaires et repères de menuiserie peuvent être mal lus.
 - Page 1 : cotes de hauteur (725 / 362.5 / 4365) et noms exacts des villas sur l'axe vertical difficiles à lire.
 - Page 2 : « Palier entrée 142.44 x 0.18 = 1.00 m3 » reproduit tel que lu, arithmétiquement incohérent.
-- Page 4 : le local en haut à droite (3.35 m2) est tronqué, nom illisible. Les pages 3 à 5 sont recadrées en haut, donc la partie arrière de la villa n'est pas entièrement visible.
+- Page 4 : la cartouche 3.35 m2 appartient probablement à la villa voisine. Les pages 3 à 5 sont recadrées en haut (côté mur mitoyen) ; le haut de la feuille montre le début de la villa voisine.
 - Aucune flèche nord repérée sur aucune page ; l'orientation se déduit seulement des titres d'élévation (Sud, Ouest, Est).
 - Plans détaillés : villa F (p.3-8) et villa B (p.9). On ignore de quelle villa sont les photos.
 - Les photos montrent du sol d'aspect bois et du grand carrelage ; les cartouches de plan indiquent « carrelage » pour presque tous les sols : écart non élucidé (finitions peut-être modifiées).
