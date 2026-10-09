@@ -83,7 +83,7 @@ export function matchFurniture(item: ProposalFurniture): Match {
     params: {
       ...(scaled ? { w: scaled.w, d: scaled.d, h: scaled.h } : {}),
       material: nearestMaterial(kinds.main, item.colour).id,
-      accent: nearestMaterial(kinds.accent, undefined).id,
+      accent: nearestMaterial(kinds.accent, kinds.accent === "wood" ? item.colour : undefined).id,
     },
   };
 }

@@ -31,3 +31,6 @@ not repeated here.
 | 2026-10-09 | Editor state in zustand with whole-scene snapshots for undo / redo (50 steps) | Scenes are small; snapshots are simpler and safer than inverse operations. |
 | 2026-10-09 | Room wall finishes apply to partitions and to a 1 cm inner skin on exterior walls; the façade keeps its render colour | One box per wall piece cannot carry two materials; the skin follows the opening cut-outs for free. |
 | 2026-10-09 | `?ui=0` hides the panels; the screenshot script always uses it | Panels were covering a quarter of every verification shot. |
+| 2026-10-09 | /deco: the vision step is the only agent call; matching and layout are deterministic code (`src/deco/`) driven by placement hints (window, cardinal walls, far wall, centre, corner, beside / in front of) | Reproducible, unit-testable, and the proposal JSON stays editable by hand between two runs. |
+| 2026-10-09 | Ceiling pendants are skipped by `/deco` (logged), not turned into floor lamps | No ceiling fixture geometry yet; a floor lamp in the room centre was worse than nothing. |
+| 2026-10-09 | Parquet materials are plank textures (120 × 18 cm, staggered); tiles stay square | Square tiles read as tiles even when brown. |
