@@ -1,24 +1,25 @@
-# État du projet — mis à jour 2026-10-09T15:50+01:00
+# État du projet — mis à jour 2026-10-09T16:15+01:00
 
-Session 1 démarrée le 2026-10-09 à 13:54. Phases 0 à 3 fusionnées (PR #1 à #4).
+Session 1 démarrée le 2026-10-09 à 13:54. Phases 0 à 4a fusionnées (PR #1 à #5).
 
 ## Phase en cours
-Phase 4a — Catalogue (`feat/furniture-catalogue`), PR en cours de fusion. Plan : `docs/plan/04-catalogue.md`.
+Phase 4b — Édition de scène (`feat/scene-editing`). Plan : `docs/plan/05-scene-editing.md`.
 
 ## Fait (dernières étapes, 5 max)
-- Schéma du manifeste, bibliothèque de matériaux (ids stables), 13 meubles procéduraux, chargeur glTF normalisé en cm.
-- 4 modèles CC0 Poly Haven (2 canapés, fauteuil, table) ; `npm run assets:fetch` restaure les glTF multi-fichiers.
-- Preset `catalogue` vérifié par `visual-check` (pièces reconnaissables, modèles texturés, rien ne flotte).
-- 58 tests unitaires, 2 e2e, portes vertes.
+- Schéma `Scene` (zod), helpers de placement (pièce, grille, aimantation aux murs), store zustand avec annuler/rétablir.
+- API dev `GET/PUT /api/scenes/:name` (plugin Vite) : le navigateur écrit `scenes/<nom>.json` ; `?scene=<nom>` charge au démarrage.
+- Meubles de la scène rendus (modèle ou paramétrique), sélection, glisser sur le sol, finitions par pièce (sol, murs, plafond).
+- Panneau éditeur en français ; raccourcis Suppr / Ctrl+Z / Ctrl+Y / Ctrl+S / R.
+- `scenes/base.json` (séjour-cuisine + chambre parents meublés) ; 67 tests unitaires, 4 e2e verts.
 
 ## En cours (étape exacte, fichier, ce qui reste)
-Fusion de la PR, puis phase 4b `feat/scene-editing` (plan `docs/plan/05-scene-editing.md`).
+`visual-check` de `scenes/base.json` (séjour, chambre parents, vues de dessus) ; corrections de placement ; portes ; PR.
 
 ## Prochaine étape (une ligne : la première action de la prochaine session)
-`gh pr list` ; si `feat/furniture-catalogue` est fusionnée, créer `feat/scene-editing` et écrire `docs/plan/05-scene-editing.md`.
+Lire le verdict `visual-check` (ou relancer `VIEWER_SCENE=base npm run screenshots -- sejour-cuisine-2 chambre-parents-2`), corriger `scenes/base.json`, `build-check`, PR `feat/scene-editing`.
 
 ## Bloqué / questions pour Benjamin
-Aucune. Les canapés Poly Haven sont de style ancien (cuir capitonné) ; le canapé moderne reste procédural tant qu'aucun modèle CC0 moderne n'est trouvé.
+Aucune.
 
 ## Branche active, dernier commit, PR ouverte
-Branche `feat/furniture-catalogue`.
+Branche `feat/scene-editing`, pas de PR.
