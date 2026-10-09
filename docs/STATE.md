@@ -1,25 +1,24 @@
-# État du projet — mis à jour 2026-10-09T15:12+01:00
+# État du projet — mis à jour 2026-10-09T15:35+01:00
 
 Session 1 démarrée le 2026-10-09 à 13:54. Phases 0, 1, 2 fusionnées (PR #1, #2, #3).
 
 ## Phase en cours
-Phase 3 — Enveloppe extérieure et lumière (`feat/exterior-shell`). Plan : `docs/plan/03-exterior-shell.md`.
+Phase 3 — Enveloppe extérieure et lumière (`feat/exterior-shell`), en fin de phase.
 
 ## Fait (dernières étapes, 5 max)
-- Modèle solaire Uvrier (`src/scene/sun.ts`) + tests ; curseurs mois / heure dans l'UI.
-- Enveloppe : terrasse, couvert et son toit sur poteaux, balcon + balustrade vitrée + couvert balcon, toiture + acrotère (`src/scene/shell.ts`).
-- Vitrages et cadres dans les ouvertures, vantail de la porte d'entrée.
-- HDRI CC0 Poly Haven dans `assets/hdri/` (manifeste), servi via `publicDir`, repli `Sky`.
-- Presets `sud`, `ouest`, `est`, `aerial` ; 52 tests unitaires, 2 e2e verts.
+- Enveloppe complète (terrasse, couvert sur poteaux, balcon + balustrade + couvert balcon, toiture + acrotère), vitrages, porte d'entrée.
+- Ciel HDRI CC0 + repli `Sky`, soleil réel (modèle NOAA, curseurs mois/heure), ombres.
+- Presets extérieurs `sud ouest est aerial` ; `visual-check` PASS sur les quatre (massing, ouvertures, balcon, couvert, ciel, ombres).
+- Captures headless fiabilisées (`preserveDrawingBuffer`), verre simple, sol 400 m sans grille.
 
 ## En cours (étape exacte, fichier, ce qui reste)
-`visual-check` des presets extérieurs contre les élévations et IMG_5497 / IMG_5510 ; corrections ; portes ; PR.
+`build-check` (toutes les portes) en cours ; puis PR `feat/exterior-shell` et squash-merge.
 
 ## Prochaine étape (une ligne : la première action de la prochaine session)
-Relancer `visual-check` sur `sud ouest est aerial` si son verdict n'est pas dans le log ; corriger ; `build-check` ; PR `feat/exterior-shell`.
+Si la PR n'est pas fusionnée : `gh pr list`, `build-check`, merge ; puis `feat/furniture-catalogue` et `docs/plan/04-catalogue.md`.
 
 ## Bloqué / questions pour Benjamin
-Aucune. Estimations : nombre de poteaux du couvert, hauteur de l'acrotère (DECISIONS.md).
+Aucune. Note : façade ouest sombre à 15 h en juin (soleil au sud-ouest, incidence rasante) ; à revoir en phase 6.
 
 ## Branche active, dernier commit, PR ouverte
-Branche `feat/exterior-shell`, pas de PR.
+Branche `feat/exterior-shell`, pas encore de PR.
