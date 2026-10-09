@@ -57,7 +57,7 @@ async function main() {
     if (!presets.length) throw new Error(`no preset matches ${wanted.join(", ")}; available: ${available.join(", ")}`);
     for (const name of presets) {
       const scene = process.env.VIEWER_SCENE ? `&scene=${process.env.VIEWER_SCENE}` : "";
-      await page.goto(`${BASE}/?preset=${name}${scene}`);
+      await page.goto(`${BASE}/?preset=${name}${scene}&ui=0`);
       await page.waitForFunction(() => (window as Window & { __sceneReady?: boolean }).__sceneReady === true, null, { timeout: 90_000 });
       await page.waitForTimeout(500);
       const file = resolve(OUT, `${name}.png`);

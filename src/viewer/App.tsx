@@ -35,6 +35,8 @@ const panel: React.CSSProperties = {
 
 export function App() {
   const initial = useMemo(() => presetFromSearch(window.location.search), []);
+  // `?ui=0` hides both panels (screenshots and exports).
+  const showUi = useMemo(() => new URLSearchParams(window.location.search).get("ui") !== "0", []);
   const [preset, setPreset] = useState<CameraPreset>(initial);
   const [levelMode, setLevelMode] = useState<LevelMode>(initial.level);
   const [cameraMode, setCameraMode] = useState<CameraMode>("orbit");
@@ -110,8 +112,8 @@ export function App() {
         showCeilings={showCeilings}
         sun={sun}
       />
-      <EditorPanel levelMode={levelMode} roomId={preset.roomId} />
-      <div style={panel}>
+      {showUi && <EditorPanel levelMode={levelMode} roomId={preset.roomId} />}
+      <div style={{ ...panel, display: showUi ? "grid" : "none" }}>
         <div style={{ fontWeight: 600 }}>Villa F « LACAPELA »</div>
         <label>
           Vue{" "}

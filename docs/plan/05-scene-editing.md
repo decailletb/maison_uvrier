@@ -16,6 +16,6 @@ the browser writes straight into `scenes/`; pure placement helpers
 - [x] `src/scene/components/SceneItems.tsx`: items rendered from the catalogue (model or procedural) with material overrides, click to select, drag on the floor plane, selection outline
 - [x] Room finishes applied: floor, ceiling and bordering walls take `roomFinishes[room]` materials
 - [x] Editor panel (French): scene select / save / save as / export PNG, add item (kind or model), selected item (position, rotation ±15°, duplicate, delete, material), room finishes, undo / redo, keyboard shortcuts (Suppr, Ctrl+Z, Ctrl+Y, R)
-- [ ] `scenes/base.json`: furnished SEJOUR - CUISINE and CHAMBRE PARENTS; `visual-check` on `sejour-cuisine-2`, `chambre-parents-2`
+- [x] `scenes/base.json`: furnished SEJOUR - CUISINE and CHAMBRE PARENTS; `visual-check` on `sejour-cuisine-2`, `chambre-parents-2`
 - [x] e2e: place, move (panel inputs), save to a temporary scene, file content asserted
 - [ ] Gates green, PR, squash-merge, STATE.md, CLAUDE.md, next phase branch
