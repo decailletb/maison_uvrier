@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { fileURLToPath, URL } from "node:url";
-import { scenesPlugin } from "./scripts/vite-scenes-plugin";
+import { scenesPlugin } from "./scripts/vite-scenes-plugin.ts";
 
 export default defineConfig({
   plugins: [react(), scenesPlugin()],
