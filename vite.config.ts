@@ -1,9 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { fileURLToPath, URL } from "node:url";
+import { scenesPlugin } from "./scripts/vite-scenes-plugin";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), scenesPlugin()],
   // CC0 assets (git-ignored, restored by `npm run assets:fetch`) are served at the site root.
   publicDir: "assets",
   resolve: {
