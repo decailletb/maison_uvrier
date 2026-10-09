@@ -15,5 +15,5 @@ the agents, skills and docs that later phases rely on.
 - [x] Skills `scene-format`, `deco`, `checkpoint`
 - [x] `.claude/settings.json` deny list + hook extended (playwright reports, screenshots, data JSON)
 - [x] `CLAUDE.md` updated: commands, structure, git conventions
-- [ ] Gates green via `build-check`; `visual-check` confirms a screenshot renders
+- [x] Gates green via `build-check`; `visual-check` confirms a screenshot renders
 - [ ] PR opened, squash-merged, STATE.md updated, phase 1 branch started
