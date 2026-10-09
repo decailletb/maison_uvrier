@@ -443,11 +443,11 @@
       "levelId": "etage",
       "roomId": "chambre-2",
       "position": [
-        958,
-        600,
+        773,
+        651,
         0
       ],
-      "rotationY": 0,
+      "rotationY": 90,
       "scale": 1
     },
     {
@@ -465,11 +465,11 @@
       "levelId": "etage",
       "roomId": "chambre-2",
       "position": [
-        768,
-        375,
+        979,
+        550,
         0
       ],
-      "rotationY": -180,
+      "rotationY": -90,
       "scale": 1
     },
     {
@@ -487,11 +487,11 @@
       "levelId": "etage",
       "roomId": "chambre-2",
       "position": [
-        768,
-        465,
+        889,
+        550,
         0
       ],
-      "rotationY": 0,
+      "rotationY": 90,
       "scale": 1
     },
     {
@@ -509,11 +509,11 @@
       "levelId": "etage",
       "roomId": "chambre-2",
       "position": [
-        863,
-        600,
+        773,
+        556,
         0
       ],
-      "rotationY": 0,
+      "rotationY": 90,
       "scale": 1
     },
     {
@@ -536,28 +536,6 @@
         0
       ],
       "rotationY": -90,
-      "scale": 1
-    },
-    {
-      "id": "chambre-2-lamp",
-      "asset": {
-        "procedural": "lamp",
-        "params": {
-          "w": 50,
-          "d": 50,
-          "h": 50,
-          "material": "fabric-white",
-          "accent": "metal-black"
-        }
-      },
-      "levelId": "etage",
-      "roomId": "chambre-2",
-      "position": [
-        833,
-        518,
-        0
-      ],
-      "rotationY": 0,
       "scale": 1
     }
   ],

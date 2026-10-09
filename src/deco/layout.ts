@@ -112,6 +112,14 @@ function hintCandidates(item: LayoutItem, room: Room, level: Level, placed: Map<
       out.push({ key: item.key, position: s.point, rotationDeg: s.rotationDeg });
     }
   }
+  // Cardinal walls: candidates snapped against the wall facing that direction. The
+  // back of an item on the west wall faces west, so its front (rotation) faces east.
+  const cardinal = hint.match(/(?:^|[^a-z])(north|nord|south|sud|east|est|west|ouest)(?:$|[^a-z])/);
+  if (cardinal) {
+    const wanted: Record<string, number> = { north: 0, nord: 0, south: 180, sud: 180, east: 270, est: 270, west: 90, ouest: 90 };
+    const rot = wanted[cardinal[1]];
+    out.push(...perimeterCandidates(room, level, item).filter((p) => Math.abs((((p.rotationDeg - rot) % 360) + 540) % 360 - 180) < 5));
+  }
   if (/opposite|opposé|en face de la porte|headboard|tête de lit|far wall|mur du fond/.test(hint)) {
     // Wall farthest from the entrance: pick the perimeter candidate farthest from it.
     const far = perimeterCandidates(room, level, item).sort(

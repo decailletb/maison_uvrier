@@ -75,6 +75,13 @@ describe("layout", () => {
     }
   });
 
+  it("honours cardinal directions", () => {
+    const { placed } = layoutRoom([{ key: "bed", category: "bed", w: 90, d: 200, hint: "against the west-side wall" }], room, etage);
+    // Headboard on the west wall (x 674 + half wall + half depth), bed pointing east.
+    expect(placed[0].position[0]).toBeLessThan(800);
+    expect(Math.abs(Math.sin((placed[0].rotationDeg * Math.PI) / 180))).toBeCloseTo(1);
+  });
+
   it("puts the desk under the window and the nightstand beside the bed", () => {
     const { placed } = layoutRoom(items, room, etage);
     const desk = placed.find((p) => p.key === "desk")!;

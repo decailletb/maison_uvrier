@@ -40,7 +40,7 @@ export function App() {
   const [preset, setPreset] = useState<CameraPreset>(initial);
   const [levelMode, setLevelMode] = useState<LevelMode>(initial.level);
   const [cameraMode, setCameraMode] = useState<CameraMode>("orbit");
-  const [showLabels, setShowLabels] = useState(initial.labels ?? true);
+  const [showLabels, setShowLabels] = useState(new URLSearchParams(window.location.search).get("labels") === "0" ? false : (initial.labels ?? true));
   const [showCeilings, setShowCeilings] = useState(isRoomView(initial));
   const [sun, setSun] = useState<SunSettings>({ month: 6, hour: 15 });
   // Remount the canvas when the camera must jump.

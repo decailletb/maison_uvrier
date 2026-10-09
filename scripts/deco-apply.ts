@@ -48,8 +48,12 @@ function applyToRoom(scene: Scene, proposal: Proposal, roomId: string, log: stri
   const pending: { key: string; item: SceneItem }[] = [];
   for (const f of entries) {
     for (let n = 0; n < f.count; n++) {
-      const match = matchFurniture(f);
       const key = `${f.category}${f.count > 1 ? `-${n + 1}` : ""}`;
+      if (f.category === "lamp" && /ceiling|plafond|suspension|pendant|pendentif/i.test(`${f.placementHint} ${f.material}`)) {
+        log.push(`- ${roomId} : suspension ignorée (luminaires de plafond non modélisés)`);
+        continue;
+      }
+      const match = matchFurniture(f);
       if (match.kind === "none") {
         log.push(`- ${roomId} : ${f.category} ignoré (${match.reason})`);
         continue;

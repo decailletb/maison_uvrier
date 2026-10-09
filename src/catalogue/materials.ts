@@ -13,8 +13,8 @@ export interface MaterialDef {
   color: string;
   roughness: number;
   metalness?: number;
-  /** Tile grid in metres for floors and wall tiles. */
-  tile?: number;
+  /** Tile grid in metres for floors and wall tiles: square size, or [length, width] for planks. */
+  tile?: number | [number, number];
   grout?: string;
   opacity?: number;
 }
@@ -24,9 +24,9 @@ const defs: MaterialDef[] = [
   { id: "tile-light", kind: "floor", label: "Carrelage clair", color: "#d9d4cc", roughness: 0.35, tile: 0.6, grout: "#b9b3a8" },
   { id: "tile-grey", kind: "floor", label: "Carrelage gris pierre", color: "#9c9a95", roughness: 0.4, tile: 0.6, grout: "#7f7d78" },
   { id: "tile-white", kind: "floor", label: "Carrelage blanc", color: "#ebe9e4", roughness: 0.3, tile: 0.6, grout: "#cfccc5" },
-  { id: "parquet-oak", kind: "floor", label: "Parquet chêne clair", color: "#b9a080", roughness: 0.6, tile: 0.2, grout: "#a08a6c" },
-  { id: "parquet-walnut", kind: "floor", label: "Parquet noyer foncé", color: "#6f4a30", roughness: 0.55, tile: 0.2, grout: "#5a3a24" },
-  { id: "laminate-grey", kind: "floor", label: "Stratifié gris-brun", color: "#9a8a7a", roughness: 0.5, tile: 0.2, grout: "#857664" },
+  { id: "parquet-oak", kind: "floor", label: "Parquet chêne clair", color: "#b9a080", roughness: 0.6, tile: [1.2, 0.18], grout: "#9c8668" },
+  { id: "parquet-walnut", kind: "floor", label: "Parquet noyer foncé", color: "#6f4a30", roughness: 0.55, tile: [1.2, 0.18], grout: "#4e3320" },
+  { id: "laminate-grey", kind: "floor", label: "Stratifié gris-brun", color: "#9a8a7a", roughness: 0.5, tile: [1.3, 0.2], grout: "#7e6f5f" },
   { id: "concrete-raw", kind: "floor", label: "Béton brut", color: "#a8a6a1", roughness: 0.9 },
   { id: "rubber-black", kind: "floor", label: "Tapis de sport noir", color: "#2a2a2a", roughness: 0.95 },
   // Walls and ceilings
