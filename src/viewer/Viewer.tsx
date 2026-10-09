@@ -2,6 +2,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Grid, OrbitControls } from "@react-three/drei";
 import { useRef } from "react";
 import { FOOTPRINT_CM, levelById } from "@/data/house";
+import { SceneEnvironment, type SunSettings } from "@/scene/components/Environment";
 import { House } from "@/scene/components/House";
 import { CM } from "@/scene/units";
 import type { CameraPreset, LevelMode } from "./presets";
@@ -23,21 +24,23 @@ function ReadySignal() {
   return null;
 }
 
-function Ground() {
+/** Terrain aménagé at −0.10; lowered to the excavation floor when the sous-sol is viewed alone. */
+function Ground({ levelMode }: { levelMode: LevelMode }) {
+  const y = levelMode === "sous-sol" ? -3.11 : -0.1;
   return (
     <group>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[FOOTPRINT.x / 2, -3.1, -FOOTPRINT.z / 2]} receiveShadow>
-        <planeGeometry args={[60, 60]} />
-        <meshStandardMaterial color="#5f6b5a" />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[FOOTPRINT.x / 2, y, -FOOTPRINT.z / 2]} receiveShadow>
+        <planeGeometry args={[80, 80]} />
+        <meshStandardMaterial color="#6f8a5c" roughness={1} />
       </mesh>
       <Grid
-        position={[FOOTPRINT.x / 2, -3.09, -FOOTPRINT.z / 2]}
-        args={[60, 60]}
+        position={[FOOTPRINT.x / 2, y + 0.005, -FOOTPRINT.z / 2]}
+        args={[80, 80]}
         cellSize={1}
         sectionSize={5}
-        cellColor="#8a9a86"
-        sectionColor="#d8e3d2"
-        fadeDistance={80}
+        cellColor="#8aa07e"
+        sectionColor="#c9d9bf"
+        fadeDistance={60}
         infiniteGrid={false}
       />
     </group>
@@ -50,9 +53,10 @@ export interface ViewerProps {
   cameraMode: CameraMode;
   showLabels: boolean;
   showCeilings: boolean;
+  sun: SunSettings;
 }
 
-export function Viewer({ preset, levelMode, cameraMode, showLabels, showCeilings }: ViewerProps) {
+export function Viewer({ preset, levelMode, cameraMode, showLabels, showCeilings, sun }: ViewerProps) {
   const walkLevel = levelMode === "all" ? "rez" : levelMode;
   const eyeHeight = (levelById(walkLevel).floorLevel + EYE_HEIGHT_CM) * CM;
   return (
@@ -63,21 +67,9 @@ export function Viewer({ preset, levelMode, cameraMode, showLabels, showCeilings
       gl={{ antialias: true, powerPreference: "high-performance" }}
       style={{ width: "100%", height: "100%" }}
     >
-      <color attach="background" args={["#202830"]} />
-      <hemisphereLight args={["#e6edf7", "#7a7265", 1.4]} />
-      <ambientLight intensity={0.35} />
-      <directionalLight
-        position={[6, 18, 12]}
-        intensity={1.3}
-        castShadow
-        shadow-mapSize={[2048, 2048]}
-        shadow-camera-left={-15}
-        shadow-camera-right={15}
-        shadow-camera-top={15}
-        shadow-camera-bottom={-15}
-        shadow-bias={-0.0004}
-      />
-      <Ground />
+      <color attach="background" args={["#9fb7cf"]} />
+      <SceneEnvironment sun={sun} />
+      <Ground levelMode={levelMode} />
       <House mode={levelMode} showLabels={showLabels} labelRoomId={showCeilings ? preset.roomId : undefined} showCeilings={showCeilings} />
       {cameraMode === "orbit" ? <OrbitControls makeDefault target={preset.target} /> : <WalkControls eyeHeight={eyeHeight} />}
       <ReadySignal />

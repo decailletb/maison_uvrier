@@ -89,7 +89,8 @@ Contexte : projet « CONSTRUCTION DE 6 VILLAS JUMELLES », commune d'UVRIER, par
 ### Page 6 — Élévation SUD, Villa « F »
 - Paysage, échelle 1-50, « Elévation SUD », date 10.03.2020, modif. 20.07.2020. Largeur 1055 + 500, hauteur totale 616.
 - Niveaux : fond de fouille - 3.11 (alt. 494.61) ; sous-sol - 2.86 ; terrain aménagé - 0.10 ; entrée - 0.14 ; rez ± 0.00 (alt. 497.72) ; + 2.51 (dessous dalle balcon/couvert) ; étage + 2.85 ; balcon + 2.80 ; balustrade + 3.80 ; acrotère + 5.655 (+ 5.36 dessous) ; acrotère + 6.06 ; acrotère couvert + 2.855. Terrain de référence 497.88.
-- Fenêtre 60 x 150 (store à lamelles, couverte béton apparent) ; coffret alu UP 85 x 80 (hauteur 118.5). Balcon à balustrade vitrée, avancées de 80 et 120.
+- Fenêtre 60 x 150 (store à lamelles, couverte béton apparent) ; coffret alu UP 85 x 80 (hauteur 118.5). Balcon : saillie totale 200 cm (80 + 120) ; dalle de couvert balcon (dessus +5.655, dessous +5.36, ~29.5 cm) en saillie de 120 cm seulement ; balustrade vitrée (+2.80 → +3.80) vue du sud.
+- Couvert d'entrée : dalle dessus +2.855 / dessous +2.51 (~34.5 cm), portée par de fins poteaux ~20 cm (3 visibles, entraxe ~100 cm, estimé), sans acrotère. Acrotère toiture : ~40-50 cm au-dessus de la dalle, ~10-15 cm d'épaisseur (estimé). Pas de débord de toiture. Terrasse à -0.17 sans marche ni garde-corps, terrain à -0.10 ; pas de fenêtre de sous-sol visible (élévations Sud et Est) ; terrain en légère pente côté est (-0.32 au pied du mur).
 
 ### Page 7 — Élévation OUEST, Villa « F »
 - Portrait, échelle 1-50, « ELEVATION OUEST », date 05.03.2020, modif. 19.08.2020. Largeur 724 + 4, hauteur 616.

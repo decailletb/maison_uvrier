@@ -174,9 +174,16 @@ function levelTop(level: Level): CameraPreset {
 }
 
 export function buildPresets(): CameraPreset[] {
+  const cx = (FOOTPRINT_CM.width / 2) * 0.01;
+  const cz = -(FOOTPRINT_CM.depth / 2) * 0.01;
   const presets: CameraPreset[] = [
-    { name: "overview", label: "Vue d'ensemble", position: [20, 12, 16], target: [5.3, 2, -3.6], level: "all" },
-    { name: "top", label: "Vue de dessus", position: [5.3, 28, -3.1], target: [5.3, 0, -3.6], level: "all" },
+    { name: "overview", label: "Vue d'ensemble", position: [20, 12, 16], target: [cx, 2, cz], level: "all" },
+    { name: "top", label: "Vue de dessus", position: [cx, 28, cz + 0.5], target: [cx, 0, cz], level: "all" },
+    // Elevations: the camera stands 22 m out from the façade it names, at eye level + 2 m.
+    { name: "sud", label: "Façade sud", position: [cx + 2, 3.5, 22], target: [cx, 2.5, cz], level: "all" },
+    { name: "ouest", label: "Façade ouest", position: [-20, 3.5, cz], target: [0, 2.5, cz], level: "all" },
+    { name: "est", label: "Façade est", position: [FOOTPRINT_CM.width * 0.01 + 22, 3.5, cz + 1], target: [FOOTPRINT_CM.width * 0.01, 2.5, cz], level: "all" },
+    { name: "aerial", label: "Vue aérienne", position: [-14, 22, 16], target: [cx, 1, cz], level: "all" },
   ];
   for (const level of house.levels) {
     presets.push(levelTop(level));

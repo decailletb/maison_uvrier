@@ -1,4 +1,17 @@
 {
   "$comment": "CC0 assets. Schema documented in .claude/skills/scene-format/SKILL.md. Binaries are git-ignored; run `npm run assets:fetch`.",
-  "assets": []
+  "assets": [
+    {
+      "id": "kloofendal-puresky",
+      "category": "hdri",
+      "file": "hdri/kloofendal_48d_partly_cloudy_puresky.hdr",
+      "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/kloofendal_48d_partly_cloudy_puresky_1k.hdr",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "tags": [
+        "exterieur"
+      ],
+      "fetchedAt": "2026-10-09"
+    }
+  ]
 }
