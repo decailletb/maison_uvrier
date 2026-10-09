@@ -10,4 +10,4 @@ pages 3, 4 and 5, cross-checked against the elevations (6 to 8) and the section 
 - [x] Cross-check openings with elevations p. 6-8 (refs 001-012, sizes) and heights with section p. 9
 - [x] Tests: room area within 5 % of printed m², exterior walls closed, openings inside their wall, levels consistent with SIA figures (p. 1-2)
 - [x] Deviations and assumptions in `docs/DECISIONS.md`; orientation assumption stated
-- [ ] Gates green, PR, squash-merge, STATE.md, next phase branch
+- [x] Gates green, PR, squash-merge, STATE.md, next phase branch
