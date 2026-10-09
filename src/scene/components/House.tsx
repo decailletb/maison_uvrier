@@ -24,8 +24,8 @@ export function House({
   const roof = useMemo(() => roofShell(), []);
   const finishes = useEditor((s) => s.scene.roomFinishes);
   const select = useEditor((s) => s.select);
-  // The roof closes the house in the full view and in the étage view with ceilings on.
-  const showRoof = mode === "all" || (mode === "etage" && showCeilings);
+  // The roof closes the house in the full view; in the étage view the room ceilings do that job.
+  const showRoof = mode === "all";
   return (
     <group name="house" onPointerMissed={() => select(null)}>
       {showRoof && <Shell data={roof} />}

@@ -43,7 +43,9 @@ export function SceneEnvironment({ sun, hdri = DEFAULT_HDRI }: { sun: SunSetting
           <hemisphereLight args={["#cfe0f5", "#6e6a5e", 0.9]} />
         </>
       )}
-      <ambientLight intensity={hasHdri ? 0.5 : 0.55} color="#fff6ea" />
+      <ambientLight intensity={hasHdri ? 0.35 : 0.4} color="#fff6ea" />
+      {/* Warm neutral fill for shaded walls and ceilings, which the blue sky HDRI tints otherwise. */}
+      <hemisphereLight args={["#fff1dd", "#e8dccb", hasHdri ? 0.75 : 0.5]} />
       <directionalLight
         position={lightPos}
         intensity={3.2 * daylight}
