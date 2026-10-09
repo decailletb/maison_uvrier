@@ -1,1 +1,639 @@
-{}
+{
+  "id": "etage",
+  "name": "ETAGE",
+  "floorLevel": 285,
+  "clearHeight": 250,
+  "slabThickness": 22,
+  "planPage": 5,
+  "walls": [
+    {
+      "id": "ext-south",
+      "points": [
+        [
+          0,
+          18.5
+        ],
+        [
+          1055,
+          18.5
+        ]
+      ],
+      "thickness": 37,
+      "structural": true,
+      "exterior": true,
+      "note": "Beton 20 + isolation 16 + 1 cm vide (annotation page 5). Thickness 37 deduced from the dimension chain 37 + 379 + 8 + 195 + 8 + 379 + 49 = 1055, not printed as such. Carries stair window 007 (60 wide, centred on x = 527.5)."
+    },
+    {
+      "id": "ext-west",
+      "points": [
+        [
+          18.5,
+          0
+        ],
+        [
+          18.5,
+          724
+        ]
+      ],
+      "thickness": 37,
+      "structural": true,
+      "exterior": true,
+      "note": "Balcon side. Carries windows 010 and 004 and the porte-fenetre 012. Offsets along this wall = y."
+    },
+    {
+      "id": "ext-east",
+      "points": [
+        [
+          1030.5,
+          0
+        ],
+        [
+          1030.5,
+          724
+        ]
+      ],
+      "thickness": 49,
+      "structural": true,
+      "exterior": true,
+      "estimated": true,
+      "note": "Thickness 49 deduced from the chain (interior face at x = 1006, outer face 1055). Carries the two windows 009. Offsets along this wall = y."
+    },
+    {
+      "id": "ext-north",
+      "points": [
+        [
+          0,
+          712
+        ],
+        [
+          1055,
+          712
+        ]
+      ],
+      "thickness": 24,
+      "structural": true,
+      "exterior": true,
+      "estimated": true,
+      "note": "PARTY WALL of the twin villa: thick wall with a green 4 cm phonic insulation line along its full length, no openings, and the neighbouring villa rooms are drawn above it on the sheet. Thickness 24 (20 concrete + 4 phonic) estimated from the drawing; the plan is cropped at the top of the sheet but this wall face is visible."
+    },
+    {
+      "id": "wall-stair-west",
+      "points": [
+        [
+          414,
+          37
+        ],
+        [
+          414,
+          261
+        ]
+      ],
+      "thickness": 20,
+      "structural": true,
+      "exterior": false,
+      "note": "Concrete 18 cm + 1 cm gypsum each side (printed 20)."
+    },
+    {
+      "id": "wall-stair-east",
+      "points": [
+        [
+          630,
+          37
+        ],
+        [
+          630,
+          261
+        ]
+      ],
+      "thickness": 22,
+      "structural": true,
+      "exterior": false,
+      "note": "Printed 22."
+    },
+    {
+      "id": "wall-hall-west",
+      "points": [
+        [
+          420,
+          261
+        ],
+        [
+          420,
+          700
+        ]
+      ],
+      "thickness": 8,
+      "structural": false,
+      "exterior": false,
+      "note": "Separates the west rooms (parents, dressing, douche) from the hall and the salle de bains. Thickness 8 printed."
+    },
+    {
+      "id": "wall-hall-east",
+      "points": [
+        [
+          623,
+          261
+        ],
+        [
+          623,
+          449
+        ]
+      ],
+      "thickness": 8,
+      "structural": false,
+      "exterior": false,
+      "note": "Hall side of chambre 2 and chambre 3, with two doors. Thickness 8 printed."
+    },
+    {
+      "id": "wall-douche-dressing",
+      "points": [
+        [
+          37,
+          545.5
+        ],
+        [
+          416,
+          545.5
+        ]
+      ],
+      "thickness": 9,
+      "structural": false,
+      "exterior": false
+    },
+    {
+      "id": "wall-dressing-parents",
+      "points": [
+        [
+          37,
+          327
+        ],
+        [
+          416,
+          327
+        ]
+      ],
+      "thickness": 8,
+      "structural": false,
+      "exterior": false
+    },
+    {
+      "id": "wall-sdb-sud",
+      "points": [
+        [
+          420,
+          453.5
+        ],
+        [
+          668.5,
+          453.5
+        ]
+      ],
+      "thickness": 9,
+      "structural": false,
+      "exterior": false,
+      "note": "South wall of the salle de bains, door to the hall."
+    },
+    {
+      "id": "wall-sdb-est",
+      "points": [
+        [
+          668.5,
+          449
+        ],
+        [
+          668.5,
+          700
+        ]
+      ],
+      "thickness": 9,
+      "structural": false,
+      "exterior": false,
+      "note": "East wall of the salle de bains (9 printed)."
+    },
+    {
+      "id": "wall-chambre-2-3",
+      "points": [
+        [
+          627,
+          343
+        ],
+        [
+          1006,
+          343
+        ]
+      ],
+      "thickness": 8,
+      "structural": false,
+      "exterior": false,
+      "note": "Between chambre 3 (south) and chambre 2 (north). No door."
+    }
+  ],
+  "rooms": [
+    {
+      "id": "douche",
+      "name": "DOUCHE",
+      "polygon": [
+        [
+          37,
+          550
+        ],
+        [
+          416,
+          550
+        ],
+        [
+          416,
+          700
+        ],
+        [
+          37,
+          700
+        ]
+      ],
+      "printedArea": 5.61,
+      "floorFinish": "carrelage",
+      "wallFinish": "carrelage",
+      "ceilingFinish": "dispersion",
+      "note": "Contains receveur FORMA COVER 150x100x3.5, double washbasin, wall-hung WC. Room name to cartouche matching by area; cartouches are outside the plan."
+    },
+    {
+      "id": "dressing",
+      "name": "DRESSING",
+      "polygon": [
+        [
+          37,
+          331
+        ],
+        [
+          416,
+          331
+        ],
+        [
+          416,
+          541
+        ],
+        [
+          37,
+          541
+        ]
+      ],
+      "printedArea": 8.05,
+      "floorFinish": "carrelage",
+      "wallFinish": "crépis",
+      "ceilingFinish": "dispersion"
+    },
+    {
+      "id": "chambre-parents",
+      "name": "CHAMBRE PARENTS",
+      "polygon": [
+        [
+          37,
+          37
+        ],
+        [
+          404,
+          37
+        ],
+        [
+          404,
+          261
+        ],
+        [
+          416,
+          261
+        ],
+        [
+          416,
+          323
+        ],
+        [
+          37,
+          323
+        ]
+      ],
+      "printedArea": 10.85,
+      "floorFinish": "carrelage",
+      "wallFinish": "crépis",
+      "ceilingFinish": "dispersion",
+      "note": "Access only through the dressing. Polygon area is about 3% under the printed value."
+    },
+    {
+      "id": "balcon",
+      "name": "BALCON",
+      "polygon": [
+        [
+          -207,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          724
+        ],
+        [
+          -207,
+          724
+        ]
+      ],
+      "printedArea": 14.98,
+      "floorFinish": "béton brut",
+      "wallFinish": "crépis",
+      "ceilingFinish": "glacis béton",
+      "estimated": true,
+      "note": "Outside the heated footprint, west side. Width 207 estimated from the drawing (printed clear width 200); depth equals the full 724 printed on the left of the sheet. Floor +2.80 finished."
+    },
+    {
+      "id": "chambre-2",
+      "name": "CHAMBRE 2",
+      "polygon": [
+        [
+          627,
+          347
+        ],
+        [
+          1006,
+          347
+        ],
+        [
+          1006,
+          699
+        ],
+        [
+          674,
+          699
+        ],
+        [
+          674,
+          449
+        ],
+        [
+          627,
+          449
+        ]
+      ],
+      "printedArea": 11.24,
+      "floorFinish": "carrelage",
+      "wallFinish": "crépis",
+      "ceilingFinish": "dispersion",
+      "estimated": true,
+      "note": "L-shape including the 47 x 102 entrance nook behind the hall door (x 627-674, y 347-449). Printed 11.24 m² probably excludes that nook: the rectangle alone is 332 x 352 = 11.69 m²; tolerance raised to 10 % in house.test.ts."
+    },
+    {
+      "id": "hall",
+      "name": "HALL",
+      "polygon": [
+        [
+          424,
+          261
+        ],
+        [
+          619,
+          261
+        ],
+        [
+          619,
+          449
+        ],
+        [
+          424,
+          449
+        ]
+      ],
+      "printedArea": 3.76,
+      "floorFinish": "carrelage",
+      "wallFinish": "crépis",
+      "ceilingFinish": "dispersion",
+      "note": "195 wide x 187.2 printed (3.65 m2); printed area 3.76. Open to the stair at its south side (arrival of step 30)."
+    },
+    {
+      "id": "chambre-3",
+      "name": "CHAMBRE 3",
+      "polygon": [
+        [
+          641,
+          37
+        ],
+        [
+          1006,
+          37
+        ],
+        [
+          1006,
+          339
+        ],
+        [
+          627,
+          339
+        ],
+        [
+          627,
+          261
+        ],
+        [
+          641,
+          261
+        ]
+      ],
+      "printedArea": 11.18,
+      "floorFinish": "carrelage",
+      "wallFinish": "crépis",
+      "ceilingFinish": "dispersion",
+      "note": "Wardrobe niche along its north wall (about 120 deep)."
+    },
+    {
+      "id": "salle-de-bains",
+      "name": "SALLE DE BAINS",
+      "polygon": [
+        [
+          424,
+          458
+        ],
+        [
+          664,
+          458
+        ],
+        [
+          664,
+          700
+        ],
+        [
+          424,
+          700
+        ]
+      ],
+      "floorFinish": "carrelage",
+      "estimated": true,
+      "note": "No cartouche on the plan (no printed area, no printed finishes; floor finish assumed as the other rooms). Printed 240 wide x 243 tall. Baignoire 180x80x43, double washbasin 122x15x50, wall-hung WC, coupole 60x60 in the ceiling. Re-checked: chain 102 + 80 + 35 + 23 = 240 wide, 243 tall printed; polygon 240 x 242 (5.81 m2, 5.83 printed-dimension product)."
+    }
+  ],
+  "openings": [
+    {
+      "id": "win-010-douche",
+      "kind": "window",
+      "wallId": "ext-west",
+      "offset": 585,
+      "width": 60,
+      "height": 80,
+      "sill": 130,
+      "ref": "010",
+      "estimated": true,
+      "note": "Satinato glass, cc + 1.30. Position along the wall deduced from the printed chain 55 / 60 / 118 / 60 measured from the north inner face; ref 010 vs 004 attribution between douche and dressing deduced from the sill and glass type, the plan labels are small."
+    },
+    {
+      "id": "win-004-dressing",
+      "kind": "window",
+      "wallId": "ext-west",
+      "offset": 407,
+      "width": 60,
+      "height": 110,
+      "sill": 100,
+      "ref": "004",
+      "estimated": true,
+      "note": "cc + 1.00, granite sill, slat blind. Position from the same chain."
+    },
+    {
+      "id": "frenchwindow-012-balcon",
+      "kind": "frenchWindow",
+      "wallId": "ext-west",
+      "offset": 90,
+      "width": 180,
+      "height": 210,
+      "sill": 0,
+      "ref": "012",
+      "note": "Fixed leaf plus tilt-turn leaf, to the balcon, threshold +0.04. 75 cm from the south edge to the outer reveal (opening 210 with reveals, 180 clear), centred on the chambre parents."
+    },
+    {
+      "id": "win-009-chambre-2",
+      "kind": "window",
+      "wallId": "ext-east",
+      "offset": 463,
+      "width": 180,
+      "height": 110,
+      "sill": 100,
+      "ref": "009",
+      "estimated": true,
+      "note": "cc + 1.00. Offset measured from the drawing."
+    },
+    {
+      "id": "win-009-chambre-3",
+      "kind": "window",
+      "wallId": "ext-east",
+      "offset": 66,
+      "width": 180,
+      "height": 110,
+      "sill": 100,
+      "ref": "009",
+      "estimated": true,
+      "note": "cc + 1.00. Offset measured from the drawing."
+    },
+    {
+      "id": "win-007-escalier",
+      "kind": "window",
+      "wallId": "ext-south",
+      "offset": 497.5,
+      "width": 60,
+      "height": 150,
+      "sill": 100,
+      "ref": "007",
+      "estimated": true,
+      "note": "Stair window, cc + 1.00. This is the printed 60 of the 497.5 + 60 + 497.5 chain. Height 150 taken from the south elevation (page 6, window 60 x 150)."
+    },
+    {
+      "id": "door-douche",
+      "kind": "door",
+      "wallId": "wall-douche-dressing",
+      "offset": 172,
+      "width": 80,
+      "height": 210,
+      "sill": 0,
+      "note": "Porte peinte, dressing to douche. Offset printed (172) from the west inner face; height not printed, 210 assumed.",
+      "estimated": true
+    },
+    {
+      "id": "door-parents",
+      "kind": "door",
+      "wallId": "wall-dressing-parents",
+      "offset": 277,
+      "width": 80,
+      "height": 210,
+      "sill": 0,
+      "estimated": true,
+      "note": "Porte peinte, parents to dressing. Offset printed (277); height not printed."
+    },
+    {
+      "id": "door-dressing-hall",
+      "kind": "door",
+      "wallId": "wall-hall-west",
+      "offset": 99,
+      "width": 80,
+      "height": 210,
+      "sill": 0,
+      "estimated": true,
+      "note": "Porte peinte, hall to dressing. Offset measured on the drawing."
+    },
+    {
+      "id": "door-sdb",
+      "kind": "door",
+      "wallId": "wall-sdb-sud",
+      "offset": 106,
+      "width": 80,
+      "height": 210,
+      "sill": 0,
+      "estimated": true,
+      "note": "Porte peinte, hall to salle de bains. Offset 102 printed from the hall west face plus 4 for the wall start; height not printed."
+    },
+    {
+      "id": "door-chambre-2",
+      "kind": "door",
+      "wallId": "wall-hall-east",
+      "offset": 97,
+      "width": 80,
+      "height": 210,
+      "sill": 0,
+      "estimated": true,
+      "note": "Porte peinte, hall to chambre 2 (south strip). Offset measured."
+    },
+    {
+      "id": "door-chambre-3",
+      "kind": "door",
+      "wallId": "wall-hall-east",
+      "offset": 0,
+      "width": 78,
+      "height": 210,
+      "sill": 0,
+      "estimated": true,
+      "note": "Porte peinte, hall to chambre 3. Squeezed between the stair corner and the chambre 3 / chambre 2 partition; width and offset measured."
+    }
+  ],
+  "stairs": [
+    {
+      "id": "stair-etage",
+      "polygon": [
+        [
+          424,
+          37
+        ],
+        [
+          619,
+          37
+        ],
+        [
+          619,
+          261
+        ],
+        [
+          424,
+          261
+        ]
+      ],
+      "risers": 14,
+      "direction": "down",
+      "toLevel": "rez",
+      "note": "Steps printed 17 to 30 on this level (steps 1 to 16 are on the rez plan). Quarter-turn with winders, clear width 90 + 15 + 90 = 195. Step 30 arrives at the top right, onto the hall. Direction is down toward the rez; flight shape inside the polygon is not modelled.",
+      "estimated": true
+    }
+  ]
+}

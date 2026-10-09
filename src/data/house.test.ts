@@ -8,7 +8,10 @@ import { FOOTPRINT_CM, house } from "./house";
 import type { Level, Point } from "./schema";
 
 /** Rooms whose polygon area is allowed to deviate more than 5 % (see DECISIONS.md). */
-const AREA_EXCEPTIONS: Record<string, number> = {};
+const AREA_EXCEPTIONS: Record<string, number> = {
+  // Includes the 0.5 m² entrance nook behind the hall door, see etage.json note.
+  "etage/chambre-2": 0.1,
+};
 const AREA_TOLERANCE = 0.05;
 /** Half a wall thickness: how far a wall centreline may sit outside the footprint. */
 const EDGE_SLACK = 30;
@@ -57,14 +60,19 @@ describe("house data", () => {
     });
 
     it("closes the exterior walls into one loop", () => {
+      // Centrelines are offset by half a thickness, so two walls meeting at a corner
+      // have ends up to one thickness apart (overlapping or butted).
       const exterior = level.walls.filter((w) => w.exterior);
       expect(exterior.length).toBeGreaterThanOrEqual(4);
-      const ends: Point[] = exterior.flatMap((w) => [w.points[0], w.points[w.points.length - 1]]);
-      for (const wall of exterior) {
-        for (const end of [wall.points[0], wall.points[wall.points.length - 1]]) {
-          const shared = ends.filter((e) => closeEnough(e, end)).length;
-          expect(shared, `${level.id}: ${wall.id} end ${end} must meet another exterior wall`).toBe(2);
-        }
+      const ends = exterior.flatMap((w) => [
+        { wall: w, p: w.points[0] },
+        { wall: w, p: w.points[w.points.length - 1] },
+      ]);
+      for (const { wall, p } of ends) {
+        const partners = ends.filter(
+          (e) => e.wall !== wall && closeEnough(e.p, p, Math.max(wall.thickness, e.wall.thickness) * 1.5),
+        );
+        expect(partners.length, `${level.id}: ${wall.id} end ${p} must meet another exterior wall`).toBe(1);
       }
     });
 

@@ -1,4 +1,4 @@
-# État du projet — mis à jour 2026-10-09T14:16+01:00
+# État du projet — mis à jour 2026-10-09T14:40+01:00
 
 Session 1 démarrée le 2026-10-09 à 13:54. Phase 0 fusionnée (PR #1).
 
@@ -6,21 +6,20 @@ Session 1 démarrée le 2026-10-09 à 13:54. Phase 0 fusionnée (PR #1).
 Phase 1 — Plan data (`feat/plan-data`). Plan : `docs/plan/01-plan-data.md`.
 
 ## Fait (dernières étapes, 5 max)
-- Phase 0 fusionnée : scène vide, portes vertes, agents, skills, CLAUDE.md.
-- `src/data/schema.ts` (zod), `src/data/geometry.ts` + tests, loader `src/data/house/index.ts`.
-- Tests de cohérence `src/data/house.test.ts` écrits (surfaces ±5 %, murs extérieurs fermés, ouvertures dans leur mur, SIA).
+- Schéma zod, helpers géométriques, loader, conversion cm → m (`src/scene/units.ts`).
+- Trois niveaux extraits (pages 3, 4, 5) dans `src/data/house/*.json`, validés.
+- Cartouche 3.35 m² identifiée comme appartenant à la villa voisine ; index house-plans corrigé.
+- Orientation fixée (nord = haut de feuille, mur mitoyen ; ouest = terrasse/balcon ; est = entrée/couvert).
+- 31 tests unitaires verts (surfaces ±5 %, CHAMBRE 2 ±10 % documenté).
 
 ## En cours (étape exacte, fichier, ce qui reste)
-Extraction des trois niveaux par trois agents Sonnet en parallèle (pages 3, 4, 5) vers
-`src/data/house/{sous-sol,rez,etage}.json`. Les fichiers contiennent `{}` tant que
-l'extraction n'est pas écrite. Reste : réconcilier les contours extérieurs entre niveaux,
-lancer `npm test`, documenter les écarts dans DECISIONS.md.
+Portes complètes via `build-check`, puis PR `feat/plan-data` et squash-merge.
 
 ## Prochaine étape (une ligne : la première action de la prochaine session)
-Si les JSON de niveau valent encore `{}` : relancer l'extraction (prompt dans `.claude/agents/geometry-extractor.md`, un agent par page 3/4/5) ; sinon `npm test` et corriger.
+Lancer `build-check` (all gates) ; si vert, `gh pr create` pour `feat/plan-data`, merge, puis créer `feat/interior-geometry` et `docs/plan/02-interior-geometry.md`.
 
 ## Bloqué / questions pour Benjamin
-Aucune. Hypothèse : élévation « SUD » = façade du balcon/terrasse (côté x = 0 ou 1055 à confirmer après extraction).
+Aucune question bloquante. Hypothèses notées dans DECISIONS.md : épaisseurs de murs extérieurs différentes par niveau, nook de CHAMBRE 2, positions de portes intérieures mesurées (non cotées).
 
 ## Branche active, dernier commit, PR ouverte
 Branche `feat/plan-data`, pas de PR ouverte.
