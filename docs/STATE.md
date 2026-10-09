@@ -1,25 +1,24 @@
-# État du projet — mis à jour 2026-10-09T16:15+01:00
+# État du projet — mis à jour 2026-10-09T16:25+01:00
 
 Session 1 démarrée le 2026-10-09 à 13:54. Phases 0 à 4a fusionnées (PR #1 à #5).
 
 ## Phase en cours
-Phase 4b — Édition de scène (`feat/scene-editing`). Plan : `docs/plan/05-scene-editing.md`.
+Phase 4b — Édition de scène (`feat/scene-editing`), en fin de phase. Plan : `docs/plan/05-scene-editing.md`.
 
 ## Fait (dernières étapes, 5 max)
-- Schéma `Scene` (zod), helpers de placement (pièce, grille, aimantation aux murs), store zustand avec annuler/rétablir.
-- API dev `GET/PUT /api/scenes/:name` (plugin Vite) : le navigateur écrit `scenes/<nom>.json` ; `?scene=<nom>` charge au démarrage.
-- Meubles de la scène rendus (modèle ou paramétrique), sélection, glisser sur le sol, finitions par pièce (sol, murs, plafond).
-- Panneau éditeur en français ; raccourcis Suppr / Ctrl+Z / Ctrl+Y / Ctrl+S / R.
-- `scenes/base.json` (séjour-cuisine + chambre parents meublés) ; 67 tests unitaires, 4 e2e verts.
+- Éditeur complet : sélection, glisser, aimantation, finitions par pièce, annuler/rétablir, enregistrement dans `scenes/`.
+- `scenes/base.json` : séjour-cuisine et chambre parents meublés ; `visual-check` : tous les objets reconnaissables, aucun ne flotte ni ne traverse un mur.
+- `?ui=0` masque les panneaux ; les captures l'utilisent. Preset `<pièce>-3` (diagonale retour).
+- 67 tests unitaires, 4 e2e (fumée + édition : placer, déplacer, enregistrer, charger).
 
 ## En cours (étape exacte, fichier, ce qui reste)
-`visual-check` de `scenes/base.json` (séjour, chambre parents, vues de dessus) ; corrections de placement ; portes ; PR.
+`build-check` (toutes les portes) en cours ; puis PR `feat/scene-editing`, squash-merge.
 
 ## Prochaine étape (une ligne : la première action de la prochaine session)
-Lire le verdict `visual-check` (ou relancer `VIEWER_SCENE=base npm run screenshots -- sejour-cuisine-2 chambre-parents-2`), corriger `scenes/base.json`, `build-check`, PR `feat/scene-editing`.
+Si la PR n'est pas fusionnée : `gh pr list`, `build-check`, merge ; puis `feat/deco-workflow` et `docs/plan/06-deco-workflow.md`.
 
 ## Bloqué / questions pour Benjamin
-Aucune.
+Aucune. À polir en phase 6 : cadrage des presets de pièce (trop serrés dans les petites pièces), teinte du parquet.
 
 ## Branche active, dernier commit, PR ouverte
-Branche `feat/scene-editing`, pas de PR.
+Branche `feat/scene-editing`, pas encore de PR.
