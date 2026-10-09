@@ -1,4 +1,4 @@
-# État du projet — mis à jour 2026-10-09T13:58+01:00
+# État du projet — mis à jour 2026-10-09T14:12+01:00
 
 Session 1 démarrée le 2026-10-09 à 13:54.
 
@@ -6,14 +6,17 @@ Session 1 démarrée le 2026-10-09 à 13:54.
 Phase 0 — Bootstrap (`feat/bootstrap`). Plan : `docs/plan/00-bootstrap.md`.
 
 ## Fait (dernières étapes, 5 max)
-- Contexte chargé (CLAUDE.md, WORKING-METHOD, skill house-plans, agents).
-- Branche `feat/bootstrap` créée ; STATE.md, DECISIONS.md et plan de phase écrits.
+- Scaffold Vite + React + TS + R3F, scène vide (sol, emprise villa, orbit, presets).
+- Portes de qualité vertes : typecheck, lint, vitest, build, Playwright smoke.
+- Scripts `screenshots` et `assets:fetch`, manifeste vide.
+- Agents geometry-extractor, visual-check, asset-fetcher, deco-interpreter ; skills scene-format, deco, checkpoint.
+- settings.json, hook de filtrage et CLAUDE.md mis à jour.
 
 ## En cours (étape exacte, fichier, ce qui reste)
-Scaffolding Vite + React + TS + R3F (package.json, configs, scène vide).
+Vérification visuelle (`visual-check` sur presets overview et top), puis PR et merge.
 
 ## Prochaine étape (une ligne : la première action de la prochaine session)
-Lire `docs/plan/00-bootstrap.md`, reprendre à la première case non cochée.
+Lancer l'agent `visual-check` sur `overview` et `top` ; si PASS, ouvrir la PR `feat/bootstrap` avec `gh pr create`.
 
 ## Bloqué / questions pour Benjamin
 Aucune.

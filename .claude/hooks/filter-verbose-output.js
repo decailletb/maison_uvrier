@@ -3,13 +3,14 @@
  * PreToolUse hook: cap the output of the verbose commands this repo will run once the
  * 3D viewer code exists, before that output reaches the model's context.
  *
- * As of 2026-10-09 the repo holds only plans and photos, so this hook is prospective.
- * It targets the commands a Vite/TypeScript web project produces:
+ * It targets the commands this Vite/TypeScript project produces:
  *
  *   npm run build / vite build   lists every transformed module; errors are in the tail
  *   npm test / vitest run        one line per test; failures and the summary are in the tail
  *   tsc (any flags)              one line per type error; a clean run prints nothing
  *   npm run lint / eslint        one line per finding
+ *   npm run test:e2e / playwright test   webServer and browser logs; summary in the tail
+ *   npm run screenshots          one line per preset
  *
  * Deliberately NOT filtered: npm install, npm run dev, vite (dev server), npx <anything>
  * that is not vitest/tsc. Rewriting a command here also auto-approves it, and those
@@ -41,7 +42,8 @@ process.stdin.on("end", () => {
   }
 
   const verbose =
-    /(^|[;&\s])npm (run )?(build|test|lint)(\s|$)/.test(cmd) ||
+    /(^|[;&\s])npm (run )?(build|test|lint|typecheck|test:e2e|screenshots|assets:fetch)(\s|$)/.test(cmd) ||
+    /(^|[;&\s])(npx\s+)?playwright (test|install)(\s|$)/.test(cmd) ||
     /(^|[;&\s])(npx\s+)?vite build(\s|$)/.test(cmd) ||
     /(^|[;&\s])(npx\s+)?vitest( run)?(\s|$)/.test(cmd) ||
     /(^|[;&\s])(npx\s+)?tsc(\s|$)/.test(cmd) ||

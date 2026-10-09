@@ -11,7 +11,12 @@
       "Read(./**/*.gltf)",
       "Read(./**/*.hdr)",
       "Read(./**/*.fbx)",
-      "Read(./**/*.obj)"
+      "Read(./**/*.obj)",
+      "Read(./**/playwright-report/**)",
+      "Read(./**/test-results/**)",
+      "Read(./**/*.exr)",
+      "Read(./**/*.ktx2)",
+      "Read(./**/*.bin)"
     ]
   },
   "enabledPlugins": {

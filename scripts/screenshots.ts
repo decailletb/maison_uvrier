@@ -4,7 +4,7 @@
  * Requires the dev server on http://localhost:5173 (started automatically if absent).
  */
 import { chromium } from "@playwright/test";
-import { spawn, type ChildProcess } from "node:child_process";
+import { execSync, spawn, type ChildProcess } from "node:child_process";
 import { mkdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { CAMERA_PRESETS } from "../src/viewer/presets";
@@ -31,6 +31,16 @@ async function startServer(): Promise<ChildProcess> {
   throw new Error(`dev server did not answer on ${BASE}`);
 }
 
+/** Kills the whole dev-server tree (shell + node) on both Windows and POSIX. */
+function stopServer(child: ChildProcess | null): void {
+  if (!child?.pid) return;
+  if (process.platform === "win32") {
+    execSync(`taskkill /PID ${child.pid} /F /T`, { stdio: "ignore" });
+  } else {
+    child.kill();
+  }
+}
+
 async function main() {
   const wanted = process.argv.slice(2);
   const presets = wanted.length ? CAMERA_PRESETS.filter((p) => wanted.includes(p.name)) : CAMERA_PRESETS;
@@ -51,7 +61,7 @@ async function main() {
     }
   } finally {
     await browser.close();
-    ownServer?.kill();
+    stopServer(ownServer);
   }
 }
 
