@@ -30,7 +30,7 @@ const defs: MaterialDef[] = [
   { id: "concrete-raw", kind: "floor", label: "Béton brut", color: "#a8a6a1", roughness: 0.9 },
   { id: "rubber-black", kind: "floor", label: "Tapis de sport noir", color: "#2a2a2a", roughness: 0.95 },
   // Walls and ceilings
-  { id: "paint-white", kind: "wall", label: "Peinture blanche", color: "#f4f2ee", roughness: 0.85 },
+  { id: "paint-white", kind: "wall", label: "Peinture blanche", color: "#fbfaf7", roughness: 0.9 },
   { id: "paint-warm-grey", kind: "wall", label: "Peinture gris chaud", color: "#d8d2c8", roughness: 0.85 },
   { id: "paint-sage", kind: "wall", label: "Peinture vert sauge", color: "#b7c2ad", roughness: 0.85 },
   { id: "paint-navy", kind: "wall", label: "Peinture bleu nuit", color: "#2f3a52", roughness: 0.8 },
@@ -38,7 +38,7 @@ const defs: MaterialDef[] = [
   { id: "tile-wall-white", kind: "wall", label: "Faïence blanche grand format", color: "#ece9e3", roughness: 0.25, tile: 0.6, grout: "#d0cdc6" },
   { id: "tile-wall-grey", kind: "wall", label: "Faïence gris pierre", color: "#9c9a95", roughness: 0.3, tile: 0.6, grout: "#7f7d78" },
   { id: "concrete-block", kind: "wall", label: "Parpaings bruts", color: "#b3b0aa", roughness: 0.95, tile: 0.4, grout: "#9a9791" },
-  { id: "ceiling-white", kind: "ceiling", label: "Plafond blanc", color: "#f8f7f3", roughness: 0.7 },
+  { id: "ceiling-white", kind: "ceiling", label: "Plafond blanc", color: "#fcfbf9", roughness: 0.8 },
   // Fabrics
   { id: "fabric-navy", kind: "fabric", label: "Tissu bleu nuit", color: "#2b3a5c", roughness: 0.95 },
   { id: "fabric-grey", kind: "fabric", label: "Tissu gris", color: "#8c8c8a", roughness: 0.95 },

@@ -3,7 +3,7 @@
  * metres (scene units). Playwright selects one with `?preset=<name>`; the UI lists
  * them. Names: `overview`, `top`, `<level>-top`, `<room-id>`, `<room-id>-2`.
  */
-import { distanceToSegment, pointAlong, pointInPolygon, polygonCentroid } from "@/data/geometry";
+import { distanceToSegment, pointAlong, pointInPolygon, polygonAreaM2, polygonCentroid } from "@/data/geometry";
 import { FOOTPRINT_CM, house } from "@/data/house";
 import type { Level, LevelId, Opening, Point, Room } from "@/data/schema";
 import { planToScene } from "@/scene/units";
@@ -24,6 +24,8 @@ export interface CameraPreset {
   labels?: boolean;
   /** Replaces the house with the catalogue showcase. */
   showcase?: boolean;
+  /** Vertical field of view in degrees (default 55). */
+  fov?: number;
 }
 
 const EYE = 155;
@@ -132,6 +134,8 @@ function roomPresets(room: Room, level: Level): CameraPreset[] {
   // Pitch down about 14° so that small rooms show their floor; never below 60 cm.
   const diagonal = Math.hypot(corner.target[0] - corner.position[0], corner.target[1] - corner.position[1]);
   const cornerLook = Math.max(60, Math.min(LOOK, EYE - 0.25 * diagonal));
+  // Small rooms get a wider lens so that two walls and the floor fit in the frame.
+  const fov = polygonAreaM2(room.polygon) < 12 ? 68 : 55;
   const presets: CameraPreset[] = [
     {
       name: room.id,
@@ -140,6 +144,7 @@ function roomPresets(room: Room, level: Level): CameraPreset[] {
       target: planToScene(corner.target, cornerLook, level.floorLevel),
       level: level.id,
       roomId: room.id,
+      fov,
     },
   ];
   // Reverse diagonal: from the far corner back toward the entrance corner.
@@ -150,6 +155,7 @@ function roomPresets(room: Room, level: Level): CameraPreset[] {
     target: planToScene(corner.position, cornerLook, level.floorLevel),
     level: level.id,
     roomId: room.id,
+    fov,
   });
   const [glazing] = roomGlazing(room, level);
   if (glazing) {
@@ -169,6 +175,7 @@ function roomPresets(room: Room, level: Level): CameraPreset[] {
       target: planToScene(glazing.mid, lookHeight, level.floorLevel),
       level: level.id,
       roomId: room.id,
+      fov,
     });
   }
   return presets;
