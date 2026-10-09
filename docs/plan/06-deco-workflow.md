@@ -13,10 +13,10 @@ fallback; no overlap, doors kept clear), `scripts/deco-apply.ts` CLI that writes
 `scenes/<room>-<theme>.json` from `scenes/base.json` and appends `docs/deco-log.md`.
 Theme mode (`all`) filters the furniture list per room type (chambre / séjour / other).
 
-- [ ] `src/deco/proposal.ts` schema + example fixture
-- [ ] `src/deco/match.ts` + tests (category and tag scoring, colour distance, procedural fallback)
-- [ ] `src/deco/layout.ts` + tests (inside room, no overlaps, doors clear, hints honoured)
-- [ ] `scripts/deco-apply.ts` (`npm run deco:apply -- <proposal> <room|all> <theme>`), French console report, `docs/deco-log.md`
-- [ ] `/deco` skill updated to the real commands; `deco-interpreter` agent checked against the schema
+- [x] `src/deco/proposal.ts` schema + example fixture
+- [x] `src/deco/match.ts` + tests (category and tag scoring, colour distance, procedural fallback)
+- [x] `src/deco/layout.ts` + tests (inside room, no overlaps, doors clear, hints honoured)
+- [x] `scripts/deco-apply.ts` (`npm run deco:apply -- <proposal> <room|all> <theme>`), French console report, `docs/deco-log.md`
+- [x] `/deco` skill updated to the real commands; `deco-interpreter` agent checked against the schema
 - [ ] Real run on a stand-in photo (no image in `inspiration/` yet): IMG_5505 → `chambre-2`, before / after screenshots, `visual-check`
 - [ ] Gates green, PR, squash-merge, STATE.md, CLAUDE.md

@@ -1,0 +1,31 @@
+{
+  "source": "photos/IMG_5505.JPG",
+  "targetRoom": "chambre-2",
+  "palette": [
+    { "hex": "#f2f0ec", "role": "murs" },
+    { "hex": "#8a7f78", "role": "sol" },
+    { "hex": "#e8a6b4", "role": "accent" },
+    { "hex": "#ffffff", "role": "meubles" },
+    { "hex": "#a82f3a", "role": "contraste" },
+    { "hex": "#f5ead8", "role": "luminaire" }
+  ],
+  "surfaces": {
+    "floor": { "material": "parquet-oak", "description": "stratifie gris-brun, aspect bois, lames longues", "colour": "#8a7f78" },
+    "wall": { "material": "paint-white", "description": "peinture blanche mate", "colour": "#f2f0ec" },
+    "ceiling": { "material": "paint-white", "description": "blanc uni", "colour": "#f7f7f5" }
+  },
+  "furniture": [
+    { "category": "bed", "styleTags": ["enfant", "blanc"], "approxDimensionsCm": { "w": 90, "d": 200, "h": 150 }, "colour": "#ffffff", "material": "bois laque blanc, lit cabane avec fanions", "placementHint": "against the west-side wall, headboard to the wall, away from the door swing", "count": 1 },
+    { "category": "desk", "styleTags": ["enfant", "blanc"], "approxDimensionsCm": { "w": 100, "d": 55, "h": 75 }, "colour": "#ffffff", "material": "bois blanc et rose", "placementHint": "under the window, against the east wall", "count": 1 },
+    { "category": "chair", "styleTags": ["enfant", "colore"], "approxDimensionsCm": { "w": 45, "d": 45, "h": 85 }, "colour": "#d9a1b0", "material": "tissu rose, pied a roulettes", "placementHint": "in front of the desk, under the window", "count": 1 },
+    { "category": "dresser", "styleTags": ["enfant", "blanc", "colore"], "approxDimensionsCm": { "w": 80, "d": 40, "h": 90 }, "colour": "#a82f3a", "material": "bois blanc, facade rouge en forme de maison", "placementHint": "against the wall near the door, next to the bed", "count": 1 },
+    { "category": "rug", "styleTags": ["enfant", "colore"], "approxDimensionsCm": { "w": 120, "d": 100, "h": 2 }, "colour": "#e8a6b4", "material": "tapis rose forme nuage", "placementHint": "centre of the room, between the bed and the window", "count": 1 },
+    { "category": "lamp", "styleTags": ["scandinave", "blanc"], "approxDimensionsCm": { "w": 50, "d": 50, "h": 50 }, "colour": "#f5ead8", "material": "suspension boule de plumes blanches", "placementHint": "centre of the ceiling", "count": 1 }
+  ],
+  "lighting": {
+    "mood": "lumineux, doux, joyeux",
+    "colourTemperatureK": 3500,
+    "sources": ["fenetre double battant avec voilage blanc", "suspension boule de plumes au centre"]
+  },
+  "styleSummary": "Chambre d'enfant lumineuse et douce, murs blancs, parquet gris-brun, avec des touches de rose et un accent rouge sur le mobilier."
+}
