@@ -49,9 +49,10 @@ export interface ViewerProps {
   levelMode: LevelMode;
   cameraMode: CameraMode;
   showLabels: boolean;
+  showCeilings: boolean;
 }
 
-export function Viewer({ preset, levelMode, cameraMode, showLabels }: ViewerProps) {
+export function Viewer({ preset, levelMode, cameraMode, showLabels, showCeilings }: ViewerProps) {
   const walkLevel = levelMode === "all" ? "rez" : levelMode;
   const eyeHeight = (levelById(walkLevel).floorLevel + EYE_HEIGHT_CM) * CM;
   return (
@@ -63,10 +64,11 @@ export function Viewer({ preset, levelMode, cameraMode, showLabels }: ViewerProp
       style={{ width: "100%", height: "100%" }}
     >
       <color attach="background" args={["#202830"]} />
-      <hemisphereLight args={["#dfe8f5", "#5a5243", 0.7]} />
+      <hemisphereLight args={["#e6edf7", "#7a7265", 1.4]} />
+      <ambientLight intensity={0.35} />
       <directionalLight
         position={[6, 18, 12]}
-        intensity={1.8}
+        intensity={1.3}
         castShadow
         shadow-mapSize={[2048, 2048]}
         shadow-camera-left={-15}
@@ -76,7 +78,7 @@ export function Viewer({ preset, levelMode, cameraMode, showLabels }: ViewerProp
         shadow-bias={-0.0004}
       />
       <Ground />
-      <House mode={levelMode} showLabels={showLabels} />
+      <House mode={levelMode} showLabels={showLabels} showCeilings={showCeilings} />
       {cameraMode === "orbit" ? <OrbitControls makeDefault target={preset.target} /> : <WalkControls eyeHeight={eyeHeight} />}
       <ReadySignal />
     </Canvas>

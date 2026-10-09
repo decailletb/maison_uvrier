@@ -1,8 +1,9 @@
 import { useMemo } from "react";
+import { DoubleSide } from "three";
 import { polygonCentroid } from "@/data/geometry";
 import { FOOTPRINT_CM } from "@/data/house";
 import type { Level, Point } from "@/data/schema";
-import { DEFAULT_FLOOR, DEFAULT_WALL, EXTERIOR_WALL, SLAB, STAIR, finishMaterial } from "../materials";
+import { DEFAULT_CEILING, DEFAULT_FLOOR, DEFAULT_WALL, EXTERIOR_WALL, SLAB, STAIR, finishMaterial } from "../materials";
 import { flatGeometry, slabGeometry } from "../shapes";
 import { stairSteps } from "../stairs";
 import { CM, planToScene } from "../units";
@@ -18,6 +19,8 @@ export interface LevelGroupProps {
   /** Stair polygons of the level below that pierce this slab. */
   stairHoles: readonly (readonly Point[])[];
   showLabels: boolean;
+  /** Draw each room's ceiling at the clear height (off for cut-away top views). */
+  showCeilings: boolean;
 }
 
 const FOOTPRINT_POLYGON: Point[] = [
@@ -73,6 +76,23 @@ function Floors({ level, showLabels }: { level: Level; showLabels: boolean }) {
   );
 }
 
+function Ceilings({ level }: { level: Level }) {
+  return (
+    <group>
+      {level.rooms
+        .filter((room) => !["terrasse", "couvert", "balcon"].includes(room.id))
+        .map((room) => {
+          const mat = finishMaterial(room.ceilingFinish, DEFAULT_CEILING);
+          return (
+            <mesh key={room.id} geometry={flatGeometry(room.polygon)} position={[0, (level.floorLevel + level.clearHeight) * CM, 0]}>
+              <meshStandardMaterial color={mat.color} roughness={mat.roughness} side={DoubleSide} />
+            </mesh>
+          );
+        })}
+    </group>
+  );
+}
+
 function Stairs({ level, riseAbove }: { level: Level; riseAbove: number }) {
   return (
     <group>
@@ -98,7 +118,7 @@ function Stairs({ level, riseAbove }: { level: Level; riseAbove: number }) {
   );
 }
 
-export function LevelGroup({ level, slabBelow, riseAbove, stairHoles, showLabels }: LevelGroupProps) {
+export function LevelGroup({ level, slabBelow, riseAbove, stairHoles, showLabels, showCeilings }: LevelGroupProps) {
   const slab = useMemo(
     () => slabGeometry(FOOTPRINT_POLYGON, level.floorLevel - slabBelow, level.floorLevel, stairHoles),
     [level.floorLevel, slabBelow, stairHoles],
@@ -111,6 +131,7 @@ export function LevelGroup({ level, slabBelow, riseAbove, stairHoles, showLabels
       <Floors level={level} showLabels={showLabels} />
       <Walls level={level} />
       <Stairs level={level} riseAbove={riseAbove} />
+      {showCeilings && <Ceilings level={level} />}
     </group>
   );
 }

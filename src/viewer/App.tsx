@@ -11,6 +11,11 @@ const LEVEL_LABELS: Record<LevelMode, string> = {
   all: "Tous les niveaux",
 };
 
+/** Room presets stand at eye level; top and overview presets look down into the cut-away levels. */
+function isRoomView(preset: CameraPreset): boolean {
+  return preset.level !== "all" && !preset.name.endsWith("-top");
+}
+
 const panel: React.CSSProperties = {
   position: "absolute",
   top: 12,
@@ -31,6 +36,7 @@ export function App() {
   const [levelMode, setLevelMode] = useState<LevelMode>(initial.level);
   const [cameraMode, setCameraMode] = useState<CameraMode>("orbit");
   const [showLabels, setShowLabels] = useState(true);
+  const [showCeilings, setShowCeilings] = useState(isRoomView(initial));
   // Remount the canvas when the camera must jump.
   const [epoch, setEpoch] = useState(0);
 
@@ -41,6 +47,7 @@ export function App() {
     if (!next) return;
     setPreset(next);
     setLevelMode(next.level);
+    setShowCeilings(isRoomView(next));
     setCameraMode("orbit");
     setEpoch((e) => e + 1);
   };
@@ -57,7 +64,14 @@ export function App() {
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }}>
-      <Viewer key={`${preset.name}-${cameraMode}-${epoch}`} preset={preset} levelMode={levelMode} cameraMode={cameraMode} showLabels={showLabels} />
+      <Viewer
+        key={`${preset.name}-${cameraMode}-${epoch}`}
+        preset={preset}
+        levelMode={levelMode}
+        cameraMode={cameraMode}
+        showLabels={showLabels}
+        showCeilings={showCeilings}
+      />
       <div style={panel}>
         <div style={{ fontWeight: 600 }}>Villa F « LACAPELA »</div>
         <label>
@@ -100,6 +114,9 @@ export function App() {
         </label>
         <label>
           <input type="checkbox" checked={showLabels} onChange={(e) => setShowLabels(e.target.checked)} /> Noms des pièces
+        </label>
+        <label>
+          <input type="checkbox" checked={showCeilings} onChange={(e) => setShowCeilings(e.target.checked)} /> Plafonds
         </label>
       </div>
     </div>

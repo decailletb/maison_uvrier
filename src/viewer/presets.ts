@@ -3,9 +3,9 @@
  * metres (scene units). Playwright selects one with `?preset=<name>`; the UI lists
  * them. Names: `overview`, `top`, `<level>-top`, `<room-id>`, `<room-id>-2`.
  */
-import { distanceToSegment, pointAlong, polygonAreaM2, polygonCentroid } from "@/data/geometry";
+import { distanceToSegment, pointAlong, pointInPolygon, polygonCentroid } from "@/data/geometry";
 import { FOOTPRINT_CM, house } from "@/data/house";
-import type { Level, LevelId, Point, Room } from "@/data/schema";
+import type { Level, LevelId, Opening, Point, Room } from "@/data/schema";
 import { planToScene } from "@/scene/units";
 
 export type LevelMode = LevelId | "all";
@@ -23,6 +23,7 @@ export interface CameraPreset {
 const EYE = 155;
 const LOOK = 120;
 const DOOR_KINDS = new Set(["door", "passage", "slidingDoor", "frenchWindow"]);
+const GLAZED_KINDS = new Set(["window", "frenchWindow", "slidingDoor"]);
 
 function unit(from: Point, to: Point): Point {
   const dx = to[0] - from[0];
@@ -57,6 +58,31 @@ export function roomEntrance(room: Room, level: Level): { point: Point; fromDoor
   return { point: [far[0] + dir[0] * 60, far[1] + dir[1] * 60], fromDoor: false };
 }
 
+/** Walks from `from` through `through` until the polygon edge; the point 30 cm before it. */
+function farPoint(from: Point, through: Point, polygon: readonly Point[]): Point {
+  const dir = unit(from, through);
+  let p: Point = through;
+  for (let d = 0; d < 2000; d += 5) {
+    const next: Point = [through[0] + dir[0] * d, through[1] + dir[1] * d];
+    if (!pointInPolygon(next, polygon)) break;
+    p = next;
+  }
+  return [p[0] - dir[0] * 30, p[1] - dir[1] * 30];
+}
+
+/** Glazed exterior openings on the room boundary, widest first, with their plan midpoint. */
+export function roomGlazing(room: Room, level: Level): { opening: Opening; mid: Point }[] {
+  const found: { opening: Opening; mid: Point }[] = [];
+  for (const opening of level.openings) {
+    if (!GLAZED_KINDS.has(opening.kind)) continue;
+    const wall = level.walls.find((w) => w.id === opening.wallId);
+    if (!wall?.exterior) continue;
+    const mid = pointAlong(wall.points, opening.offset + opening.width / 2).point;
+    if (onBoundary(mid, room.polygon, wall.thickness / 2 + 6)) found.push({ opening, mid });
+  }
+  return found.sort((a, b) => b.opening.width - a.opening.width);
+}
+
 function roomPresets(room: Room, level: Level): CameraPreset[] {
   const centroid = polygonCentroid(room.polygon);
   const { point } = roomEntrance(room, level);
@@ -65,19 +91,25 @@ function roomPresets(room: Room, level: Level): CameraPreset[] {
       name: room.id,
       label: `${room.name} (${level.name})`,
       position: planToScene(point, EYE, level.floorLevel),
-      target: planToScene(centroid, LOOK, level.floorLevel),
+      target: planToScene(farPoint(point, centroid, room.polygon), LOOK, level.floorLevel),
       level: level.id,
     },
   ];
-  if (polygonAreaM2(room.polygon) >= 20) {
-    // Second angle from the corner opposite the entrance.
-    const opposite: Point = [2 * centroid[0] - point[0], 2 * centroid[1] - point[1]];
-    const dir = unit(opposite, centroid);
+  const [glazing] = roomGlazing(room, level);
+  if (glazing) {
+    // Second angle: from the far side of the room toward its widest window or bay.
+    const far = room.polygon.reduce((best, p) =>
+      Math.hypot(p[0] - glazing.mid[0], p[1] - glazing.mid[1]) > Math.hypot(best[0] - glazing.mid[0], best[1] - glazing.mid[1])
+        ? p
+        : best,
+    );
+    const dir = unit(far, glazing.mid);
+    const lookHeight = Math.min(LOOK + 20, glazing.opening.sill + glazing.opening.height / 2);
     presets.push({
       name: `${room.id}-2`,
-      label: `${room.name} — vue 2`,
-      position: planToScene([opposite[0] + dir[0] * 40, opposite[1] + dir[1] * 40], EYE, level.floorLevel),
-      target: planToScene(centroid, LOOK, level.floorLevel),
+      label: `${room.name} — vers la fenêtre`,
+      position: planToScene([far[0] + dir[0] * 50, far[1] + dir[1] * 50], EYE, level.floorLevel),
+      target: planToScene(glazing.mid, lookHeight, level.floorLevel),
       level: level.id,
     });
   }

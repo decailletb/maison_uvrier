@@ -31,10 +31,11 @@ function textTexture(text: string): { texture: CanvasTexture; aspect: number } {
 
 export function RoomLabel({ text, position }: { text: string; position: [number, number, number] }) {
   const { texture, aspect } = useMemo(() => textTexture(text), [text]);
-  const height = 0.28;
+  // Constant screen size: with sizeAttenuation off, a scale of 1 spans the frustum height at distance 1.
+  const height = 0.045;
   return (
     <sprite position={position} scale={[height * aspect, height, 1]} renderOrder={10}>
-      <spriteMaterial map={texture} transparent depthTest={false} />
+      <spriteMaterial map={texture} transparent depthTest={false} sizeAttenuation={false} />
     </sprite>
   );
 }

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { pointInPolygon } from "@/data/geometry";
 import { house } from "@/data/house";
-import { CAMERA_PRESETS, DEFAULT_PRESET, findPreset, presetFromSearch, roomEntrance } from "./presets";
+import { CAMERA_PRESETS, DEFAULT_PRESET, findPreset, presetFromSearch, roomEntrance, roomGlazing } from "./presets";
 
 describe("camera presets", () => {
   it("have unique names", () => {
@@ -17,6 +17,17 @@ describe("camera presets", () => {
       }
     }
     expect(findPreset("sejour-cuisine-2")).toBeDefined();
+    expect(findPreset("chambre-parents-2")).toBeDefined();
+    expect(findPreset("salle-de-bains-2")).toBeUndefined();
+  });
+
+  it("find the widest glazed exterior opening of a room", () => {
+    const rez = house.levels[1];
+    const sejour = rez.rooms.find((r) => r.id === "sejour-cuisine")!;
+    expect(roomGlazing(sejour, rez)[0].opening.ref).toBe("006");
+    const etage = house.levels[2];
+    const parents = etage.rooms.find((r) => r.id === "chambre-parents")!;
+    expect(roomGlazing(parents, etage)[0].opening.ref).toBe("012");
   });
 
   it("start room views inside the room, at eye height", () => {
