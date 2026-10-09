@@ -1,0 +1,22 @@
+node_modules/
+dist/
+*.local
+.vite/
+
+# 3D assets: reproducible with `npm run assets:fetch`
+assets/**/*.glb
+assets/**/*.gltf
+assets/**/*.bin
+assets/**/*.hdr
+assets/**/*.exr
+assets/**/*.jpg
+assets/**/*.jpeg
+assets/**/*.png
+assets/**/*.ktx2
+assets/**/*.zip
+
+# Playwright
+playwright-report/
+playwright/.cache/
+playwright/screenshots/
+test-results/
