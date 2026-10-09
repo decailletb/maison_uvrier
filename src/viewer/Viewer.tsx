@@ -6,6 +6,7 @@ import { flatGeometry } from "@/scene/shapes";
 import { EXTERIOR_ROOMS } from "@/scene/shell";
 import { useMemo } from "react";
 import { SceneEnvironment, type SunSettings } from "@/scene/components/Environment";
+import { Showcase } from "@/catalogue/components/Showcase";
 import { House } from "@/scene/components/House";
 import { CM } from "@/scene/units";
 import type { CameraPreset, LevelMode } from "./presets";
@@ -88,8 +89,14 @@ export function Viewer({ preset, levelMode, cameraMode, showLabels, showCeilings
     >
       <color attach="background" args={["#9fb7cf"]} />
       <SceneEnvironment sun={sun} />
-      <Ground levelMode={levelMode} />
-      <House mode={levelMode} showLabels={showLabels} labelRoomId={showCeilings ? preset.roomId : undefined} showCeilings={showCeilings} />
+      {preset.showcase ? (
+        <Showcase />
+      ) : (
+        <>
+          <Ground levelMode={levelMode} />
+          <House mode={levelMode} showLabels={showLabels} labelRoomId={showCeilings ? preset.roomId : undefined} showCeilings={showCeilings} />
+        </>
+      )}
       {cameraMode === "orbit" ? <OrbitControls makeDefault target={preset.target} /> : <WalkControls eyeHeight={eyeHeight} />}
       <ReadySignal />
     </Canvas>
