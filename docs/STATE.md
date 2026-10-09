@@ -1,24 +1,24 @@
-# État du projet — mis à jour 2026-10-09T16:55+01:00
+# État du projet — mis à jour 2026-10-09T17:00+01:00
 
-Session 1 démarrée le 2026-10-09 à 13:54. Phases 0 à 4 fusionnées (PR #1 à #6).
+Session 1 démarrée le 2026-10-09 à 13:54. Phases 0 à 5 fusionnées (PR #1 à #7).
 
 ## Phase en cours
-Phase 5 — Workflow décoration (`feat/deco-workflow`). Plan : `docs/plan/06-deco-workflow.md`.
+Phase 6 — Polish (`feat/render-quality`). Plan : `docs/plan/07-polish.md`.
 
 ## Fait (dernières étapes, 5 max)
-- `src/deco/` : proposition (zod), appariement, mise en place (indices fenêtre / points cardinaux / mur opposé / centre / coin / à côté de / devant), 13 tests.
-- `npm run deco:apply` ; exécution réelle IMG_5505 → `scenes/chambre-2-enfant.json` : lit tête au mur ouest, bureau sous la fenêtre est, chaise devant, commode à côté du lit, tapis ; suspension ignorée (journalisé).
-- Parquet en lames (texture), `VIEWER_LABELS=0` pour les captures.
-- Mode thème `all` testé à sec (4 pièces).
+- Tone mapping ACES, remplissage intérieur plus fort, peinture plus blanche, ombres douces, objectif plus large dans les petites pièces.
+- Rendu à la demande en mode orbite (continu en marche), carte d'ombres 1536, `?stats=1`, journal des draw calls.
+- `docs/USER-GUIDE.md` (français) : installation, navigation, édition, enregistrement, `/deco`, dépannage.
+- 74 tests unitaires et 4 e2e verts après le passage au rendu à la demande.
 
 ## En cours (étape exacte, fichier, ce qui reste)
-Deuxième `visual-check` avant / après sur chambre-2 ; puis portes, PR.
+`visual-check` de l'éclairage (murs blancs ?) sur chambre-2-enfant et base ; ajustements ; portes ; PR.
 
 ## Prochaine étape (une ligne : la première action de la prochaine session)
-Lire le verdict `visual-check` ; si PASS : `build-check`, PR `feat/deco-workflow`, merge, puis phase 6 (`feat/render-quality`, `docs/USER-GUIDE.md`).
+Lire le verdict éclairage ; ajuster `src/scene/components/Environment.tsx` si besoin ; `build-check` ; PR `feat/render-quality` ; merge ; STATE final.
 
 ## Bloqué / questions pour Benjamin
-Aucune. Photo IMG_5505 utilisée comme image d'inspiration de substitution (aucune image dans `inspiration/`).
+Aucune. Budget de performance Iris Xe non mesurable ici (SwiftShader) : à vérifier sur la machine avec `?stats=1`.
 
 ## Branche active, dernier commit, PR ouverte
-Branche `feat/deco-workflow`, pas de PR.
+Branche `feat/render-quality`, pas de PR.
