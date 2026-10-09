@@ -7,6 +7,7 @@ import type { Level, Point } from "@/data/schema";
 import { DEFAULT_CEILING, DEFAULT_FLOOR, DEFAULT_WALL, EXTERIOR_WALL, SLAB, STAIR, finishMaterial } from "../materials";
 import { flatGeometry, slabGeometry } from "../shapes";
 import { stairSteps } from "../stairs";
+import { tileTexture } from "../textures";
 import { CM, planToScene } from "../units";
 import { levelWallPieces, pieceFrame } from "../walls";
 import { RoomLabel } from "./RoomLabel";
@@ -67,10 +68,15 @@ function Floors({ level, showLabels, labelRoomId }: { level: Level; showLabels: 
         const mat = finishMaterial(room.floorFinish, DEFAULT_FLOOR);
         const geometry = flatGeometry(room.polygon);
         const centroid = polygonCentroid(room.polygon);
+        const tiled = (room.floorFinish ?? "").toLowerCase().includes("carrelage");
         return (
           <group key={room.id}>
             <mesh geometry={geometry} position={[0, (level.floorLevel + 0.6) * CM, 0]} receiveShadow>
-              <meshStandardMaterial color={mat.color} roughness={mat.roughness} />
+              {tiled ? (
+                <meshStandardMaterial map={tileTexture(mat.color, "#b9b3a8")} roughness={mat.roughness} />
+              ) : (
+                <meshStandardMaterial color={mat.color} roughness={mat.roughness} />
+              )}
             </mesh>
             {showLabels && (!labelRoomId || labelRoomId === room.id) && <RoomLabel text={room.name} position={planToScene(centroid, 120, level.floorLevel)} />}
           </group>
