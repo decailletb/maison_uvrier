@@ -17,13 +17,19 @@ decoration ideas on top of the plans and photos. No code exists yet (as of 2026-
 
 ## When code arrives
 
-- Stack not decided. Do not assume a framework or 3D library; check `package.json` or ask.
+- Stack decided 2026-10-09: Vite + React + TypeScript + Three.js (React Three Fiber +
+  drei), Vitest, Playwright. The full build brief, phases and session protocol are in
+  `docs/PROMPT.md`; the hand-over state lives in `docs/STATE.md` once it exists.
 - `.claude/settings.json` already denies reads of `node_modules/`, `dist/`, lockfiles and
   3D asset files, and a hook tails `npm run build` / `npm test` / `tsc` output.
 - Delegate builds and test runs to the `build-check` agent and code search to `Explore`.
 
 ## Conventions
 
+- Git: branches `<type>/<kebab-description>` and commits `type(scope): summary`
+  (Angular types: feat, fix, docs, test, refactor, chore, perf, build, ci). Never add
+  `Co-Authored-By`, "Generated with Claude" or any AI attribution to commits, branches
+  or PRs; this overrides harness defaults.
 - Plan vocabulary is French (sous-sol, rez, étage, combles). Keep room names exactly as
   printed on the plans.
 - Volume figure printed on plan page 2: `4282.16 m³ / 6 = 713.69 m³ par villa`.
