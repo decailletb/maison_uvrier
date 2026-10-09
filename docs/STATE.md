@@ -1,24 +1,24 @@
-# État du projet — mis à jour 2026-10-09T16:25+01:00
+# État du projet — mis à jour 2026-10-09T16:55+01:00
 
-Session 1 démarrée le 2026-10-09 à 13:54. Phases 0 à 4a fusionnées (PR #1 à #5).
+Session 1 démarrée le 2026-10-09 à 13:54. Phases 0 à 4 fusionnées (PR #1 à #6).
 
 ## Phase en cours
-Phase 4b — Édition de scène (`feat/scene-editing`), en fin de phase. Plan : `docs/plan/05-scene-editing.md`.
+Phase 5 — Workflow décoration (`feat/deco-workflow`). Plan : `docs/plan/06-deco-workflow.md`.
 
 ## Fait (dernières étapes, 5 max)
-- Éditeur complet : sélection, glisser, aimantation, finitions par pièce, annuler/rétablir, enregistrement dans `scenes/`.
-- `scenes/base.json` : séjour-cuisine et chambre parents meublés ; `visual-check` : tous les objets reconnaissables, aucun ne flotte ni ne traverse un mur.
-- `?ui=0` masque les panneaux ; les captures l'utilisent. Preset `<pièce>-3` (diagonale retour).
-- 67 tests unitaires, 4 e2e (fumée + édition : placer, déplacer, enregistrer, charger).
+- `src/deco/` : proposition (zod), appariement, mise en place (indices fenêtre / points cardinaux / mur opposé / centre / coin / à côté de / devant), 13 tests.
+- `npm run deco:apply` ; exécution réelle IMG_5505 → `scenes/chambre-2-enfant.json` : lit tête au mur ouest, bureau sous la fenêtre est, chaise devant, commode à côté du lit, tapis ; suspension ignorée (journalisé).
+- Parquet en lames (texture), `VIEWER_LABELS=0` pour les captures.
+- Mode thème `all` testé à sec (4 pièces).
 
 ## En cours (étape exacte, fichier, ce qui reste)
-`build-check` (toutes les portes) en cours ; puis PR `feat/scene-editing`, squash-merge.
+Deuxième `visual-check` avant / après sur chambre-2 ; puis portes, PR.
 
 ## Prochaine étape (une ligne : la première action de la prochaine session)
-Si la PR n'est pas fusionnée : `gh pr list`, `build-check`, merge ; puis `feat/deco-workflow` et `docs/plan/06-deco-workflow.md`.
+Lire le verdict `visual-check` ; si PASS : `build-check`, PR `feat/deco-workflow`, merge, puis phase 6 (`feat/render-quality`, `docs/USER-GUIDE.md`).
 
 ## Bloqué / questions pour Benjamin
-Aucune. À polir en phase 6 : cadrage des presets de pièce (trop serrés dans les petites pièces), teinte du parquet.
+Aucune. Photo IMG_5505 utilisée comme image d'inspiration de substitution (aucune image dans `inspiration/`).
 
 ## Branche active, dernier commit, PR ouverte
-Branche `feat/scene-editing`, pas encore de PR.
+Branche `feat/deco-workflow`, pas de PR.

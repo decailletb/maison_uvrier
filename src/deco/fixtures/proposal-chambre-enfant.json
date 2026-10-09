@@ -1,0 +1,25 @@
+{
+  "source": "photos/IMG_5505.JPG",
+  "targetRoom": "chambre-2",
+  "palette": [
+    { "hex": "#f3eeee", "role": "dominante" },
+    { "hex": "#e8b4b8", "role": "accent" },
+    { "hex": "#9a8a7a", "role": "sol" },
+    { "hex": "#ffffff", "role": "murs" },
+    { "hex": "#d9c7a0", "role": "bois" }
+  ],
+  "surfaces": {
+    "floor": { "description": "stratifié bois gris-brun", "colour": "#9a8a7a" },
+    "wall": { "description": "peinture blanche", "colour": "#f7f5f2" },
+    "ceiling": { "description": "plafond blanc", "colour": "#f8f7f3" }
+  },
+  "furniture": [
+    { "category": "bed", "styleTags": ["enfant", "blanc"], "approxDimensionsCm": { "w": 90, "d": 200, "h": 120 }, "colour": "#f3eeee", "material": "bois laqué blanc", "placementHint": "headboard against the wall opposite the door" },
+    { "category": "nightstand", "styleTags": ["enfant", "blanc"], "approxDimensionsCm": { "w": 40, "d": 35, "h": 50 }, "colour": "#f3eeee", "material": "bois blanc", "placementHint": "beside the bed" },
+    { "category": "rug", "styleTags": ["enfant", "colore"], "approxDimensionsCm": { "w": 140, "d": 100, "h": 2 }, "colour": "#e8b4b8", "material": "laine", "placementHint": "centre" },
+    { "category": "wardrobe", "styleTags": ["blanc", "minimaliste"], "approxDimensionsCm": { "w": 120, "d": 60, "h": 200 }, "colour": "#f5f5f5", "material": "bois laqué", "placementHint": "against a wall" },
+    { "category": "lamp", "styleTags": ["enfant"], "approxDimensionsCm": { "w": 35, "d": 35, "h": 150 }, "colour": "#f3eeee", "material": "plumes", "placementHint": "corner" }
+  ],
+  "lighting": { "mood": "douce et claire", "colourTemperatureK": 3000, "sources": ["suspension boule", "lumière du jour"] },
+  "styleSummary": "Chambre d'enfant douce en blanc et rose poudré, sol stratifié gris-brun, lit cabane et tapis nuage."
+}

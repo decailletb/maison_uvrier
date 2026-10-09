@@ -36,14 +36,14 @@ export function SceneEnvironment({ sun, hdri = DEFAULT_HDRI }: { sun: SunSetting
   return (
     <>
       {hasHdri ? (
-        <DreiEnvironment files={hdri} background environmentIntensity={0.6} backgroundBlurriness={0} />
+        <DreiEnvironment files={hdri} background environmentIntensity={0.85} backgroundBlurriness={0} />
       ) : (
         <>
           <Sky sunPosition={lightPos} turbidity={6} rayleigh={1.5} />
           <hemisphereLight args={["#cfe0f5", "#6e6a5e", 0.9]} />
         </>
       )}
-      <ambientLight intensity={hasHdri ? 0.15 : 0.3} />
+      <ambientLight intensity={hasHdri ? 0.35 : 0.4} />
       <directionalLight
         position={lightPos}
         intensity={3.2 * daylight}
