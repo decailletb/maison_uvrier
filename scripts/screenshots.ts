@@ -1,7 +1,8 @@
 /**
  * Writes one PNG per camera preset to playwright/screenshots/<preset>.png.
  * Usage: npm run screenshots [-- overview rez-top sejour-cuisine]   (no args = all presets)
- * Preset names come from the running app (`window.__presets`).
+ * Preset names come from the running app (`window.__presets`). Set VIEWER_SCENE=<name>
+ * to load scenes/<name>.json in every shot.
  * Requires the dev server on http://localhost:5173 (started automatically if absent).
  */
 import { chromium } from "@playwright/test";
@@ -55,7 +56,8 @@ async function main() {
     const presets = wanted.length ? available.filter((n) => wanted.includes(n)) : available;
     if (!presets.length) throw new Error(`no preset matches ${wanted.join(", ")}; available: ${available.join(", ")}`);
     for (const name of presets) {
-      await page.goto(`${BASE}/?preset=${name}`);
+      const scene = process.env.VIEWER_SCENE ? `&scene=${process.env.VIEWER_SCENE}` : "";
+      await page.goto(`${BASE}/?preset=${name}${scene}`);
       await page.waitForFunction(() => (window as Window & { __sceneReady?: boolean }).__sceneReady === true, null, { timeout: 90_000 });
       await page.waitForTimeout(500);
       const file = resolve(OUT, `${name}.png`);
