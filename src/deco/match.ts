@@ -5,7 +5,7 @@
  */
 import { findAssets, type AssetEntry, type Category } from "@/catalogue/manifest";
 import { materialsOfKind, type MaterialDef, type MaterialKind } from "@/catalogue/materials";
-import type { ProceduralKind } from "@/catalogue/procedural";
+import { PROCEDURAL_DEFAULTS, type ProceduralKind } from "@/catalogue/procedural";
 import type { ProposalFurniture, Surface } from "./proposal";
 
 export const CATEGORY_TO_KIND: Partial<Record<Category, ProceduralKind>> = {
@@ -23,7 +23,19 @@ export const CATEGORY_TO_KIND: Partial<Record<Category, ProceduralKind>> = {
   kitchen: "kitchenBlock",
   lamp: "lamp",
   rug: "rug",
+  plant: "plant",
 };
+
+/** Decor pieces with a procedural shape, recognised from their description. */
+const DECOR_KINDS: [RegExp, ProceduralKind][] = [[/pouf|ottoman/i, "pouf"]];
+
+function proceduralKindFor(item: ProposalFurniture): ProceduralKind | undefined {
+  if (item.category === "decor") {
+    const text = `${item.material} ${item.placementHint}`;
+    return DECOR_KINDS.find(([re]) => re.test(text))?.[1];
+  }
+  return CATEGORY_TO_KIND[item.category];
+}
 
 /** Material kinds a procedural kind takes for its main and accent materials. */
 const KIND_MATERIALS: Record<ProceduralKind, { main: MaterialKind; accent: MaterialKind }> = {
@@ -40,7 +52,17 @@ const KIND_MATERIALS: Record<ProceduralKind, { main: MaterialKind; accent: Mater
   kitchenBlock: { main: "wood", accent: "stone" },
   rug: { main: "fabric", accent: "fabric" },
   lamp: { main: "fabric", accent: "metal" },
+  pouf: { main: "fabric", accent: "fabric" },
+  plant: { main: "fabric", accent: "stone" },
 };
+
+/** Accent material: wood follows the item colour, a same-kind accent matches the main material, else the kind's default. */
+function accentMaterial(procedural: ProceduralKind, item: ProposalFurniture, main: string): string {
+  const kinds = KIND_MATERIALS[procedural];
+  if (kinds.accent === "wood") return nearestMaterial("wood", item.colour).id;
+  if (kinds.accent === kinds.main) return main;
+  return PROCEDURAL_DEFAULTS[procedural].accent;
+}
 
 function hexToRgb(hex: string): [number, number, number] {
   const n = parseInt(hex.slice(1), 16);
@@ -72,18 +94,19 @@ export function matchFurniture(item: ProposalFurniture): Match {
     const score = best.tags.filter((t) => item.styleTags.includes(t)).length;
     if (score >= 1) return { kind: "asset", entry: best, score };
   }
-  const procedural = CATEGORY_TO_KIND[item.category];
+  const procedural = proceduralKindFor(item);
   if (!procedural) return { kind: "none", reason: `pas de modèle ni de forme paramétrique pour « ${item.category} »` };
   const kinds = KIND_MATERIALS[procedural];
   const dims = item.approxDimensionsCm;
   const scaled = item.category === "armchair" && dims ? { w: dims.w, d: dims.d, h: dims.h } : dims;
+  const material = nearestMaterial(kinds.main, item.colour).id;
   return {
     kind: "procedural",
     procedural,
     params: {
       ...(scaled ? { w: scaled.w, d: scaled.d, h: scaled.h } : {}),
-      material: nearestMaterial(kinds.main, item.colour).id,
-      accent: nearestMaterial(kinds.accent, kinds.accent === "wood" ? item.colour : undefined).id,
+      material,
+      accent: accentMaterial(procedural, item, material),
     },
   };
 }

@@ -17,6 +17,8 @@ export const PROCEDURAL_KINDS = [
   "kitchenBlock",
   "rug",
   "lamp",
+  "pouf",
+  "plant",
 ] as const;
 export type ProceduralKind = (typeof PROCEDURAL_KINDS)[number];
 
@@ -43,7 +45,7 @@ export interface ProceduralResult {
   parts: Part[];
 }
 
-const DEFAULTS: Record<ProceduralKind, { w: number; d: number; h: number; material: string; accent: string }> = {
+export const PROCEDURAL_DEFAULTS: Record<ProceduralKind, { w: number; d: number; h: number; material: string; accent: string }> = {
   bed: { w: 160, d: 200, h: 95, material: "fabric-white", accent: "wood-oak" },
   nightstand: { w: 45, d: 40, h: 50, material: "wood-oak", accent: "metal-black" },
   wardrobe: { w: 200, d: 60, h: 220, material: "wood-white", accent: "metal-steel" },
@@ -57,6 +59,8 @@ const DEFAULTS: Record<ProceduralKind, { w: number; d: number; h: number; materi
   kitchenBlock: { w: 300, d: 62, h: 90, material: "wood-white", accent: "stone-black" },
   rug: { w: 200, d: 150, h: 1.5, material: "fabric-grey", accent: "fabric-grey" },
   lamp: { w: 40, d: 40, h: 150, material: "fabric-beige", accent: "metal-black" },
+  pouf: { w: 55, d: 55, h: 40, material: "fabric-beige", accent: "fabric-beige" },
+  plant: { w: 60, d: 60, h: 150, material: "fabric-green", accent: "stone-terracotta" },
 };
 
 function box(x: number, y: number, z: number, w: number, h: number, d: number, material: string): Part {
@@ -75,7 +79,7 @@ function legs(w: number, d: number, h: number, t: number, material: string, inse
 }
 
 export function proceduralParts(kind: ProceduralKind, params: ProceduralParams): ProceduralResult {
-  const def = DEFAULTS[kind];
+  const def = PROCEDURAL_DEFAULTS[kind];
   const w = params.w ?? def.w;
   const d = params.d ?? def.d;
   const h = params.h ?? def.h;
@@ -152,6 +156,20 @@ export function proceduralParts(kind: ProceduralKind, params: ProceduralParams):
       parts.push(box(0, 1, 0, w * 0.7, 2, d * 0.7, a));
       parts.push(box(0, (h - 30) / 2, 0, 3, h - 30, 3, a));
       parts.push(box(0, h - 15, 0, w, 30, d, m));
+      break;
+    }
+    case "pouf":
+      parts.push(box(0, (h - 6) / 2, 0, w, h - 6, d, m));
+      parts.push(box(0, h - 3, 0, w - 6, 6, d - 6, a)); // cushion top
+      break;
+    case "plant": {
+      // Terracotta pot, short trunk, two stacked foliage blocks.
+      const potH = Math.min(40, h * 0.28);
+      const crown = h - potH;
+      parts.push(box(0, potH / 2, 0, w * 0.5, potH, d * 0.5, a));
+      parts.push(box(0, potH + crown * 0.2, 0, 3, crown * 0.4, 3, "wood-walnut"));
+      parts.push(box(0, potH + crown * 0.55, 0, w, crown * 0.5, d, m));
+      parts.push(box(0, potH + crown * 0.87, 0, w * 0.6, crown * 0.26, d * 0.6, m));
       break;
     }
   }

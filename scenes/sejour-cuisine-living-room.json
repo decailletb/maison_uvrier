@@ -5,7 +5,7 @@
   "roomFinishes": {
     "sejour-cuisine": {
       "floor": "parquet-oak",
-      "wall": "paint-warm-grey",
+      "wall": "paint-sand-pink",
       "ceiling": "ceiling-white"
     },
     "entree": {
@@ -195,11 +195,55 @@
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
-        231,
+        225,
         254,
         0
       ],
-      "rotationY": 0,
+      "rotationY": 270,
+      "scale": 1
+    },
+    {
+      "id": "sejour-cuisine-decor-1",
+      "asset": {
+        "procedural": "pouf",
+        "params": {
+          "w": 55,
+          "d": 55,
+          "h": 40,
+          "material": "fabric-white",
+          "accent": "fabric-white"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        343,
+        254,
+        0
+      ],
+      "rotationY": 90,
+      "scale": 1
+    },
+    {
+      "id": "sejour-cuisine-decor-2",
+      "asset": {
+        "procedural": "pouf",
+        "params": {
+          "w": 55,
+          "d": 55,
+          "h": 40,
+          "material": "fabric-white",
+          "accent": "fabric-white"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        225,
+        152,
+        0
+      ],
+      "rotationY": 270,
       "scale": 1
     },
     {
@@ -211,17 +255,17 @@
           "d": 220,
           "h": 1,
           "material": "fabric-beige",
-          "accent": "fabric-pink"
+          "accent": "fabric-beige"
         }
       },
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
-        231,
+        225,
         254,
         0
       ],
-      "rotationY": 90,
+      "rotationY": 270,
       "scale": 1
     },
     {
@@ -239,11 +283,55 @@
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
-        51,
+        58,
         627,
         0
       ],
       "rotationY": 90,
+      "scale": 1
+    },
+    {
+      "id": "sejour-cuisine-plant-1",
+      "asset": {
+        "procedural": "plant",
+        "params": {
+          "w": 60,
+          "d": 60,
+          "h": 150,
+          "material": "fabric-green",
+          "accent": "stone-terracotta"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        82,
+        72,
+        0
+      ],
+      "rotationY": 0,
+      "scale": 1
+    },
+    {
+      "id": "sejour-cuisine-plant-2",
+      "asset": {
+        "procedural": "plant",
+        "params": {
+          "w": 60,
+          "d": 60,
+          "h": 150,
+          "material": "fabric-green",
+          "accent": "stone-terracotta"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        378,
+        72,
+        0
+      ],
+      "rotationY": 0,
       "scale": 1
     },
     {

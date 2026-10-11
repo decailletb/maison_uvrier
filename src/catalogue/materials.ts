@@ -34,6 +34,7 @@ const defs: MaterialDef[] = [
   { id: "paint-warm-grey", kind: "wall", label: "Peinture gris chaud", color: "#d8d2c8", roughness: 0.85 },
   { id: "paint-sage", kind: "wall", label: "Peinture vert sauge", color: "#b7c2ad", roughness: 0.85 },
   { id: "paint-navy", kind: "wall", label: "Peinture bleu nuit", color: "#2f3a52", roughness: 0.8 },
+  { id: "paint-sand-pink", kind: "wall", label: "Peinture beige rosé", color: "#e8d3be", roughness: 0.85 },
   { id: "paint-terracotta", kind: "wall", label: "Peinture terre cuite", color: "#c57a5a", roughness: 0.85 },
   { id: "tile-wall-white", kind: "wall", label: "Faïence blanche grand format", color: "#ece9e3", roughness: 0.25, tile: 0.6, grout: "#d0cdc6" },
   { id: "tile-wall-grey", kind: "wall", label: "Faïence gris pierre", color: "#9c9a95", roughness: 0.3, tile: 0.6, grout: "#7f7d78" },
@@ -57,6 +58,7 @@ const defs: MaterialDef[] = [
   { id: "metal-steel", kind: "metal", label: "Acier brossé", color: "#b8babd", roughness: 0.35, metalness: 0.9 },
   { id: "metal-brass", kind: "metal", label: "Laiton", color: "#c9a955", roughness: 0.35, metalness: 0.9 },
   { id: "stone-black", kind: "stone", label: "Plan noir", color: "#1f1f1f", roughness: 0.3 },
+  { id: "stone-terracotta", kind: "stone", label: "Terre cuite", color: "#b8683f", roughness: 0.8 },
   { id: "stone-white", kind: "stone", label: "Plan blanc", color: "#e9e7e2", roughness: 0.3 },
   { id: "glass-clear", kind: "glass", label: "Verre", color: "#cfe3ee", roughness: 0.05, opacity: 0.35 },
 ];
