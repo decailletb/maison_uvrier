@@ -55,3 +55,25 @@ Scène écrite : scenes/sejour-cuisine-living-room.json (base : base)
 Retouches : canapé et tapis fabric-beige, pieds chêne ; étagère → bibliothèque 120×35×180 ; cuisine, table à manger et 6 chaises de la base conservées.
 Verdict visual-check : réussi avec remarques. Murs beige rosé (teinte discrète), poufs et plantes lisibles et bien placés, rien ne se chevauche, portes et baies dégagées ; tapis peu contrasté avec le parquet.
 
+## 2026-10-11 12:15 — sejour-cuisine ← inspiration/sejour/living_room.jpg (thème « living-room »)
+
+Style : Un séjour bohème chaleureux, mêlant parquet clair, murs beige rosé, rotin, lin crème et nombreuses plantes.
+Palette : #E8D3BE, #C99A6B, #EFE6D8, #B8683F, #6F8F4E, #D9A55B, #FFFFFF
+Scène écrite : scenes/sejour-cuisine-living-room.json (base : base)
+
+- sejour-cuisine : sofa → forme paramétrique sofa (fabric-cream)
+- sejour-cuisine : coffeeTable → modèle modern-coffee-table-01
+- sejour-cuisine : decor → forme paramétrique pouf (fabric-cream)
+- sejour-cuisine : decor → forme paramétrique pouf (fabric-cream)
+- sejour-cuisine : rug → forme paramétrique rug (fabric-jute)
+- sejour-cuisine : shelf → modèle wooden-display-shelves-01
+- sejour-cuisine : plant → modèle potted-plant-01
+- sejour-cuisine : plant → modèle potted-plant-02
+- sejour-cuisine : suspension ignorée (luminaires de plafond non modélisés)
+- sejour-cuisine : decor → modèle hanging-picture-frame-02
+- sejour-cuisine : decor → modèle hanging-picture-frame-02
+- sejour-cuisine : conservés de la base : kitchen-block, dining-table, chair-1, chair-2, chair-3, chair-4, chair-5, chair-6
+- sejour-cuisine : sol parquet-oak, murs paint-sand-pink, plafond ceiling-white
+
+Verdict visual-check (rendu réaliste) : réussi avec remarques. Parquet chêne texturé, murs beige rosé, table basse, étagère à casiers, plantes, cadres et chaises en modèles 3D réels, canapé et poufs en lin crème arrondis, tapis jute naturel ; restent un plafond gris-froid, un relief de tissu peu visible à distance et l'œuvre des cadres très sombre.
+

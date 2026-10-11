@@ -23,7 +23,7 @@
     {"category": "shelf", "styleTags": ["boheme", "bois-clair"], "approxDimensionsCm": {"w": 120, "d": 22, "h": 20}, "colour": "#C99A6B", "material": "bois clair", "placementHint": "Étagère murale au-dessus de la desserte, mur du fond du salon"},
     {"category": "plant", "styleTags": ["boheme"], "approxDimensionsCm": {"w": 60, "d": 60, "h": 150}, "colour": "#6F8F4E", "material": "feuillage, pot terre cuite", "count": 2, "placementHint": "Grandes plantes en coin et près de la baie, plusieurs petites sur étagère"},
     {"category": "lamp", "styleTags": ["boheme", "bois-clair"], "approxDimensionsCm": {"w": 50, "d": 50, "h": 45}, "colour": "#D9A55B", "material": "rotin tressé", "placementHint": "Suspension au-dessus de la table basse, hauteur 150 cm du sol"},
-    {"category": "decor", "styleTags": ["boheme"], "approxDimensionsCm": {"w": 45, "d": 3, "h": 60}, "colour": "#EFE6D8", "material": "cadres botaniques bois clair", "placementHint": "Deux cadres sur le mur derrière le canapé"}
+    {"category": "decor", "styleTags": ["boheme"], "approxDimensionsCm": {"w": 45, "d": 3, "h": 60}, "colour": "#EFE6D8", "material": "cadres botaniques bois clair", "count": 2, "placementHint": "Deux cadres sur le mur derrière le canapé"}
   ],
   "lighting": {
     "mood": "chaleureux, lumière naturelle douce par grands rideaux blancs",

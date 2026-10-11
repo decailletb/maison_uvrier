@@ -14,7 +14,14 @@ export interface LayoutItem {
   w: number;
   d: number;
   hint: string;
+  /** Hung on a wall (frames): only wall items and tall furniture block it. */
+  wall?: boolean;
+  /** Height, cm: floor pieces from TALL up block the wall above them. */
+  h?: number;
 }
+
+/** Floor furniture at least this high (cm) reaches the wall decor zone. */
+const TALL = 100;
 
 export interface Placed {
   key: string;
@@ -36,21 +43,47 @@ function overlaps(a: Box, b: Box, gap = 5): boolean {
   return a.min[0] < b.max[0] + gap && a.max[0] > b.min[0] - gap && a.min[1] < b.max[1] + gap && a.max[1] > b.min[1] - gap;
 }
 
-/** Squares of 90 cm inside the room in front of each door, kept free. */
+/** Passage zones kept free inside the room: the full width of each door, 90 cm deep (100 cm wide at least). */
 function doorZones(room: Room, level: Level): Box[] {
   const zones: Box[] = [];
   const centroid = polygonCentroid(room.polygon);
   for (const o of level.openings) {
-    if (o.kind !== "door" && o.kind !== "passage" && o.kind !== "frenchWindow") continue;
+    if (o.kind === "window") continue;
     const wall = level.walls.find((w) => w.id === o.wallId);
     if (!wall) continue;
-    const mid = pointAlong(wall.points, o.offset + o.width / 2).point;
+    const at = pointAlong(wall.points, o.offset + o.width / 2);
+    const mid = at.point;
     const inside: Point = [mid[0] + (centroid[0] - mid[0]) * 0.001, mid[1] + (centroid[1] - mid[1]) * 0.001];
     if (!pointInPolygon(inside, room.polygon, wall.thickness / 2 + 6)) continue;
-    const dir = [centroid[0] - mid[0], centroid[1] - mid[1]];
-    const len = Math.hypot(dir[0], dir[1]) || 1;
-    const c: Point = [mid[0] + (dir[0] / len) * 50, mid[1] + (dir[1] / len) * 50];
-    zones.push({ min: [c[0] - 50, c[1] - 50], max: [c[0] + 50, c[1] + 50] });
+    // Wall direction at the opening, and its normal turned toward the room.
+    const a = pointAlong(wall.points, o.offset).point;
+    const b = pointAlong(wall.points, o.offset + o.width).point;
+    const len = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
+    const along: Point = [(b[0] - a[0]) / len, (b[1] - a[1]) / len];
+    let normal: Point = [-along[1], along[0]];
+    if (normal[0] * (centroid[0] - mid[0]) + normal[1] * (centroid[1] - mid[1]) < 0) normal = [-normal[0], -normal[1]];
+    const half = Math.max(o.width, 100) / 2;
+    const corners: Point[] = [-half, half].flatMap((s) =>
+      [0, 90 + wall.thickness / 2].map((t): Point => [mid[0] + along[0] * s + normal[0] * t, mid[1] + along[1] * s + normal[1] * t]),
+    );
+    zones.push(bbox(corners));
+  }
+  return zones;
+}
+
+/** Every opening of the level (windows, doors) as a box around its span in the wall: wall decor keeps off them. */
+function openingZones(level: Level): Box[] {
+  const zones: Box[] = [];
+  for (const o of level.openings) {
+    const wall = level.walls.find((w) => w.id === o.wallId);
+    if (!wall) continue;
+    const a = pointAlong(wall.points, o.offset).point;
+    const b = pointAlong(wall.points, o.offset + o.width).point;
+    const pad = wall.thickness / 2 + 10;
+    zones.push({
+      min: [Math.min(a[0], b[0]) - pad, Math.min(a[1], b[1]) - pad],
+      max: [Math.max(a[0], b[0]) + pad, Math.max(a[1], b[1]) + pad],
+    });
   }
   return zones;
 }
@@ -85,7 +118,7 @@ function perimeterCandidates(room: Room, level: Level, item: LayoutItem): Placed
 }
 
 const RELATIVE =
-  /(beside|next to|à côté d[eu]|près d[eu]|devant|in front of|facing|face au|face à|autour d[eu]|around|sous|under|centr[ée]e? sur|cent(?:er|r)ed on)\s+(?:the |le |la |l'|les |de la |du )?([^,.;]+)/g;
+  /(beside|next to|à côté d[eu]|près d[eu]|devant|in front of|facing|face au|face à|autour d[eu]|around|sous|under|centr[ée]e? sur|cent(?:er|r)ed on|derrière|behind|au-dessus d[eu]|above)\s+(?:the |le |la |l'|les |de la |du )?([^,.;]+)/g;
 
 /** Words naming a piece in a hint, most specific first, mapped to its layout key prefix. */
 const REFERENCES: [RegExp, string][] = [
@@ -113,7 +146,25 @@ function hintCandidates(item: LayoutItem, room: Room, level: Level, placed: Map<
     const r = (ref.rotationDeg * Math.PI) / 180;
     const front: Point = [Math.sin(r), -Math.cos(r)];
     const side: Point = [Math.cos(r), Math.sin(r)];
-    const mode = /devant|in front|facing|face/.test(relative[1]) ? "front" : /sous|under|centr/.test(relative[1]) ? "under" : /autour|around/.test(relative[1]) ? "around" : "beside";
+    const mode = /devant|in front|facing|face/.test(relative[1])
+      ? "front"
+      : /sous|under|centr/.test(relative[1])
+        ? "under"
+        : /autour|around/.test(relative[1])
+          ? "around"
+          : /derrière|behind|dessus|above/.test(relative[1])
+            ? "behind"
+            : "beside";
+    if (mode === "behind") {
+      // On the wall at the back of the piece, side by side when there are several.
+      // The piece's back is against the wall: the item hangs on that wall face.
+      const back = ref.d / 2 - item.d / 2;
+      const pair = /deux|two|paire|pair/.test(hint);
+      const shifts = pair ? [item.w / 2 + 8, -(item.w / 2 + 8), 0] : [0, item.w / 2 + 8, -(item.w / 2 + 8)];
+      for (const shift of [...shifts, item.w + 16, -(item.w + 16)]) {
+        out.push({ key: item.key, position: [ref.position[0] - front[0] * back + side[0] * shift, ref.position[1] - front[1] * back + side[1] * shift], rotationDeg: ref.rotationDeg });
+      }
+    }
     if (mode === "under") {
       // Centred on the piece, else slid along its width (near a wall), else turned a quarter.
       for (const rot of [ref.rotationDeg, (ref.rotationDeg + 90) % 360]) {
@@ -178,15 +229,30 @@ function hintCandidates(item: LayoutItem, room: Room, level: Level, placed: Map<
   return out;
 }
 
-export function layoutRoom(items: LayoutItem[], room: Room, level: Level): { placed: Placed[]; unplaced: { key: string; reason: string }[] } {
-  const taken: Box[] = [];
+/** Furniture already in the room and kept: new items are laid out around it. */
+export interface Occupied {
+  position: Point;
+  w: number;
+  d: number;
+  rotationDeg: number;
+}
+
+export function layoutRoom(
+  items: LayoutItem[],
+  room: Room,
+  level: Level,
+  occupied: readonly Occupied[] = [],
+): { placed: Placed[]; unplaced: { key: string; reason: string }[] } {
+  const taken: Box[] = occupied.map((o) => bbox(itemFootprint(o.position, o.w, o.d, o.rotationDeg)));
   const doors = doorZones(room, level);
   const placed: Placed[] = [];
   const unplaced: { key: string; reason: string }[] = [];
   const byKey = new Map<string, Placed & { w: number; d: number }>();
+  const takenWall: Box[] = [];
+  const openings = openingZones(level);
   for (const item of items) {
     const candidates = [...hintCandidates(item, room, level, byKey), ...perimeterCandidates(room, level, item)];
-    // Rugs lie under other furniture: no overlap check for them.
+    // Rugs lie under other furniture: no overlap check for them. Wall items only avoid each other.
     const isRug = item.category === "rug";
     let done = false;
     for (const c of candidates) {
@@ -195,9 +261,15 @@ export function layoutRoom(items: LayoutItem[], room: Room, level: Level): { pla
             const fp = itemFootprint(c.position, item.w, item.d, c.rotationDeg);
             return fp.every((p) => pointInPolygon(p, room.polygon, 1)) ? bbox(fp) : null;
           })()
-        : fits(c, item, room, taken, doors);
+        : item.wall
+          ? fits(c, item, room, takenWall, openings)
+          : fits(c, item, room, taken, doors);
       if (!box) continue;
-      if (!isRug) taken.push(box);
+      if (item.wall) takenWall.push(box);
+      else if (!isRug) {
+        taken.push(box);
+        if ((item.h ?? 0) >= TALL) takenWall.push(box);
+      }
       placed.push(c);
       byKey.set(item.key, { ...c, w: item.w, d: item.d });
       done = true;

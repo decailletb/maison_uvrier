@@ -26,16 +26,26 @@ export const CATEGORY_TO_KIND: Partial<Record<Category, ProceduralKind>> = {
   plant: "plant",
 };
 
-/** Decor pieces with a procedural shape, recognised from their description. */
-const DECOR_KINDS: [RegExp, ProceduralKind][] = [[/pouf|ottoman/i, "pouf"]];
+/** Decor types recognised from the description; catalogue decor assets carry the type as a tag. */
+const DECOR_TYPES: [RegExp, DecorType][] = [
+  [/pouf|ottoman/i, "pouf"],
+  [/cadre|frame|tableau|affiche|poster/i, "cadre"],
+];
+export type DecorType = "pouf" | "cadre";
+
+export function decorType(item: ProposalFurniture): DecorType | undefined {
+  if (item.category !== "decor") return undefined;
+  const text = `${item.material} ${item.placementHint}`;
+  return DECOR_TYPES.find(([re]) => re.test(text))?.[1];
+}
 
 function proceduralKindFor(item: ProposalFurniture): ProceduralKind | undefined {
-  if (item.category === "decor") {
-    const text = `${item.material} ${item.placementHint}`;
-    return DECOR_KINDS.find(([re]) => re.test(text))?.[1];
-  }
+  if (item.category === "decor") return decorType(item) === "pouf" ? "pouf" : undefined;
   return CATEGORY_TO_KIND[item.category];
 }
+
+/** Main material named in the description, ahead of the nearest colour. */
+const NAMED_MATERIALS: [RegExp, string][] = [[/jute|sisal|chanvre|hessian/i, "fabric-jute"]];
 
 /** Material kinds a procedural kind takes for its main and accent materials. */
 const KIND_MATERIALS: Record<ProceduralKind, { main: MaterialKind; accent: MaterialKind }> = {
@@ -56,10 +66,14 @@ const KIND_MATERIALS: Record<ProceduralKind, { main: MaterialKind; accent: Mater
   plant: { main: "fabric", accent: "stone" },
 };
 
+const LIGHT_WOOD_STYLES = new Set(["bois-clair", "scandinave", "boheme"]);
+
 /** Accent material: wood follows the item colour, a same-kind accent matches the main material, else the kind's default. */
 function accentMaterial(procedural: ProceduralKind, item: ProposalFurniture, main: string): string {
   const kinds = KIND_MATERIALS[procedural];
   if (kinds.accent === "wood") return nearestMaterial("wood", item.colour).id;
+  // Legs and frames in light wood for light-wood styles, rather than black metal.
+  if (kinds.accent === "metal" && item.styleTags.some((t) => LIGHT_WOOD_STYLES.has(t))) return "wood-oak";
   if (kinds.accent === kinds.main) return main;
   return PROCEDURAL_DEFAULTS[procedural].accent;
 }
@@ -88,18 +102,23 @@ export type Match =
   | { kind: "procedural"; procedural: ProceduralKind; params: { w?: number; d?: number; h?: number; material: string; accent: string } }
   | { kind: "none"; reason: string };
 
-export function matchFurniture(item: ProposalFurniture): Match {
-  const [best] = findAssets(item.category, item.styleTags);
-  if (best) {
-    const score = best.tags.filter((t) => item.styleTags.includes(t)).length;
-    if (score >= 1) return { kind: "asset", entry: best, score };
+/** `index`: n-th copy of a repeated piece, rotated among the equally good models for variety. */
+export function matchFurniture(item: ProposalFurniture, index = 0): Match {
+  const type = decorType(item);
+  const scoreOf = (a: AssetEntry) => a.tags.filter((t) => item.styleTags.includes(t)).length;
+  const candidates = findAssets(item.category, item.styleTags).filter((a) => item.category !== "decor" || (type !== undefined && a.tags.includes(type)));
+  const top = candidates.length ? scoreOf(candidates[0]) : 0;
+  if (top >= 1) {
+    const best = candidates.filter((a) => scoreOf(a) === top);
+    return { kind: "asset", entry: best[index % best.length], score: top };
   }
   const procedural = proceduralKindFor(item);
   if (!procedural) return { kind: "none", reason: `pas de modèle ni de forme paramétrique pour « ${item.category} »` };
   const kinds = KIND_MATERIALS[procedural];
   const dims = item.approxDimensionsCm;
   const scaled = item.category === "armchair" && dims ? { w: dims.w, d: dims.d, h: dims.h } : dims;
-  const material = nearestMaterial(kinds.main, item.colour).id;
+  const named = NAMED_MATERIALS.find(([re]) => re.test(item.material))?.[1];
+  const material = named ?? nearestMaterial(kinds.main, item.colour).id;
   return {
     kind: "procedural",
     procedural,

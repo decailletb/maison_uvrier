@@ -13,6 +13,7 @@ import { CM, planToScene } from "../units";
 import { levelWallPieces, pieceFrame, type WallPiece } from "../walls";
 import { EXTERIOR_ROOMS, etageShell, rezShell } from "../shell";
 import { Glazing } from "./Glazing";
+import { MetricGeometry } from "./MetricGeometry";
 import { Shell } from "./Shell";
 import { RoomLabel } from "./RoomLabel";
 
@@ -75,17 +76,18 @@ function Walls({ level, finishes }: { level: Level; finishes?: Record<string, Ro
         return (
           <group key={`${piece.wallId}-${i}`}>
             <mesh position={planToScene(centre, mid, level.floorLevel)} rotation={[0, yaw, 0]} castShadow receiveShadow>
-              <boxGeometry args={[length * CM, (piece.top - piece.bottom) * CM, piece.thickness * CM]} />
+              <MetricGeometry size={[length * CM, (piece.top - piece.bottom) * CM, piece.thickness * CM]} />
               {exterior ? (
                 <meshStandardMaterial color={EXTERIOR_WALL.color} roughness={EXTERIOR_WALL.roughness} />
               ) : (
                 <MaterialNode id={wallMaterial} fallback="paint-white" />
               )}
-              <Edges color="#6a6a66" threshold={30} />
+              {/* Outlines keep the façade readable from outside; textured interior walls do without. */}
+              {exterior && <Edges color="#6a6a66" threshold={30} />}
             </mesh>
             {exterior && room && (
               <mesh position={planToScene(skinCentre, mid, level.floorLevel)} rotation={[0, yaw, 0]} receiveShadow>
-                <boxGeometry args={[length * CM, (piece.top - piece.bottom) * CM, 1.2 * CM]} />
+                <MetricGeometry size={[length * CM, (piece.top - piece.bottom) * CM, 1.2 * CM]} />
                 <MaterialNode id={wallMaterial} fallback="paint-white" />
               </mesh>
             )}

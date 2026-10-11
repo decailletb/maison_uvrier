@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Stats } from "@react-three/drei";
-import { ACESFilmicToneMapping } from "three";
+import { NeutralToneMapping } from "three";
 import { useEffect, useRef } from "react";
 import { FOOTPRINT_CM, levelById } from "@/data/house";
 import { flatGeometry } from "@/scene/shapes";
@@ -94,7 +94,7 @@ export function Viewer({ preset, levelMode, cameraMode, showLabels, showCeilings
       // Orbit mode renders only when something changes; walking needs every frame.
       frameloop={cameraMode === "walk" ? "always" : "demand"}
       camera={{ position: preset.position, fov: preset.fov ?? 55, near: 0.05, far: 300 }}
-      gl={{ antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: true, toneMapping: ACESFilmicToneMapping, toneMappingExposure: 1.05 }}
+      gl={{ antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: true, toneMapping: NeutralToneMapping, toneMappingExposure: 1.0 }}
       style={{ width: "100%", height: "100%" }}
     >
       <color attach="background" args={["#9fb7cf"]} />

@@ -60,13 +60,7 @@
     },
     {
       "id": "chair-1",
-      "asset": {
-        "procedural": "chair",
-        "params": {
-          "material": "wood-white",
-          "accent": "metal-black"
-        }
-      },
+      "asset": "painted-wooden-chair-01",
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
@@ -79,13 +73,7 @@
     },
     {
       "id": "chair-2",
-      "asset": {
-        "procedural": "chair",
-        "params": {
-          "material": "wood-white",
-          "accent": "metal-black"
-        }
-      },
+      "asset": "painted-wooden-chair-01",
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
@@ -98,13 +86,7 @@
     },
     {
       "id": "chair-3",
-      "asset": {
-        "procedural": "chair",
-        "params": {
-          "material": "wood-white",
-          "accent": "metal-black"
-        }
-      },
+      "asset": "painted-wooden-chair-01",
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
@@ -117,13 +99,7 @@
     },
     {
       "id": "chair-4",
-      "asset": {
-        "procedural": "chair",
-        "params": {
-          "material": "wood-white",
-          "accent": "metal-black"
-        }
-      },
+      "asset": "painted-wooden-chair-01",
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
@@ -136,13 +112,7 @@
     },
     {
       "id": "chair-5",
-      "asset": {
-        "procedural": "chair",
-        "params": {
-          "material": "wood-white",
-          "accent": "metal-black"
-        }
-      },
+      "asset": "painted-wooden-chair-01",
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
@@ -155,13 +125,7 @@
     },
     {
       "id": "chair-6",
-      "asset": {
-        "procedural": "chair",
-        "params": {
-          "material": "wood-white",
-          "accent": "metal-black"
-        }
-      },
+      "asset": "painted-wooden-chair-01",
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [

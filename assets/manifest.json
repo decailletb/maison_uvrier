@@ -2,6 +2,76 @@
   "$comment": "CC0 assets. Schema documented in .claude/skills/scene-format/SKILL.md. Binaries are git-ignored; run `npm run assets:fetch`.",
   "assets": [
     {
+      "id": "floor-tiles-08",
+      "category": "material-floor",
+      "file": "textures/floor_tiles_08/floor_tiles_08_diff_1k.jpg",
+      "files": [
+        "textures/floor_tiles_08/floor_tiles_08_diff_1k.jpg",
+        "textures/floor_tiles_08/floor_tiles_08_nor_gl_1k.jpg",
+        "textures/floor_tiles_08/floor_tiles_08_rough_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/floor_tiles_08/floor_tiles_08_diff_1k.jpg",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "sizeM": 1.5,
+      "tags": [
+        "carrelage"
+      ],
+      "fetchedAt": "2026-10-11"
+    },
+    {
+      "id": "hanging-picture-frame-02",
+      "category": "decor",
+      "file": "models/hanging_picture_frame_02/hanging_picture_frame_02_1k.gltf",
+      "files": [
+        "models/hanging_picture_frame_02/hanging_picture_frame_02_1k.gltf",
+        "models/hanging_picture_frame_02/hanging_picture_frame_02.bin",
+        "models/hanging_picture_frame_02/textures/hanging_picture_frame_02_diff_1k.jpg",
+        "models/hanging_picture_frame_02/textures/hanging_picture_frame_02_artwork_diff_1k.jpg",
+        "models/hanging_picture_frame_02/textures/hanging_picture_frame_02_arm_1k.jpg",
+        "models/hanging_picture_frame_02/textures/hanging_picture_frame_02_artwork_nor_gl_1k.jpg",
+        "models/hanging_picture_frame_02/textures/hanging_picture_frame_02_artwork_roughness_1k.jpg",
+        "models/hanging_picture_frame_02/textures/hanging_picture_frame_02_nor_gl_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hanging_picture_frame_02/hanging_picture_frame_02_1k.gltf",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "dimensionsCm": {
+        "w": 75,
+        "d": 3.3,
+        "h": 50
+      },
+      "tags": [
+        "cadre",
+        "boheme",
+        "vintage",
+        "blanc",
+        "sejour",
+        "chambre"
+      ],
+      "fetchedAt": "2026-10-11"
+    },
+    {
+      "id": "hessian-380",
+      "category": "material-fabric",
+      "file": "textures/hessian_380/hessian_380_diff_1k.jpg",
+      "files": [
+        "textures/hessian_380/hessian_380_diff_1k.jpg",
+        "textures/hessian_380/hessian_380_nor_gl_1k.jpg",
+        "textures/hessian_380/hessian_380_rough_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/hessian_380/hessian_380_diff_1k.jpg",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "sizeM": 0.274,
+      "tags": [
+        "tapis",
+        "jute",
+        "boheme"
+      ],
+      "fetchedAt": "2026-10-11"
+    },
+    {
       "id": "kloofendal-puresky",
       "category": "hdri",
       "file": "hdri/kloofendal_48d_partly_cloudy_puresky.hdr",
@@ -12,6 +82,26 @@
         "exterieur"
       ],
       "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "laminate-floor-02",
+      "category": "material-floor",
+      "file": "textures/laminate_floor_02/laminate_floor_02_diff_1k.jpg",
+      "files": [
+        "textures/laminate_floor_02/laminate_floor_02_diff_1k.jpg",
+        "textures/laminate_floor_02/laminate_floor_02_nor_gl_1k.jpg",
+        "textures/laminate_floor_02/laminate_floor_02_rough_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/laminate_floor_02/laminate_floor_02_diff_1k.jpg",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "sizeM": 1.7,
+      "tags": [
+        "parquet",
+        "chene",
+        "clair"
+      ],
+      "fetchedAt": "2026-10-11"
     },
     {
       "id": "modern-arm-chair-01",
@@ -43,6 +133,194 @@
         "sejour"
       ],
       "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "modern-coffee-table-01",
+      "category": "coffeeTable",
+      "file": "models/modern_coffee_table_01/modern_coffee_table_01_1k.gltf",
+      "files": [
+        "models/modern_coffee_table_01/modern_coffee_table_01_1k.gltf",
+        "models/modern_coffee_table_01/modern_coffee_table_01.bin",
+        "models/modern_coffee_table_01/textures/modern_coffee_table_01_diff_1k.jpg",
+        "models/modern_coffee_table_01/textures/modern_coffee_table_01_nor_gl_1k.jpg",
+        "models/modern_coffee_table_01/textures/modern_coffee_table_01_rough_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modern_coffee_table_01/modern_coffee_table_01_1k.gltf",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "dimensionsCm": {
+        "w": 120,
+        "d": 60,
+        "h": 39
+      },
+      "yawDeg": 90,
+      "tags": [
+        "scandinave",
+        "boheme",
+        "bois-clair",
+        "moderne",
+        "sejour"
+      ],
+      "fetchedAt": "2026-10-11"
+    },
+    {
+      "id": "oak-veneer-01",
+      "category": "material-wood",
+      "file": "textures/oak_veneer_01/oak_veneer_01_diff_1k.jpg",
+      "files": [
+        "textures/oak_veneer_01/oak_veneer_01_diff_1k.jpg",
+        "textures/oak_veneer_01/oak_veneer_01_nor_gl_1k.jpg",
+        "textures/oak_veneer_01/oak_veneer_01_rough_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_01/oak_veneer_01_diff_1k.jpg",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "sizeM": 1.83,
+      "tags": [
+        "chene",
+        "bois-clair",
+        "placage"
+      ],
+      "fetchedAt": "2026-10-11"
+    },
+    {
+      "id": "ottoman-01",
+      "category": "decor",
+      "file": "models/ottoman_01/Ottoman_01_1k.gltf",
+      "files": [
+        "models/ottoman_01/Ottoman_01_1k.gltf",
+        "models/ottoman_01/Ottoman_01.bin",
+        "models/ottoman_01/textures/Ottoman_01_arm_1k.jpg",
+        "models/ottoman_01/textures/Ottoman_01_diff_1k.jpg",
+        "models/ottoman_01/textures/Ottoman_01_nor_gl_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/Ottoman_01/Ottoman_01_1k.gltf",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "dimensionsCm": {
+        "w": 88.5,
+        "d": 62.1,
+        "h": 62.4
+      },
+      "tags": [
+        "pouf",
+        "classique",
+        "cuir",
+        "bois-fonce",
+        "sejour"
+      ],
+      "fetchedAt": "2026-10-11"
+    },
+    {
+      "id": "painted-wooden-chair-01",
+      "category": "chair",
+      "file": "models/painted_wooden_chair_01/painted_wooden_chair_01_1k.gltf",
+      "files": [
+        "models/painted_wooden_chair_01/painted_wooden_chair_01_1k.gltf",
+        "models/painted_wooden_chair_01/painted_wooden_chair_01.bin",
+        "models/painted_wooden_chair_01/textures/painted_wooden_chair_01_diff_1k.jpg",
+        "models/painted_wooden_chair_01/textures/painted_wooden_chair_01_nor_gl_1k.jpg",
+        "models/painted_wooden_chair_01/textures/painted_wooden_chair_01_arm_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/painted_wooden_chair_01/painted_wooden_chair_01_1k.gltf",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "dimensionsCm": {
+        "w": 43,
+        "d": 54,
+        "h": 96
+      },
+      "tags": [
+        "blanc",
+        "rustique",
+        "boheme",
+        "sejour"
+      ],
+      "fetchedAt": "2026-10-11"
+    },
+    {
+      "id": "potted-plant-01",
+      "category": "plant",
+      "file": "models/potted_plant_01/potted_plant_01_1k.gltf",
+      "files": [
+        "models/potted_plant_01/potted_plant_01_1k.gltf",
+        "models/potted_plant_01/potted_plant_01.bin",
+        "models/potted_plant_01/textures/potted_plant_01_pot_diff_1k.jpg",
+        "models/potted_plant_01/textures/potted_plant_01_pot_nor_gl_1k.jpg",
+        "models/potted_plant_01/textures/potted_plant_01_pot_rough_1k.jpg",
+        "models/potted_plant_01/textures/potted_plant_01_leaves_diff_1k.jpg",
+        "models/potted_plant_01/textures/potted_plant_01_leaves_nor_gl_1k.jpg",
+        "models/potted_plant_01/textures/potted_plant_01_leaves_rough_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/potted_plant_01/potted_plant_01_1k.gltf",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "dimensionsCm": {
+        "w": 59,
+        "d": 63,
+        "h": 135
+      },
+      "tags": [
+        "boheme",
+        "scandinave",
+        "moderne",
+        "grande",
+        "sejour",
+        "chambre"
+      ],
+      "fetchedAt": "2026-10-11"
+    },
+    {
+      "id": "potted-plant-02",
+      "category": "plant",
+      "file": "models/potted_plant_02/potted_plant_02_1k.gltf",
+      "files": [
+        "models/potted_plant_02/potted_plant_02_1k.gltf",
+        "models/potted_plant_02/potted_plant_02.bin",
+        "models/potted_plant_02/textures/potted_plant_02_leaves_diff_1k.jpg",
+        "models/potted_plant_02/textures/potted_plant_02_leaves_nor_gl_1k.jpg",
+        "models/potted_plant_02/textures/potted_plant_02_leaves_rough_1k.jpg",
+        "models/potted_plant_02/textures/potted_plant_02_pot_diff_1k.jpg",
+        "models/potted_plant_02/textures/potted_plant_02_pot_nor_gl_1k.jpg",
+        "models/potted_plant_02/textures/potted_plant_02_pot_rough_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/potted_plant_02/potted_plant_02_1k.gltf",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "dimensionsCm": {
+        "w": 70,
+        "d": 66,
+        "h": 84
+      },
+      "tags": [
+        "boheme",
+        "scandinave",
+        "moderne",
+        "petite",
+        "sejour",
+        "chambre"
+      ],
+      "fetchedAt": "2026-10-11"
+    },
+    {
+      "id": "rough-linen",
+      "category": "material-fabric",
+      "file": "textures/rough_linen/rough_linen_diff_1k.jpg",
+      "files": [
+        "textures/rough_linen/rough_linen_diff_1k.jpg",
+        "textures/rough_linen/rough_linen_nor_gl_1k.jpg",
+        "textures/rough_linen/rough_linen_rough_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rough_linen/rough_linen_diff_1k.jpg",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "sizeM": 0.271,
+      "tags": [
+        "lin",
+        "tissu",
+        "tisse"
+      ],
+      "fetchedAt": "2026-10-11"
     },
     {
       "id": "sofa-02",
@@ -94,6 +372,55 @@
         "sejour"
       ],
       "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "white-plaster-02",
+      "category": "material-wall",
+      "file": "textures/white_plaster_02/white_plaster_02_diff_1k.jpg",
+      "files": [
+        "textures/white_plaster_02/white_plaster_02_diff_1k.jpg",
+        "textures/white_plaster_02/white_plaster_02_nor_gl_1k.jpg",
+        "textures/white_plaster_02/white_plaster_02_rough_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_02/white_plaster_02_diff_1k.jpg",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "sizeM": 1,
+      "tags": [
+        "crepi",
+        "peinture",
+        "lisse"
+      ],
+      "fetchedAt": "2026-10-11"
+    },
+    {
+      "id": "wooden-display-shelves-01",
+      "category": "shelf",
+      "file": "models/wooden_display_shelves_01/wooden_display_shelves_01_1k.gltf",
+      "files": [
+        "models/wooden_display_shelves_01/wooden_display_shelves_01_1k.gltf",
+        "models/wooden_display_shelves_01/wooden_display_shelves_01.bin",
+        "models/wooden_display_shelves_01/textures/wooden_display_shelves_01_diff_1k.jpg",
+        "models/wooden_display_shelves_01/textures/wooden_display_shelves_01_arm_1k.jpg",
+        "models/wooden_display_shelves_01/textures/wooden_display_shelves_01_nor_gl_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_display_shelves_01/wooden_display_shelves_01_1k.gltf",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "dimensionsCm": {
+        "w": 108,
+        "d": 37,
+        "h": 156
+      },
+      "tags": [
+        "moderne",
+        "scandinave",
+        "boheme",
+        "bois-clair",
+        "sejour",
+        "chambre"
+      ],
+      "fetchedAt": "2026-10-11"
     },
     {
       "id": "wooden-table-02",

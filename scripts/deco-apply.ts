@@ -11,14 +11,40 @@ import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } fr
 import { resolve } from "node:path";
 import { house } from "../src/data/house";
 import type { Level, Room } from "../src/data/schema";
-import { layoutRoom, type LayoutItem } from "../src/deco/layout";
-import { matchFurniture, matchSurface } from "../src/deco/match";
+import { layoutRoom, type LayoutItem, type Occupied } from "../src/deco/layout";
+import { decorType, matchFurniture, matchSurface } from "../src/deco/match";
 import { parseProposal, type Proposal, type ProposalFurniture } from "../src/deco/proposal";
-import { proceduralParts } from "../src/catalogue/procedural";
+import { assetById, type Category } from "../src/catalogue/manifest";
+import { proceduralParts, type ProceduralKind } from "../src/catalogue/procedural";
 import { parseScene, type Scene, type SceneItem } from "../src/scene/sceneFile";
 
 const BEDROOM = new Set(["bed", "nightstand", "wardrobe", "dresser", "desk", "lamp", "rug", "shelf", "chair", "decor", "plant"]);
 const LIVING = new Set(["sofa", "armchair", "coffeeTable", "table", "chair", "shelf", "lamp", "rug", "kitchen", "decor", "plant"]);
+
+/** Height of the bottom edge of frames and other wall decor above the floor, cm. */
+const WALL_DECOR_BOTTOM = 115;
+
+/**
+ * Functional furniture of the base scene kept in the room unless the proposal brings
+ * its own (an inspiration image of a salon says nothing about the kitchen or the
+ * dining table); decorative pieces are always replaced.
+ */
+const KEEP_UNLESS_PROPOSED = new Set<string>(["kitchen", "appliance", "bathroomFixture", "table", "chair", "desk", "wardrobe"]);
+
+const KIND_CATEGORY: Partial<Record<ProceduralKind, Category>> = { kitchenBlock: "kitchen", pouf: "decor" };
+
+function categoryOf(item: SceneItem): Category | undefined {
+  if (typeof item.asset === "string") return assetById(item.asset)?.category;
+  return KIND_CATEGORY[item.asset.procedural] ?? (item.asset.procedural as Category);
+}
+
+function footprintOf(item: SceneItem): Occupied {
+  const size =
+    typeof item.asset === "string"
+      ? (assetById(item.asset)?.dimensionsCm ?? { w: 100, d: 100 })
+      : proceduralParts(item.asset.procedural, { ...item.asset.params, ...item.materialOverrides }).size;
+  return { position: [item.position[0], item.position[1]], w: size.w, d: size.d, rotationDeg: item.rotationY };
+}
 
 function roomType(roomId: string): "chambre" | "sejour" | "other" {
   if (roomId.startsWith("chambre")) return "chambre";
@@ -46,54 +72,69 @@ function applyToRoom(scene: Scene, proposal: Proposal, roomId: string, log: stri
   const entries = furnitureFor(proposal, roomId);
   const layoutItems: LayoutItem[] = [];
   const pending: { key: string; item: SceneItem }[] = [];
-  // Item ids must be kebab-case (scene schema) and unique when a category repeats.
-  const perCategory = new Map<string, number>();
-  for (const f of entries) perCategory.set(f.category, (perCategory.get(f.category) ?? 0) + f.count);
+  // Item ids must be kebab-case (scene schema) and unique when a category repeats;
+  // decor is named after its type (pouf, cadre).
+  const slugOf = (f: ProposalFurniture) => decorType(f) ?? f.category.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+  const perSlug = new Map<string, number>();
+  for (const f of entries) perSlug.set(slugOf(f), (perSlug.get(slugOf(f)) ?? 0) + f.count);
   const seen = new Map<string, number>();
+  const elevation = new Map<string, number>();
   for (const f of entries) {
     for (let n = 0; n < f.count; n++) {
-      const slug = f.category.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
-      const index = (seen.get(f.category) ?? 0) + 1;
-      seen.set(f.category, index);
-      const key = `${slug}${perCategory.get(f.category)! > 1 ? `-${index}` : ""}`;
+      const slug = slugOf(f);
+      const index = (seen.get(slug) ?? 0) + 1;
+      seen.set(slug, index);
+      const key = `${slug}${perSlug.get(slug)! > 1 ? `-${index}` : ""}`;
       if (f.category === "lamp" && /ceiling|plafond|suspension|pendant|pendentif/i.test(`${f.placementHint} ${f.material}`)) {
         log.push(`- ${roomId} : suspension ignorée (luminaires de plafond non modélisés)`);
         continue;
       }
-      const match = matchFurniture(f);
+      const match = matchFurniture(f, n);
       if (match.kind === "none") {
         log.push(`- ${roomId} : ${f.category} ignoré (${match.reason})`);
         continue;
       }
       let w: number;
       let d: number;
+      let h: number;
       let asset: SceneItem["asset"];
       if (match.kind === "asset") {
         w = match.entry.dimensionsCm?.w ?? 100;
         d = match.entry.dimensionsCm?.d ?? 100;
+        h = match.entry.dimensionsCm?.h ?? 100;
         asset = match.entry.id;
         log.push(`- ${roomId} : ${f.category} → modèle ${match.entry.id}`);
       } else {
         const size = proceduralParts(match.procedural, match.params).size;
         w = size.w;
         d = size.d;
+        h = size.h;
         asset = { procedural: match.procedural, params: match.params };
         log.push(`- ${roomId} : ${f.category} → forme paramétrique ${match.procedural} (${match.params.material})`);
       }
-      layoutItems.push({ key, category: f.category, w, d, hint: f.placementHint });
+      const wall = decorType(f) === "cadre";
+      if (wall) elevation.set(key, WALL_DECOR_BOTTOM);
+      layoutItems.push({ key, category: f.category, w, d, h, hint: f.placementHint, wall });
       pending.push({
         key,
         item: { id: `${roomId}-${key}`, asset, levelId: level.id, roomId, position: [0, 0, 0], rotationY: 0, scale: 1 },
       });
     }
   }
-  const { placed, unplaced } = layoutRoom(layoutItems, room, level);
+  const proposed = new Set<string>(entries.map((f) => f.category));
+  const kept = scene.items.filter((it) => {
+    if (it.roomId !== roomId) return false;
+    const category = categoryOf(it);
+    return category !== undefined && KEEP_UNLESS_PROPOSED.has(category) && !proposed.has(category);
+  });
+  if (kept.length) log.push(`- ${roomId} : conservés de la base : ${kept.map((it) => it.id).join(", ")}`);
+  const { placed, unplaced } = layoutRoom(layoutItems, room, level, kept.map(footprintOf));
   for (const u of unplaced) log.push(`- ${roomId} : ${u.key} non placé (${u.reason})`);
   const items = pending
     .map(({ key, item }) => {
       const p = placed.find((x) => x.key === key);
       if (!p) return null;
-      return { ...item, position: [Math.round(p.position[0]), Math.round(p.position[1]), 0] as [number, number, number], rotationY: p.rotationDeg };
+      return { ...item, position: [Math.round(p.position[0]), Math.round(p.position[1]), elevation.get(key) ?? 0] as [number, number, number], rotationY: p.rotationDeg };
     })
     .filter((x): x is SceneItem => x !== null);
 
@@ -106,7 +147,7 @@ function applyToRoom(scene: Scene, proposal: Proposal, roomId: string, log: stri
   return {
     ...scene,
     roomFinishes: { ...scene.roomFinishes, [roomId]: finishes },
-    items: [...scene.items.filter((it) => it.roomId !== roomId), ...items],
+    items: [...scene.items.filter((it) => it.roomId !== roomId), ...kept, ...items],
   };
 }
 

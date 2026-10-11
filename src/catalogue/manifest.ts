@@ -44,7 +44,12 @@ export const AssetEntry = z.object({
   url: z.string().url(),
   source: z.enum(["polyhaven", "ambientcg", "kenney", "sketchfab"]),
   license: z.literal("CC0-1.0"),
+  /** Footprint after `yawDeg`: w across, d front-to-back, h up. */
   dimensionsCm: z.object({ w: z.number().positive(), d: z.number().positive(), h: z.number().positive() }).optional(),
+  /** Model turn (degrees, counter-clockwise from above) so that its width runs along x and its front faces +z. */
+  yawDeg: z.number().optional(),
+  /** Texture sets: physical size of one repeat, metres. */
+  sizeM: z.number().positive().optional(),
   tags: z.array(z.string()).default([]),
   fetchedAt: z.string(),
 });
@@ -68,4 +73,20 @@ export function findAssets(category: Category, tags: readonly string[] = []): As
 /** URL the dev server and the build serve the asset at (Vite publicDir = assets/, under the site base). */
 export function assetUrl(entry: AssetEntry): string {
   return siteUrl(entry.file);
+}
+
+export interface TextureMapUrls {
+  map?: string;
+  normalMap?: string;
+  roughnessMap?: string;
+}
+
+/** Colour, normal (OpenGL) and roughness map URLs of a texture set, from Poly Haven or ambientCG file names. */
+export function textureMapUrls(entry: AssetEntry): TextureMapUrls {
+  const files = entry.files ?? [entry.file];
+  const find = (re: RegExp) => {
+    const f = files.find((x) => re.test(x));
+    return f ? siteUrl(f) : undefined;
+  };
+  return { map: find(/_diff_|_Color\./), normalMap: find(/_nor_gl_|_NormalGL\./), roughnessMap: find(/_rough_|_Roughness\./) };
 }

@@ -103,7 +103,9 @@ AssetEntry {
   url: string                // direct download URL of `file`
   source: "polyhaven" | "ambientcg" | "kenney" | "sketchfab"
   license: "CC0-1.0"
-  dimensionsCm?: { w, d, h } // models only, after unit normalisation
+  dimensionsCm?: { w, d, h } // models only, after unit normalisation and yawDeg
+  yawDeg?: number            // models: turn so that width runs along x and the front faces +z
+  sizeM?: number             // texture sets: physical size of one repeat, metres
   tags: string[]             // style + room tags from the vocabulary below
   fetchedAt: string          // ISO date
 }
