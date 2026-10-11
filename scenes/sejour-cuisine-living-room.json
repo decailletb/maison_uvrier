@@ -1,0 +1,405 @@
+{
+  "version": 1,
+  "name": "sejour-cuisine-living-room",
+  "base": "base",
+  "roomFinishes": {
+    "sejour-cuisine": {
+      "floor": "parquet-oak",
+      "wall": "paint-warm-grey",
+      "ceiling": "ceiling-white"
+    },
+    "entree": {
+      "floor": "parquet-walnut"
+    },
+    "chambre-parents": {
+      "floor": "parquet-oak",
+      "wall": "paint-white",
+      "ceiling": "ceiling-white"
+    }
+  },
+  "items": [
+    {
+      "id": "bed",
+      "asset": {
+        "procedural": "bed",
+        "params": {
+          "w": 160,
+          "d": 200,
+          "material": "fabric-white",
+          "accent": "wood-white"
+        }
+      },
+      "levelId": "etage",
+      "roomId": "chambre-parents",
+      "position": [
+        300,
+        180,
+        0
+      ],
+      "rotationY": 270,
+      "scale": 1
+    },
+    {
+      "id": "nightstand-1",
+      "asset": {
+        "procedural": "nightstand",
+        "params": {
+          "material": "wood-white",
+          "accent": "metal-black"
+        }
+      },
+      "levelId": "etage",
+      "roomId": "chambre-parents",
+      "position": [
+        378,
+        78,
+        0
+      ],
+      "rotationY": 270,
+      "scale": 1
+    },
+    {
+      "id": "nightstand-2",
+      "asset": {
+        "procedural": "nightstand",
+        "params": {
+          "material": "wood-white",
+          "accent": "metal-black"
+        }
+      },
+      "levelId": "etage",
+      "roomId": "chambre-parents",
+      "position": [
+        378,
+        282,
+        0
+      ],
+      "rotationY": 270,
+      "scale": 1
+    },
+    {
+      "id": "bedside-lamp-1",
+      "asset": {
+        "procedural": "lamp",
+        "params": {
+          "w": 22,
+          "d": 22,
+          "h": 45
+        }
+      },
+      "levelId": "etage",
+      "roomId": "chambre-parents",
+      "position": [
+        378,
+        78,
+        50
+      ],
+      "rotationY": 0,
+      "scale": 1
+    },
+    {
+      "id": "bedside-lamp-2",
+      "asset": {
+        "procedural": "lamp",
+        "params": {
+          "w": 22,
+          "d": 22,
+          "h": 45
+        }
+      },
+      "levelId": "etage",
+      "roomId": "chambre-parents",
+      "position": [
+        378,
+        282,
+        50
+      ],
+      "rotationY": 0,
+      "scale": 1
+    },
+    {
+      "id": "dresser",
+      "asset": {
+        "procedural": "dresser",
+        "params": {
+          "w": 120,
+          "d": 45,
+          "material": "wood-white",
+          "accent": "metal-steel"
+        }
+      },
+      "levelId": "etage",
+      "roomId": "chambre-parents",
+      "position": [
+        180,
+        60,
+        0
+      ],
+      "rotationY": 180,
+      "scale": 1
+    },
+    {
+      "id": "bedroom-rug",
+      "asset": {
+        "procedural": "rug",
+        "params": {
+          "w": 200,
+          "d": 140,
+          "material": "fabric-beige"
+        }
+      },
+      "levelId": "etage",
+      "roomId": "chambre-parents",
+      "position": [
+        170,
+        180,
+        0
+      ],
+      "rotationY": 90,
+      "scale": 1
+    },
+    {
+      "id": "sejour-cuisine-sofa",
+      "asset": {
+        "procedural": "sofa",
+        "params": {
+          "w": 230,
+          "d": 95,
+          "h": 80,
+          "material": "fabric-beige",
+          "accent": "wood-oak"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        88,
+        254,
+        0
+      ],
+      "rotationY": 90,
+      "scale": 1
+    },
+    {
+      "id": "sejour-cuisine-coffee-table",
+      "asset": {
+        "procedural": "coffeeTable",
+        "params": {
+          "w": 100,
+          "d": 100,
+          "h": 40,
+          "material": "wood-oak",
+          "accent": "wood-oak"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        231,
+        254,
+        0
+      ],
+      "rotationY": 0,
+      "scale": 1
+    },
+    {
+      "id": "sejour-cuisine-rug",
+      "asset": {
+        "procedural": "rug",
+        "params": {
+          "w": 300,
+          "d": 220,
+          "h": 1,
+          "material": "fabric-beige",
+          "accent": "fabric-pink"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        231,
+        254,
+        0
+      ],
+      "rotationY": 90,
+      "scale": 1
+    },
+    {
+      "id": "sejour-cuisine-shelf",
+      "asset": {
+        "procedural": "shelf",
+        "params": {
+          "w": 120,
+          "d": 35,
+          "h": 180,
+          "material": "wood-oak",
+          "accent": "wood-oak"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        51,
+        627,
+        0
+      ],
+      "rotationY": 90,
+      "scale": 1
+    },
+    {
+      "id": "kitchen-block",
+      "asset": {
+        "procedural": "kitchenBlock",
+        "params": {
+          "w": 320,
+          "material": "wood-white",
+          "accent": "stone-black"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        993,
+        560,
+        0
+      ],
+      "rotationY": 270,
+      "scale": 1
+    },
+    {
+      "id": "dining-table",
+      "asset": {
+        "procedural": "table",
+        "params": {
+          "w": 180,
+          "d": 90,
+          "material": "wood-oak",
+          "accent": "wood-oak"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        760,
+        540,
+        0
+      ],
+      "rotationY": 0,
+      "scale": 1
+    },
+    {
+      "id": "chair-1",
+      "asset": {
+        "procedural": "chair",
+        "params": {
+          "material": "wood-white",
+          "accent": "metal-black"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        705,
+        462,
+        0
+      ],
+      "rotationY": 180,
+      "scale": 1
+    },
+    {
+      "id": "chair-2",
+      "asset": {
+        "procedural": "chair",
+        "params": {
+          "material": "wood-white",
+          "accent": "metal-black"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        760,
+        462,
+        0
+      ],
+      "rotationY": 180,
+      "scale": 1
+    },
+    {
+      "id": "chair-3",
+      "asset": {
+        "procedural": "chair",
+        "params": {
+          "material": "wood-white",
+          "accent": "metal-black"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        815,
+        462,
+        0
+      ],
+      "rotationY": 180,
+      "scale": 1
+    },
+    {
+      "id": "chair-4",
+      "asset": {
+        "procedural": "chair",
+        "params": {
+          "material": "wood-white",
+          "accent": "metal-black"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        705,
+        618,
+        0
+      ],
+      "rotationY": 0,
+      "scale": 1
+    },
+    {
+      "id": "chair-5",
+      "asset": {
+        "procedural": "chair",
+        "params": {
+          "material": "wood-white",
+          "accent": "metal-black"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        760,
+        618,
+        0
+      ],
+      "rotationY": 0,
+      "scale": 1
+    },
+    {
+      "id": "chair-6",
+      "asset": {
+        "procedural": "chair",
+        "params": {
+          "material": "wood-white",
+          "accent": "metal-black"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        815,
+        618,
+        0
+      ],
+      "rotationY": 0,
+      "scale": 1
+    }
+  ]
+}
