@@ -19,8 +19,10 @@ export function Model({ entry }: { entry: AssetEntry }) {
     return clone;
   }, [gltf.scene]);
   return (
-    <group position={offset} scale={scale}>
-      <primitive object={scene} />
+    <group rotation={[0, ((entry.yawDeg ?? 0) * Math.PI) / 180, 0]}>
+      <group position={offset} scale={scale}>
+        <primitive object={scene} />
+      </group>
     </group>
   );
 }

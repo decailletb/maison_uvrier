@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { MetricGeometry } from "@/scene/components/MetricGeometry";
 import { CM } from "@/scene/units";
 import { proceduralParts, type ProceduralKind, type ProceduralParams } from "../procedural";
 import { MaterialNode } from "./MaterialNode";
@@ -10,7 +11,7 @@ export function Procedural({ kind, params = {} }: { kind: ProceduralKind; params
     <group>
       {parts.map((p, i) => (
         <mesh key={i} position={[p.pos[0] * CM, p.pos[1] * CM, p.pos[2] * CM]} castShadow receiveShadow>
-          <boxGeometry args={[p.size[0] * CM, p.size[1] * CM, p.size[2] * CM]} />
+          <MetricGeometry size={[p.size[0] * CM, p.size[1] * CM, p.size[2] * CM]} shape={p.shape} />
           <MaterialNode id={p.material} fallback="wood-oak" />
         </mesh>
       ))}

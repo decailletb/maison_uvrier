@@ -1,9 +1,25 @@
 /**
  * Material library: ids shared by scene files, the procedural furniture and the
- * `/deco` proposals. Procedural (colour + roughness, optional tile grid) until PBR
- * texture sets from ambientCG are added with the same ids.
+ * `/deco` proposals. Colour and roughness always; a PBR texture set from the manifest
+ * when `pbr` is set (the flat colour stays the fallback while it loads or if it is
+ * missing).
  */
 export type MaterialKind = "floor" | "wall" | "ceiling" | "fabric" | "wood" | "metal" | "stone" | "glass";
+
+/**
+ * Texture set of the manifest. `full`: colour map multiplied by `tint` (white when
+ * omitted) plus normal and roughness maps. `relief`: normal and roughness maps only, on
+ * the material colour (paints, dyed fabrics, tiles in any colour).
+ */
+export interface PbrRef {
+  asset: string;
+  mode: "full" | "relief";
+  tint?: string;
+  /** Texture repeat as a multiple of the set's physical size (coarser weave above 1). */
+  scale?: number;
+  /** Normal map strength, 1 by default. */
+  relief?: number;
+}
 
 export interface MaterialDef {
   id: string;
@@ -17,46 +33,57 @@ export interface MaterialDef {
   tile?: number | [number, number];
   grout?: string;
   opacity?: number;
+  pbr?: PbrRef;
 }
+
+const LAMINATE = "laminate-floor-02";
+const PLASTER: PbrRef = { asset: "white-plaster-02", mode: "relief", relief: 2 };
+const TILES: PbrRef = { asset: "floor-tiles-08", mode: "relief" };
+const LINEN: PbrRef = { asset: "rough-linen", mode: "relief", scale: 2, relief: 1.5 };
+const OAK = "oak-veneer-01";
 
 const defs: MaterialDef[] = [
   // Floors
-  { id: "tile-light", kind: "floor", label: "Carrelage clair", color: "#d9d4cc", roughness: 0.35, tile: 0.6, grout: "#b9b3a8" },
-  { id: "tile-grey", kind: "floor", label: "Carrelage gris pierre", color: "#9c9a95", roughness: 0.4, tile: 0.6, grout: "#7f7d78" },
-  { id: "tile-white", kind: "floor", label: "Carrelage blanc", color: "#ebe9e4", roughness: 0.3, tile: 0.6, grout: "#cfccc5" },
-  { id: "parquet-oak", kind: "floor", label: "Parquet chêne clair", color: "#ad9270", roughness: 0.6, tile: [1.2, 0.18], grout: "#90785a" },
-  { id: "parquet-walnut", kind: "floor", label: "Parquet noyer foncé", color: "#6f4a30", roughness: 0.55, tile: [1.2, 0.18], grout: "#4e3320" },
-  { id: "laminate-grey", kind: "floor", label: "Stratifié gris-brun", color: "#9a8a7a", roughness: 0.5, tile: [1.3, 0.2], grout: "#7e6f5f" },
+  { id: "tile-light", kind: "floor", label: "Carrelage clair", color: "#d9d4cc", roughness: 0.35, tile: 0.6, grout: "#b9b3a8", pbr: TILES },
+  { id: "tile-grey", kind: "floor", label: "Carrelage gris pierre", color: "#9c9a95", roughness: 0.4, tile: 0.6, grout: "#7f7d78", pbr: TILES },
+  { id: "tile-white", kind: "floor", label: "Carrelage blanc", color: "#ebe9e4", roughness: 0.3, tile: 0.6, grout: "#cfccc5", pbr: TILES },
+  { id: "parquet-oak", kind: "floor", label: "Parquet chêne clair", color: "#ad9270", roughness: 0.6, tile: [1.2, 0.18], grout: "#90785a", pbr: { asset: LAMINATE, mode: "full" } },
+  { id: "parquet-walnut", kind: "floor", label: "Parquet noyer foncé", color: "#6f4a30", roughness: 0.55, tile: [1.2, 0.18], grout: "#4e3320", pbr: { asset: LAMINATE, mode: "full", tint: "#8a6650" } },
+  { id: "laminate-grey", kind: "floor", label: "Stratifié gris-brun", color: "#9a8a7a", roughness: 0.5, tile: [1.3, 0.2], grout: "#7e6f5f", pbr: { asset: LAMINATE, mode: "full", tint: "#c2b6aa" } },
   { id: "concrete-raw", kind: "floor", label: "Béton brut", color: "#a8a6a1", roughness: 0.9 },
   { id: "rubber-black", kind: "floor", label: "Tapis de sport noir", color: "#2a2a2a", roughness: 0.95 },
   // Walls and ceilings
-  { id: "paint-white", kind: "wall", label: "Peinture blanche", color: "#fbfaf7", roughness: 0.9 },
-  { id: "paint-warm-grey", kind: "wall", label: "Peinture gris chaud", color: "#d8d2c8", roughness: 0.85 },
-  { id: "paint-sage", kind: "wall", label: "Peinture vert sauge", color: "#b7c2ad", roughness: 0.85 },
-  { id: "paint-navy", kind: "wall", label: "Peinture bleu nuit", color: "#2f3a52", roughness: 0.8 },
-  { id: "paint-terracotta", kind: "wall", label: "Peinture terre cuite", color: "#c57a5a", roughness: 0.85 },
+  { id: "paint-white", kind: "wall", label: "Peinture blanche", color: "#fbfaf7", roughness: 0.9, pbr: PLASTER },
+  { id: "paint-warm-grey", kind: "wall", label: "Peinture gris chaud", color: "#d8d2c8", roughness: 0.85, pbr: PLASTER },
+  { id: "paint-sage", kind: "wall", label: "Peinture vert sauge", color: "#b7c2ad", roughness: 0.85, pbr: PLASTER },
+  { id: "paint-navy", kind: "wall", label: "Peinture bleu nuit", color: "#2f3a52", roughness: 0.8, pbr: PLASTER },
+  { id: "paint-sand-pink", kind: "wall", label: "Peinture beige rosé", color: "#e8d3be", roughness: 0.85, pbr: PLASTER },
+  { id: "paint-terracotta", kind: "wall", label: "Peinture terre cuite", color: "#c57a5a", roughness: 0.85, pbr: PLASTER },
   { id: "tile-wall-white", kind: "wall", label: "Faïence blanche grand format", color: "#ece9e3", roughness: 0.25, tile: 0.6, grout: "#d0cdc6" },
   { id: "tile-wall-grey", kind: "wall", label: "Faïence gris pierre", color: "#9c9a95", roughness: 0.3, tile: 0.6, grout: "#7f7d78" },
   { id: "concrete-block", kind: "wall", label: "Parpaings bruts", color: "#b3b0aa", roughness: 0.95, tile: 0.4, grout: "#9a9791" },
-  { id: "ceiling-white", kind: "ceiling", label: "Plafond blanc", color: "#fcfbf9", roughness: 0.8 },
+  { id: "ceiling-white", kind: "ceiling", label: "Plafond blanc", color: "#fbf7f0", roughness: 0.8, pbr: PLASTER },
   // Fabrics
-  { id: "fabric-navy", kind: "fabric", label: "Tissu bleu nuit", color: "#2b3a5c", roughness: 0.95 },
-  { id: "fabric-grey", kind: "fabric", label: "Tissu gris", color: "#8c8c8a", roughness: 0.95 },
-  { id: "fabric-beige", kind: "fabric", label: "Tissu beige", color: "#cfc2ad", roughness: 0.95 },
-  { id: "fabric-white", kind: "fabric", label: "Tissu blanc", color: "#f1efe9", roughness: 0.95 },
-  { id: "fabric-pink", kind: "fabric", label: "Tissu rose poudré", color: "#e8b4b8", roughness: 0.95 },
-  { id: "fabric-green", kind: "fabric", label: "Tissu vert", color: "#6b8f6a", roughness: 0.95 },
+  { id: "fabric-navy", kind: "fabric", label: "Tissu bleu nuit", color: "#2b3a5c", roughness: 0.95, pbr: LINEN },
+  { id: "fabric-grey", kind: "fabric", label: "Tissu gris", color: "#8c8c8a", roughness: 0.95, pbr: LINEN },
+  { id: "fabric-beige", kind: "fabric", label: "Tissu beige", color: "#cfc2ad", roughness: 0.95, pbr: LINEN },
+  { id: "fabric-white", kind: "fabric", label: "Tissu blanc", color: "#f1efe9", roughness: 0.95, pbr: LINEN },
+  { id: "fabric-cream", kind: "fabric", label: "Lin crème", color: "#e9dfcf", roughness: 0.95, pbr: LINEN },
+  { id: "fabric-pink", kind: "fabric", label: "Tissu rose poudré", color: "#e8b4b8", roughness: 0.95, pbr: LINEN },
+  { id: "fabric-green", kind: "fabric", label: "Tissu vert", color: "#6b8f6a", roughness: 0.95, pbr: LINEN },
+  { id: "fabric-jute", kind: "fabric", label: "Jute naturelle", color: "#d6c6aa", roughness: 0.95, pbr: { asset: "hessian-380", mode: "relief", scale: 3, relief: 2 } },
   // Wood
-  { id: "wood-oak", kind: "wood", label: "Chêne clair", color: "#c8a478", roughness: 0.5 },
-  { id: "wood-walnut", kind: "wood", label: "Noyer", color: "#6a4630", roughness: 0.5 },
+  { id: "wood-oak", kind: "wood", label: "Chêne clair", color: "#c8a478", roughness: 0.5, pbr: { asset: OAK, mode: "full" } },
+  { id: "wood-walnut", kind: "wood", label: "Noyer", color: "#6a4630", roughness: 0.5, pbr: { asset: OAK, mode: "full", tint: "#7a5238" } },
   { id: "wood-white", kind: "wood", label: "Laqué blanc", color: "#f2f1ee", roughness: 0.35 },
   { id: "wood-black", kind: "wood", label: "Laqué noir", color: "#232323", roughness: 0.35 },
-  { id: "wood-grey", kind: "wood", label: "Bois gris", color: "#8f8a82", roughness: 0.55 },
+  { id: "wood-grey", kind: "wood", label: "Bois gris", color: "#8f8a82", roughness: 0.55, pbr: { asset: OAK, mode: "full", tint: "#a8a29a" } },
   // Metal, stone, glass
   { id: "metal-black", kind: "metal", label: "Métal noir", color: "#2a2a2a", roughness: 0.4, metalness: 0.8 },
   { id: "metal-steel", kind: "metal", label: "Acier brossé", color: "#b8babd", roughness: 0.35, metalness: 0.9 },
   { id: "metal-brass", kind: "metal", label: "Laiton", color: "#c9a955", roughness: 0.35, metalness: 0.9 },
   { id: "stone-black", kind: "stone", label: "Plan noir", color: "#1f1f1f", roughness: 0.3 },
+  { id: "stone-terracotta", kind: "stone", label: "Terre cuite", color: "#b8683f", roughness: 0.8 },
   { id: "stone-white", kind: "stone", label: "Plan blanc", color: "#e9e7e2", roughness: 0.3 },
   { id: "glass-clear", kind: "glass", label: "Verre", color: "#cfe3ee", roughness: 0.05, opacity: 0.35 },
 ];

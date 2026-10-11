@@ -82,7 +82,8 @@ SceneItem {
 
 Procedural kinds (`src/catalogue/procedural.ts`): `bed`, `nightstand`, `wardrobe`,
 `dresser`, `table`, `chair`, `sofa`, `coffeeTable`, `shelf`, `desk`, `kitchenBlock`,
-`rug`, `lamp`. Their origin is on the floor at the centre of the footprint; the
+`rug`, `lamp`, `pouf`, `plant` (`/deco` maps category `plant` to `plant`, and a
+`decor` entry whose material or hint says "pouf" to `pouf`). Their origin is on the floor at the centre of the footprint; the
 headboard / backrest is at the back. Material ids come from
 `src/catalogue/materials.ts` (`tile-light`, `parquet-oak`, `paint-white`,
 `fabric-navy`, `wood-white`, `metal-black`, `stone-black`, …); `materialForFinish`
@@ -102,7 +103,9 @@ AssetEntry {
   url: string                // direct download URL of `file`
   source: "polyhaven" | "ambientcg" | "kenney" | "sketchfab"
   license: "CC0-1.0"
-  dimensionsCm?: { w, d, h } // models only, after unit normalisation
+  dimensionsCm?: { w, d, h } // models only, after unit normalisation and yawDeg
+  yawDeg?: number            // models: turn so that width runs along x and the front faces +z
+  sizeM?: number             // texture sets: physical size of one repeat, metres
   tags: string[]             // style + room tags from the vocabulary below
   fetchedAt: string          // ISO date
 }

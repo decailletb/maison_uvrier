@@ -24,6 +24,8 @@ const KIND_LABELS: Record<ProceduralKind, string> = {
   kitchenBlock: "Bloc cuisine",
   rug: "Tapis",
   lamp: "Lampadaire",
+  pouf: "Pouf",
+  plant: "Plante",
 };
 
 const panel: React.CSSProperties = {

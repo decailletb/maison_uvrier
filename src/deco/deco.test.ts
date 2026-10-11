@@ -28,7 +28,29 @@ describe("match", () => {
     expect(armchair.kind).toBe("asset");
     const bed = matchFurniture({ category: "bed", styleTags: ["enfant"], colour: "#f3e9ec", material: "", placementHint: "", count: 1, approxDimensionsCm: { w: 90, d: 200, h: 120 } });
     expect(bed).toMatchObject({ kind: "procedural", procedural: "bed", params: { w: 90, material: "fabric-white" } });
-    expect(matchFurniture({ category: "plant", styleTags: [], material: "", placementHint: "", count: 1 }).kind).toBe("none");
+    expect(matchFurniture({ category: "decor", styleTags: [], material: "cadres botaniques", placementHint: "", count: 1 }).kind).toBe("none");
+  });
+
+  it("matches plants and poufs to procedural kinds", () => {
+    const plant = matchFurniture({ category: "plant", styleTags: [], colour: "#6f8f4e", material: "feuillage, pot terre cuite", placementHint: "", count: 1 });
+    expect(plant).toMatchObject({ kind: "procedural", procedural: "plant", params: { material: "fabric-green", accent: "stone-terracotta" } });
+    const pouf = matchFurniture({ category: "decor", styleTags: [], colour: "#efe6d8", material: "pouf tricoté", placementHint: "", count: 2 });
+    expect(pouf).toMatchObject({ kind: "procedural", procedural: "pouf", params: { material: "fabric-cream", accent: "fabric-cream" } });
+  });
+
+  it("matches decor only to an asset of the same decor type", () => {
+    const boheme = { category: "decor" as const, styleTags: ["boheme"], placementHint: "", count: 1 };
+    expect(matchFurniture({ ...boheme, material: "pouf tricoté" })).toMatchObject({ kind: "procedural", procedural: "pouf" });
+    const frame = matchFurniture({ ...boheme, material: "cadres botaniques" });
+    expect(frame.kind === "asset" && frame.entry.tags).toContain("cadre");
+  });
+
+  it("alternates equally good models for repeated pieces and names jute", () => {
+    const plant = { category: "plant" as const, styleTags: ["boheme"], material: "", placementHint: "", count: 2 };
+    const [a, b] = [matchFurniture(plant, 0), matchFurniture(plant, 1)];
+    expect(a.kind === "asset" && b.kind === "asset" && a.entry.id !== b.entry.id).toBe(true);
+    const rug = matchFurniture({ category: "rug", styleTags: [], colour: "#efe6d8", material: "jute et laine", placementHint: "", count: 1 });
+    expect(rug).toMatchObject({ kind: "procedural", params: { material: "fabric-jute" } });
   });
 
   it("maps surfaces to library materials", () => {
@@ -36,6 +58,7 @@ describe("match", () => {
     expect(matchSurface({ description: "carrelage gris grand format", colour: "#9c9a95" }, "floor")).toBe("tile-grey");
     expect(matchSurface({ material: "paint-sage", description: "", colour: "#b7c2ad" }, "wall")).toBe("paint-sage");
     expect(matchSurface({ description: "peinture", colour: "#2f3a52" }, "wall")).toBe("paint-navy");
+    expect(matchSurface({ description: "crépi beige rosé", colour: "#e8d3be" }, "wall")).toBe("paint-sand-pink");
   });
 });
 
@@ -90,5 +113,52 @@ describe("layout", () => {
     const bed = placed.find((p) => p.key === "bed")!;
     const ns = placed.find((p) => p.key === "nightstand")!;
     expect(Math.hypot(ns.position[0] - bed.position[0], ns.position[1] - bed.position[1])).toBeLessThan(120);
+  });
+
+  it("understands French relative hints in the séjour", () => {
+    const rez = levelById("rez");
+    const sejour = rez.rooms.find((r) => r.id === "sejour-cuisine")!;
+    const salon: LayoutItem[] = [
+      { key: "sofa", category: "sofa", w: 230, d: 95, hint: "dos au mur ouest du séjour" },
+      { key: "coffee-table", category: "coffeeTable", w: 100, d: 100, hint: "centre de l'espace salon, devant le canapé" },
+      { key: "decor-1", category: "decor", w: 55, d: 55, hint: "deux poufs autour de la table basse" },
+      { key: "rug", category: "rug", w: 300, d: 220, hint: "sous le salon, centré sur la table basse" },
+    ];
+    const { placed, unplaced } = layoutRoom(salon, sejour, rez);
+    expect(unplaced).toEqual([]);
+    const at = (key: string) => placed.find((p) => p.key === key)!.position;
+    const dist = (a: string, b: string) => Math.hypot(at(a)[0] - at(b)[0], at(a)[1] - at(b)[1]);
+    expect(dist("sofa", "coffee-table")).toBeLessThan(150);
+    expect(dist("coffee-table", "decor-1")).toBeLessThan(150);
+    expect(dist("coffee-table", "rug")).toBeLessThanOrEqual(100);
+  });
+
+  it("hangs frames on the wall behind the sofa, side by side", () => {
+    const rez = levelById("rez");
+    const sejour = rez.rooms.find((r) => r.id === "sejour-cuisine")!;
+    const { placed, unplaced } = layoutRoom(
+      [
+        { key: "sofa", category: "sofa", w: 230, d: 95, hint: "dos au mur ouest du séjour" },
+        { key: "cadre-1", category: "decor", w: 75, d: 3, hint: "deux cadres sur le mur derrière le canapé", wall: true },
+        { key: "cadre-2", category: "decor", w: 75, d: 3, hint: "deux cadres sur le mur derrière le canapé", wall: true },
+      ],
+      sejour,
+      rez,
+    );
+    expect(unplaced).toEqual([]);
+    const [c1, c2] = ["cadre-1", "cadre-2"].map((k) => placed.find((p) => p.key === k)!);
+    expect(Math.hypot(c1.position[0] - c2.position[0], c1.position[1] - c2.position[1])).toBeGreaterThan(75);
+    // The sofa backs onto the fixed west window (y 506-656) and the sliding door (y 75-395)
+    // takes the rest of that wall: frames go to another wall, never over glazing.
+    for (const c of [c1, c2]) expect(c.position[0]).toBeGreaterThan(60);
+  });
+
+  it("keeps the full width of a sliding door clear", () => {
+    const rez = levelById("rez");
+    const sejour = rez.rooms.find((r) => r.id === "sejour-cuisine")!;
+    const { placed } = layoutRoom([{ key: "sofa", category: "sofa", w: 230, d: 95, hint: "dos au mur ouest du séjour" }], sejour, rez);
+    // Sliding door op-006 spans y 75-395 on the west wall: the sofa ends below or above it.
+    const y = placed[0].position[1];
+    expect(y - 115 >= 395 || y + 115 <= 75).toBe(true);
   });
 });
