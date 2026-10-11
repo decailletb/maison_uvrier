@@ -46,9 +46,16 @@ function applyToRoom(scene: Scene, proposal: Proposal, roomId: string, log: stri
   const entries = furnitureFor(proposal, roomId);
   const layoutItems: LayoutItem[] = [];
   const pending: { key: string; item: SceneItem }[] = [];
+  // Item ids must be kebab-case (scene schema) and unique when a category repeats.
+  const perCategory = new Map<string, number>();
+  for (const f of entries) perCategory.set(f.category, (perCategory.get(f.category) ?? 0) + f.count);
+  const seen = new Map<string, number>();
   for (const f of entries) {
     for (let n = 0; n < f.count; n++) {
-      const key = `${f.category}${f.count > 1 ? `-${n + 1}` : ""}`;
+      const slug = f.category.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+      const index = (seen.get(f.category) ?? 0) + 1;
+      seen.set(f.category, index);
+      const key = `${slug}${perCategory.get(f.category)! > 1 ? `-${index}` : ""}`;
       if (f.category === "lamp" && /ceiling|plafond|suspension|pendant|pendentif/i.test(`${f.placementHint} ${f.material}`)) {
         log.push(`- ${roomId} : suspension ignorée (luminaires de plafond non modélisés)`);
         continue;
@@ -122,7 +129,8 @@ function main() {
   let scene: Scene = { ...base, base: basePath.replace(/^scenes\//, "").replace(/\.json$/, "") };
   for (const roomId of rooms) scene = applyToRoom(scene, proposal, roomId, log);
   const name = `${target}-${theme}`;
-  scene = { ...scene, name };
+  // Validate before writing: the viewer refuses an invalid scene without a visible error.
+  scene = parseScene({ ...scene, name });
   mkdirSync(resolve("scenes"), { recursive: true });
   const outFile = resolve("scenes", `${name}.json`);
   writeFileSync(outFile, JSON.stringify(scene, null, 2) + "\n");
