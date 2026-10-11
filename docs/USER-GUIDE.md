@@ -1,7 +1,8 @@
 # Guide d'utilisation — Villa F « LACAPELA » en 3D
 
-Visite virtuelle de la villa, ameublement et décoration à partir des plans. Tout tourne
-en local, dans Chrome.
+Visite virtuelle de la villa, ameublement et décoration à partir des plans. Tourne en
+local dans Chrome (installation pas à pas dans le `README.md`) ou en ligne sur
+https://decailletb.github.io/maison_uvrier/. Maquette Archicad : `archicad/README.md`.
 
 ## Installation (une fois)
 
@@ -61,6 +62,8 @@ Le panneau de droite édite la scène courante.
 
 - **Enregistrer** (`Ctrl+S`) écrit la scène dans `scenes/<nom>.json`, fichier versionné
   avec git. « Enregistrer sous » crée un nouveau fichier ; « Charger… » en ouvre un.
+- **Version en ligne** : les scènes sont en lecture seule ; **Enregistrer** télécharge
+  `<nom>.json`, à copier dans `scenes/` puis commit et push.
 - **Exporter PNG** télécharge l'image affichée.
 - `scenes/base.json` est la scène de référence (séjour-cuisine et chambre parents
   meublés). Les scènes produites par `/deco` s'appellent `scenes/<pièce>-<thème>.json`.
@@ -97,6 +100,6 @@ Chaque capture prend environ une minute sans carte graphique (SwiftShader).
 - **Ciel gris uni, pas de nuages** : le fichier HDRI manque ; `npm run assets:fetch`.
 - **Modèle du catalogue absent (cube rose)** : asset non téléchargé ; même commande.
 - **« Enregistrement impossible »** : le serveur de développement n'est pas lancé
-  (`npm run dev`) ; en version construite (`npm run build`), seul l'export PNG existe.
+  (`npm run dev`). En version construite ou en ligne, Enregistrer télécharge le fichier.
 - **Rendu saccadé** : rester sur un seul niveau, désactiver les étiquettes, vérifier
   avec `&stats=1`.

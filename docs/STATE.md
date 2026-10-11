@@ -1,32 +1,29 @@
-# État du projet — mis à jour 2026-10-09T17:10+01:00
+# État du projet — mis à jour 2026-10-11T13:26+02:00
 
-Session 1 démarrée le 2026-10-09 à 13:54. Phases 0 à 6 : toutes fusionnées (PR #1 à #8).
+Phases 0 à 6 fusionnées (PR #1 à #8). Cycle d'améliorations en cours.
 
 ## Phase en cours
-Aucune phase ouverte : les six phases du brief sont livrées. Prochain cycle = améliorations.
+Hors phases : README d'installation, publication GitHub Pages, export IFC pour Archicad
+(branche `feat/readme-pages-ifc`).
 
 ## Fait (dernières étapes, 5 max)
-- Phase 6 fusionnée : tone mapping ACES, remplissage intérieur neutre (murs ombrés 205+, sans dominante bleue), rendu à la demande, objectif large dans les petites pièces, `docs/USER-GUIDE.md`.
-- Phase 5 : `/deco` complet (agent → proposition → `deco:apply` → scène → captures → verdict), exécution réelle sur IMG_5505 → `scenes/chambre-2-enfant.json`.
-- Phase 4 : catalogue (4 modèles CC0, 13 formes paramétriques, matériaux) et éditeur (sélection, glisser, aimantation, finitions, annuler/rétablir, enregistrement dans `scenes/`).
-- Phases 0 à 3 : scaffold, données des plans, intérieur, enveloppe, ciel et soleil.
-- 74 tests unitaires, 4 e2e, toutes portes vertes sur `master`.
+- `README.md` en français : installation pas à pas (Git présent → Node.js LTS → `git clone` → `npm ci` → `npm run assets:fetch` → `npm run dev`), commandes, publication.
+- GitHub Pages : `.github/workflows/pages.yml` (Node 24, `assets:fetch`, build avec `BASE_PATH=/maison_uvrier/`), `base` configurable dans `vite.config.ts`, URLs d'assets via `src/baseUrl.ts`, scènes copiées dans `dist/scenes/` + `index.json` ; en ligne, « Enregistrer » télécharge le JSON.
+- Export IFC4 : `src/export/ifc.ts` + `npm run export:ifc` → `archicad/villa-lacapela.ifc` (4 étages dont TOITURE, 35 murs dont acrotère, 22 ouvertures, 13 portes, 9 fenêtres, 9 dalles, 2 escaliers, 17 zones aux noms imprimés, jeu de propriétés LACAPELA). Validé IfcOpenShell 0.9 : 0 erreur de schéma, 92/92 géométries. Mode d'emploi : `archicad/README.md`.
+- Toutes portes vertes : typecheck, lint (0 avertissement), 82 tests unitaires, build, 4 e2e.
+- Phases 0 à 6 : maquette, catalogue, éditeur, `/deco`, rendu (voir DECISIONS.md).
 
 ## En cours (étape exacte, fichier, ce qui reste)
-Rien en cours. Pistes pour la suite (par ordre d'intérêt) :
-1. Mesurer les FPS sur l'Iris Xe (`?stats=1`, un niveau puis tous) et ajuster (ombres, arêtes de murs).
-2. Modèles CC0 modernes (canapé, lit) : chercher sur Sketchfab CC0 via `asset-fetcher`.
-3. Textures PBR ambientCG pour `parquet-oak`, `tile-light`, `paint-white` (mêmes ids).
-4. Escaliers en vrai tracé (volées + paliers) à partir d'une lecture ciblée des pages 3-5.
-5. Collisions en mode marche ; portes intérieures avec vantail ouvert.
+Rien en cours. Reste : ouvrir la PR de `feat/readme-pages-ifc` (gh absent sur ce PC : par le site GitHub), la fusionner, activer Pages.
 
 ## Prochaine étape (une ligne : la première action de la prochaine session)
-Si Benjamin n'a rien demandé d'autre : créer `feat/perf-iris-xe`, ouvrir `http://localhost:5173/?preset=rez-top&stats=1` sur sa machine (ou lui demander les FPS) et traiter la piste 1.
+Vérifier que Benjamin a réglé Settings → Pages → Source = GitHub Actions, puis ouvrir l'onglet Actions et contrôler le déploiement de https://decailletb.github.io/maison_uvrier/.
 
 ## Bloqué / questions pour Benjamin
-- Aucune image dans `inspiration/` : la photo IMG_5505 a servi de substitut pour `/deco`. Déposer une vraie image et lancer `/deco <pièce> inspiration/<thème>`.
-- Performance Iris Xe non mesurable depuis cette session (rendu logiciel) : vérifier avec `?stats=1`.
-- Hypothèses à confirmer si besoin : orientation (nord = haut des plans), escaliers en volées droites, photos possiblement d'une autre villa (voir DECISIONS.md).
+- Activer Pages (Settings → Pages → Source : GitHub Actions) : réglage manuel une fois.
+- Export IFC non testé dans Archicad lui-même (pas d'Archicad ici) : retour de l'architecte bienvenu.
+- `inspiration/sejour/` non suivi par git : à committer par Benjamin s'il le souhaite (lancer `/deco sejour-cuisine inspiration/sejour`).
+- Performance Iris Xe toujours à mesurer avec `?stats=1`.
 
 ## Branche active, dernier commit, PR ouverte
-`master`, aucune PR ouverte.
+`feat/readme-pages-ifc`, voir `git log -1`, PR à ouvrir.

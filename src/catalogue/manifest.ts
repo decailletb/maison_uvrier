@@ -4,6 +4,7 @@
  */
 import { z } from "zod";
 import manifestJson from "../../assets/manifest.json";
+import { siteUrl } from "@/baseUrl";
 
 export const Category = z.enum([
   "sofa",
@@ -64,7 +65,7 @@ export function findAssets(category: Category, tags: readonly string[] = []): As
   return manifest.assets.filter((a) => a.category === category).sort((a, b) => score(b) - score(a));
 }
 
-/** URL the dev server and the build serve the asset at (Vite publicDir = assets/). */
+/** URL the dev server and the build serve the asset at (Vite publicDir = assets/, under the site base). */
 export function assetUrl(entry: AssetEntry): string {
-  return `/${entry.file}`;
+  return siteUrl(entry.file);
 }

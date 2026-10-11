@@ -13,7 +13,8 @@
     "test:e2e": "playwright test",
     "screenshots": "tsx scripts/screenshots.ts",
     "assets:fetch": "tsx scripts/fetch-assets.ts",
-    "deco:apply": "tsx --tsconfig tsconfig.app.json scripts/deco-apply.ts"
+    "deco:apply": "tsx --tsconfig tsconfig.app.json scripts/deco-apply.ts",
+    "export:ifc": "tsx --tsconfig tsconfig.app.json scripts/export-ifc.ts"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

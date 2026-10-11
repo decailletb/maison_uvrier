@@ -4,9 +4,11 @@
  */
 import { Environment as DreiEnvironment, Sky } from "@react-three/drei";
 import { useEffect, useState } from "react";
+import { siteUrl } from "@/baseUrl";
 import { sunDirection, sunPosition } from "../sun";
 
-export const DEFAULT_HDRI = "/hdri/kloofendal_48d_partly_cloudy_puresky.hdr";
+/** Path under the site root (see siteUrl). */
+export const DEFAULT_HDRI = "hdri/kloofendal_48d_partly_cloudy_puresky.hdr";
 
 function useFileExists(url: string): boolean | undefined {
   const [exists, setExists] = useState<boolean | undefined>(undefined);
@@ -28,7 +30,8 @@ export interface SunSettings {
 }
 
 export function SceneEnvironment({ sun, hdri = DEFAULT_HDRI }: { sun: SunSettings; hdri?: string }) {
-  const hasHdri = useFileExists(hdri);
+  const url = siteUrl(hdri);
+  const hasHdri = useFileExists(url);
   const position = sunPosition(sun.month, 15, sun.hour);
   const dir = sunDirection(position);
   const daylight = Math.max(0, Math.min(1, position.elevation / 20));
@@ -36,7 +39,7 @@ export function SceneEnvironment({ sun, hdri = DEFAULT_HDRI }: { sun: SunSetting
   return (
     <>
       {hasHdri ? (
-        <DreiEnvironment files={hdri} background environmentIntensity={1.0} backgroundBlurriness={0} />
+        <DreiEnvironment files={url} background environmentIntensity={1.0} backgroundBlurriness={0} />
       ) : (
         <>
           <Sky sunPosition={lightPos} turbidity={6} rayleigh={1.5} />

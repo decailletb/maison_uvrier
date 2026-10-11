@@ -1,9 +1,27 @@
 /**
  * Editor state: the scene (single source of truth, mirrored to scenes/<name>.json),
- * selection, undo / redo snapshots and persistence through the dev API.
+ * selection, undo / redo snapshots and persistence (dev API, or download in the static build).
  */
 import { create } from "zustand";
+import { siteUrl } from "@/baseUrl";
 import { EMPTY_SCENE, newItemId, parseScene, type Scene, type SceneItem } from "@/scene/sceneFile";
+
+/**
+ * Dev reads and writes scenes through the Vite plugin API; the static build (GitHub
+ * Pages) ships scenes/*.json plus scenes/index.json and saves by downloading the file.
+ */
+const DEV_API = import.meta.env.DEV;
+const sceneUrl = (name: string) => (DEV_API ? `/api/scenes/${name}` : siteUrl(`scenes/${name}.json`));
+const sceneListUrl = () => (DEV_API ? "/api/scenes" : siteUrl("scenes/index.json"));
+
+function downloadScene(name: string, scene: Scene) {
+  const blob = new Blob([JSON.stringify(scene, null, 2) + "\n"], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `${name}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
 
 const HISTORY = 50;
 
@@ -96,7 +114,7 @@ export const useEditor = create<EditorState>((set, get) => ({
 
   loadScene: async (name) => {
     try {
-      const res = await fetch(`/api/scenes/${name}`);
+      const res = await fetch(sceneUrl(name));
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const scene = parseScene(await res.json());
       set({ scene, sceneName: name, dirty: false, past: [], future: [], selectedId: null, status: `Scène « ${name} » chargée` });
@@ -108,6 +126,11 @@ export const useEditor = create<EditorState>((set, get) => ({
   saveScene: async (name) => {
     const target = name ?? get().sceneName;
     const scene = { ...get().scene, name: target };
+    if (!DEV_API) {
+      downloadScene(target, scene);
+      set({ scene, sceneName: target, dirty: false, status: `Téléchargé : ${target}.json (à copier dans scenes/)` });
+      return;
+    }
     try {
       const res = await fetch(`/api/scenes/${target}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(scene) });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -120,10 +143,10 @@ export const useEditor = create<EditorState>((set, get) => ({
 
   refreshScenes: async () => {
     try {
-      const res = await fetch("/api/scenes");
+      const res = await fetch(sceneListUrl());
       if (res.ok) set({ availableScenes: (await res.json()) as string[] });
     } catch {
-      // Production build: no dev API, saving is export-only.
+      // No scene list available: keep the current one.
     }
   },
 
