@@ -2,7 +2,8 @@
  * Writes one PNG per camera preset to playwright/screenshots/<preset>.png.
  * Usage: npm run screenshots [-- overview rez-top sejour-cuisine]   (no args = all presets)
  * Preset names come from the running app (`window.__presets`). Set VIEWER_SCENE=<name>
- * to load scenes/<name>.json in every shot, VIEWER_LABELS=0 to hide room labels.
+ * to load scenes/<name>.json in every shot, VIEWER_LABELS=0 to hide room labels,
+ * VIEWER_QUERY=<k=v&...> to add viewer options, VIEWER_SUFFIX=<s> to name files <preset><s>.png.
  * Requires the dev server on http://localhost:5173 (started automatically if absent).
  */
 import { chromium } from "@playwright/test";
@@ -58,10 +59,12 @@ async function main() {
     for (const name of presets) {
       const scene = process.env.VIEWER_SCENE ? `&scene=${process.env.VIEWER_SCENE}` : "";
       const labels = process.env.VIEWER_LABELS === "0" ? "&labels=0" : "";
-      await page.goto(`${BASE}/?preset=${name}${scene}${labels}&ui=0`);
+      // VIEWER_QUERY appends raw options, e.g. "lights=1&hour=21" or "quality=low".
+      const extra = process.env.VIEWER_QUERY ? `&${process.env.VIEWER_QUERY}` : "";
+      await page.goto(`${BASE}/?preset=${name}${scene}${labels}${extra}&ui=0`);
       await page.waitForFunction(() => (window as Window & { __sceneReady?: boolean }).__sceneReady === true, null, { timeout: 90_000 });
       await page.waitForTimeout(500);
-      const file = resolve(OUT, `${name}.png`);
+      const file = resolve(OUT, `${name}${process.env.VIEWER_SUFFIX ?? ""}.png`);
       await page.screenshot({ path: file, timeout: 90_000 });
       console.log(`${name} -> ${file}`);
     }

@@ -6,9 +6,8 @@ import { materialForFinish } from "@/catalogue/materials";
 import type { RoomFinish } from "../sceneFile";
 import { FOOTPRINT_CM } from "@/data/house";
 import type { Level, Point, Room } from "@/data/schema";
-import { EXTERIOR_WALL, SLAB, STAIR } from "../materials";
+import { EXTERIOR_WALL, SLAB } from "../materials";
 import { flatGeometry, slabGeometry } from "../shapes";
-import { stairSteps } from "../stairs";
 import { CM, planToScene } from "../units";
 import { levelWallPieces, pieceFrame, type WallPiece } from "../walls";
 import { EXTERIOR_ROOMS, etageShell, rezShell } from "../shell";
@@ -16,6 +15,9 @@ import { Glazing } from "./Glazing";
 import { MetricGeometry } from "./MetricGeometry";
 import { Shell } from "./Shell";
 import { RoomLabel } from "./RoomLabel";
+import { StairMesh } from "./StairMesh";
+import { Fixtures } from "./Fixtures";
+import { Skirting } from "./Skirting";
 
 export interface LevelGroupProps {
   level: Level;
@@ -133,6 +135,9 @@ function Floors({
   );
 }
 
+/** Ceilings sit just under the slab above, which starts exactly at the clear height (z-fighting otherwise). */
+const CEILING_GAP = 0.8;
+
 function Ceilings({ level, finishes }: { level: Level; finishes?: Record<string, RoomFinish> }) {
   return (
     <group>
@@ -141,7 +146,7 @@ function Ceilings({ level, finishes }: { level: Level; finishes?: Record<string,
         .map((room) => {
           const ceilingMaterial = finishes?.[room.id]?.ceiling ?? materialForFinish(room.ceilingFinish, "ceiling");
           return (
-            <mesh key={room.id} geometry={flatGeometry(room.polygon)} position={[0, (level.floorLevel + level.clearHeight) * CM, 0]}>
+            <mesh key={room.id} geometry={flatGeometry(room.polygon)} position={[0, (level.floorLevel + level.clearHeight - CEILING_GAP) * CM, 0]}>
               <MaterialNode id={ceilingMaterial} fallback="ceiling-white" side="double" />
             </mesh>
           );
@@ -156,20 +161,7 @@ function Stairs({ level, riseAbove }: { level: Level; riseAbove: number }) {
       {level.stairs
         .filter((s) => s.direction === "up")
         .map((stair) => (
-          <group key={stair.id}>
-            {stairSteps(stair, riseAbove).map((step, i) => (
-              <mesh
-                key={i}
-                position={planToScene(step.centre, step.top / 2, level.floorLevel)}
-                rotation={[0, step.yaw, 0]}
-                castShadow
-                receiveShadow
-              >
-                <boxGeometry args={[step.run * CM, step.top * CM, step.width * CM]} />
-                <meshStandardMaterial color={STAIR.color} roughness={STAIR.roughness} />
-              </mesh>
-            ))}
-          </group>
+          <StairMesh key={stair.id} stair={stair} floorLevel={level.floorLevel} rise={riseAbove} />
         ))}
     </group>
   );
@@ -191,6 +183,8 @@ export function LevelGroup({ level, slabBelow, riseAbove, stairHoles, showLabels
       <Glazing level={level} />
       {shell && <Shell data={shell} />}
       <Stairs level={level} riseAbove={riseAbove} />
+      <Skirting level={level} />
+      <Fixtures level={level} showBodies={showCeilings} />
       {showCeilings && <Ceilings level={level} finishes={finishes} />}
     </group>
   );

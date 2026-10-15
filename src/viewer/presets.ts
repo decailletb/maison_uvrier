@@ -204,12 +204,22 @@ export function buildPresets(): CameraPreset[] {
     { name: "ouest", label: "Façade ouest", position: [-13, 3, cz], target: [-1, 2.6, cz], level: "all", labels: false },
     { name: "est", label: "Façade est", position: [FOOTPRINT_CM.width * 0.01 + 14, 3, cz + 1], target: [FOOTPRINT_CM.width * 0.01 + 2, 2.6, cz], level: "all", labels: false },
     { name: "aerial", label: "Vue aérienne", position: [-9, 14, 10], target: [cx, 1.5, cz], level: "all", labels: false },
+    // Parcel 17030 with the road and the railway to the south (RDPPF extract, Maps screenshot).
+    { name: "site", label: "Parcelle et environs", position: [-12, 20, 34], target: [cx + 1, 0, cz + 6], level: "all", labels: false },
     { name: "catalogue", label: "Catalogue (aperçu)", position: [16.8, 7, 24], target: [16.8, 0.6, -2], level: "all", labels: false, showcase: true },
   ];
   for (const level of house.levels) {
     presets.push(levelTop(level));
     for (const room of level.rooms) presets.push(...roomPresets(room, level));
   }
+  // Hand-placed interior views of the stair and the entrée / kitchen corner (plan p. 4).
+  const eye = EYE * 0.01;
+  presets.push(
+    { name: "escalier", label: "Escalier depuis le séjour", position: [2.4, eye, -3.4], target: [4.7, 1.3, -1.4], level: "rez", roomId: "sejour-cuisine", fov: 60 },
+    { name: "cuisine", label: "Cuisine et îlot", position: [6.2, eye, -5.9], target: [9.4, 0.9, -4.8], level: "rez", roomId: "sejour-cuisine", fov: 60 },
+    { name: "couloir-entree", label: "Couloir d'entrée", position: [6.9, eye, -3.25], target: [10.3, 1.2, -3.25], level: "rez", roomId: "entree", fov: 60 },
+    { name: "escalier-etage", label: "Escalier depuis le haut", position: [5.85, 2.85 + eye, -2.75], target: [5.6, 1.4, -0.7], level: "etage", roomId: "hall", fov: 75 },
+  );
   return presets;
 }
 

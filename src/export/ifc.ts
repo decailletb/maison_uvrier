@@ -457,10 +457,9 @@ function writeStairs(m: IfcModel, level: Level, storeyPlacement: Ref, rise: numb
     .map((stair) => {
       const key = `${level.id}:${stair.id}`;
       const placement = m.local(storeyPlacement, [0, 0, 0]);
-      const steps = stairSteps(stair, rise).map((step) =>
-        m.extrude(m.rectProfile([mm(step.centre[0]), mm(step.centre[1])], mm(step.run), mm(step.width), [Math.cos(step.yaw), Math.sin(step.yaw)]), 0, mm(step.top)),
-      );
-      const el = m.w.add(`IFCSTAIR(${m.root(`stair:${key}`)},${str(`Escalier vers ${stair.toLevel}`)},${str(stair.note)},$,${placement},${m.shape(steps)},${str(stair.id)},.STRAIGHT_RUN_STAIR.)`);
+      const steps = stairSteps(stair, rise).map((step) => m.extrude(m.polygonProfile(step.polygon), mm(step.bottom), mm(step.top - step.bottom)));
+      const type = stair.halfTurn ? ".HALF_TURN_STAIR." : ".STRAIGHT_RUN_STAIR.";
+      const el = m.w.add(`IFCSTAIR(${m.root(`stair:${key}`)},${str(`Escalier vers ${stair.toLevel}`)},${str(stair.note)},$,${placement},${m.shape(steps)},${str(stair.id)},${type})`);
       m.propertySet(key, SOURCE_PSET, [el], { ...sourceProps(stair, level.planPage), Marches: { type: "integer", value: steps.length } });
       m.material("Béton armé", el);
       return el;

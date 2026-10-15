@@ -5,6 +5,7 @@ import { publishPresets } from "./ready";
 import type { SunSettings } from "@/scene/components/Environment";
 import { EditorPanel } from "./EditorPanel";
 import { useEditor } from "./store";
+import { useDisplay, type RenderQuality } from "./display";
 import { Viewer, type CameraMode } from "./Viewer";
 
 const LEVEL_LABELS: Record<LevelMode, string> = {
@@ -43,16 +44,20 @@ export function App() {
   const [cameraMode, setCameraMode] = useState<CameraMode>("orbit");
   const [showLabels, setShowLabels] = useState(new URLSearchParams(window.location.search).get("labels") === "0" ? false : (initial.labels ?? true));
   const [showCeilings, setShowCeilings] = useState(isRoomView(initial));
-  const [sun, setSun] = useState<SunSettings>({ month: 6, hour: 15 });
+  const [sun, setSun] = useState<SunSettings>(() => {
+    const hour = Number(new URLSearchParams(window.location.search).get("hour"));
+    return { month: 6, hour: hour >= 5 && hour <= 23 ? hour : 15 };
+  });
+  const { lightsOn, setLightsOn, quality, setQuality } = useDisplay();
   // Remount the canvas when the camera must jump.
   const [epoch, setEpoch] = useState(0);
 
   useEffect(() => publishPresets(CAMERA_PRESETS.map((p) => p.name)), []);
 
-  // `?scene=<name>` loads a scene file on start.
+  // The furnished base scene opens by default; `?scene=<name>` picks another, `?scene=vide` none.
   useEffect(() => {
-    const name = new URLSearchParams(window.location.search).get("scene");
-    if (name) void useEditor.getState().loadScene(name);
+    const name = new URLSearchParams(window.location.search).get("scene") ?? "base";
+    if (name !== "vide") void useEditor.getState().loadScene(name);
   }, []);
 
   // Keyboard shortcuts of the editor (ignored while typing in a field).
@@ -162,12 +167,22 @@ export function App() {
           <input type="checkbox" checked={showCeilings} onChange={(e) => setShowCeilings(e.target.checked)} /> Plafonds
         </label>
         <label>
+          <input type="checkbox" checked={lightsOn} onChange={(e) => setLightsOn(e.target.checked)} data-testid="lights-toggle" /> Lampes allumées
+        </label>
+        <label>
+          Rendu{" "}
+          <select value={quality} onChange={(e) => setQuality(e.target.value as RenderQuality)} data-testid="quality-select">
+            <option value="high">Réaliste (ombres de contact)</option>
+            <option value="low">Rapide (ordinateur lent)</option>
+          </select>
+        </label>
+        <label>
           Mois {sun.month}{" "}
           <input type="range" min={1} max={12} value={sun.month} onChange={(e) => setSun({ ...sun, month: Number(e.target.value) })} />
         </label>
         <label>
           Heure {sun.hour}h{" "}
-          <input type="range" min={5} max={21} step={0.5} value={sun.hour} onChange={(e) => setSun({ ...sun, hour: Number(e.target.value) })} />
+          <input type="range" min={5} max={23} step={0.5} value={sun.hour} onChange={(e) => setSun({ ...sun, hour: Number(e.target.value) })} />
         </label>
       </div>
     </div>

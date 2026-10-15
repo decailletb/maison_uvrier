@@ -23,7 +23,8 @@ const FINISHES: Record<string, FlatMaterial> = {
 export const DEFAULT_FLOOR: FlatMaterial = { color: "#cfc8bc", roughness: 0.5 };
 export const DEFAULT_WALL: FlatMaterial = { color: "#efede8", roughness: 0.85 };
 export const DEFAULT_CEILING: FlatMaterial = { color: "#f7f6f2", roughness: 0.7 };
-export const SLAB: FlatMaterial = { color: "#8e8c88", roughness: 0.9 };
+// Light plaster grey: slab edges show in stairwells, where they are plastered like the walls.
+export const SLAB: FlatMaterial = { color: "#d8d5cf", roughness: 0.9 };
 export const STAIR: FlatMaterial = { color: "#b08a5a", roughness: 0.6 };
 export const EXTERIOR_WALL: FlatMaterial = { color: "#d8d5ce", roughness: 0.9 };
 

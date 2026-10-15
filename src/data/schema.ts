@@ -72,6 +72,19 @@ export const Stair = z.object({
   toLevel: LevelId,
   /** Plan direction of ascent (unit vector); defaults to the long axis of the polygon. */
   ascent: Point.optional(),
+  /**
+   * Half-turn stair: treads of flight A, winders and flight B; flight A on the walker's
+   * right or left when climbing along `ascent`; central wall thickness. Risers = treads + 1.
+   */
+  halfTurn: z
+    .object({
+      treads: z.tuple([z.number().int().positive(), z.number().int().positive(), z.number().int().positive()]),
+      firstFlight: z.enum(["left", "right"]),
+      centralWall: z.number().positive(),
+    })
+    .optional(),
+  /** Guard lines (balustrade on a closed stringer wall) following the treads, plan polylines. */
+  guards: z.array(z.array(Point).min(2)).optional(),
   estimated: z.boolean().optional(),
   note: z.string().optional(),
 });

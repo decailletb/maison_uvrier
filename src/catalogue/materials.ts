@@ -4,7 +4,8 @@
  * when `pbr` is set (the flat colour stays the fallback while it loads or if it is
  * missing).
  */
-export type MaterialKind = "floor" | "wall" | "ceiling" | "fabric" | "wood" | "metal" | "stone" | "glass";
+/** `exterior`: site surfaces around the house (lawn, asphalt, decking...), never offered for rooms. */
+export type MaterialKind = "floor" | "wall" | "ceiling" | "fabric" | "wood" | "metal" | "stone" | "glass" | "exterior";
 
 /**
  * Texture set of the manifest. `full`: colour map multiplied by `tint` (white when
@@ -82,10 +83,22 @@ const defs: MaterialDef[] = [
   { id: "metal-black", kind: "metal", label: "Métal noir", color: "#2a2a2a", roughness: 0.4, metalness: 0.8 },
   { id: "metal-steel", kind: "metal", label: "Acier brossé", color: "#b8babd", roughness: 0.35, metalness: 0.9 },
   { id: "metal-brass", kind: "metal", label: "Laiton", color: "#c9a955", roughness: 0.35, metalness: 0.9 },
-  { id: "stone-black", kind: "stone", label: "Plan noir", color: "#1f1f1f", roughness: 0.3 },
+  { id: "stone-black", kind: "stone", label: "Plan noir", color: "#232427", roughness: 0.5 },
   { id: "stone-terracotta", kind: "stone", label: "Terre cuite", color: "#b8683f", roughness: 0.8 },
   { id: "stone-white", kind: "stone", label: "Plan blanc", color: "#e9e7e2", roughness: 0.3 },
   { id: "glass-clear", kind: "glass", label: "Verre", color: "#cfe3ee", roughness: 0.05, opacity: 0.35 },
+  // Exterior (site around the house)
+  { id: "grass", kind: "exterior", label: "Gazon", color: "#527f33", roughness: 1, pbr: { asset: "leafy-grass", mode: "relief", relief: 1.5 } },
+  { id: "field", kind: "exterior", label: "Prairie", color: "#4a6f2e", roughness: 1 },
+  { id: "asphalt", kind: "exterior", label: "Enrobé", color: "#6a6865", roughness: 0.95, pbr: { asset: "asphalt-02", mode: "relief" } },
+  { id: "decking", kind: "exterior", label: "Platelage bois", color: "#9c6c45", roughness: 0.7, pbr: { asset: "wood-floor-deck", mode: "relief", relief: 2 } },
+  { id: "gravel", kind: "exterior", label: "Gravier", color: "#9d9a93", roughness: 1, pbr: { asset: "gravel", mode: "relief", relief: 2 } },
+  { id: "ballast", kind: "exterior", label: "Ballast", color: "#857a6e", roughness: 1, pbr: { asset: "gravel", mode: "full", tint: "#a9a49d", scale: 0.6 } },
+  { id: "render-white", kind: "exterior", label: "Crépi blanc", color: "#efede8", roughness: 0.9, pbr: PLASTER },
+  { id: "metal-anthracite", kind: "exterior", label: "Métal anthracite", color: "#33363a", roughness: 0.5, metalness: 0.5 },
+  { id: "fence-anthracite", kind: "exterior", label: "Palissade gris foncé", color: "#3e4348", roughness: 0.6, metalness: 0.3 },
+  { id: "hedge-green", kind: "exterior", label: "Haie verte", color: "#3f5f2c", roughness: 1, pbr: { asset: "leafy-grass", mode: "relief", scale: 0.5, relief: 3 } },
+  { id: "hedge-red", kind: "exterior", label: "Haie pourpre", color: "#6b4a3c", roughness: 1, pbr: { asset: "leafy-grass", mode: "relief", scale: 0.5, relief: 3 } },
 ];
 
 export const MATERIALS: ReadonlyMap<string, MaterialDef> = new Map(defs.map((d) => [d.id, d]));

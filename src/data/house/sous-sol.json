@@ -160,6 +160,23 @@
       "exterior": false,
       "estimated": true,
       "note": "Carries the pink 'tableau electrique' (25 cm deep) marking."
+    },
+    {
+      "id": "wall-stair-central",
+      "points": [
+        [
+          527.5,
+          264.8
+        ],
+        [
+          527.5,
+          111
+        ]
+      ],
+      "thickness": 15,
+      "structural": false,
+      "exterior": false,
+      "note": "Central wall of the half-turn stair, brique ciment 15 (p. 3), ends where the winders start."
     }
   ],
   "rooms": [
@@ -311,11 +328,11 @@
           20
         ],
         [
-          520,
+          626,
           20
         ],
         [
-          520,
+          626,
           264.8
         ],
         [
@@ -326,12 +343,21 @@
       "direction": "up",
       "toLevel": "rez",
       "estimated": true,
-      "note": "Flight 91 wide, straight part 132.8 long plus winder; riser count not readable. Risers from section p.9 (marches 1-16 sous-sol→rez, 17-30 rez→étage); straight flight ascending toward plan +y assumed.",
+      "note": "Half-turn stair (plans p. 3-5, section p. 9): two 91 cm flights separated by a 15 cm brique ciment central wall, 6 winders fanned around the wall end at the south, concrete steps with wood-look treads (photo IMG_5506). Sous-sol: steps 1-5, winders 6-11, steps 12-15, rez landing = 16 (p. 3).",
       "risers": 16,
       "ascent": [
         0,
-        1
-      ]
+        -1
+      ],
+      "halfTurn": {
+        "treads": [
+          5,
+          6,
+          4
+        ],
+        "firstFlight": "right",
+        "centralWall": 15
+      }
     }
   ]
 }
