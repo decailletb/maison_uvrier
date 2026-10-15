@@ -14,6 +14,40 @@
       "floor": "parquet-oak",
       "wall": "paint-white",
       "ceiling": "ceiling-white"
+    },
+    "wc": {
+      "floor": "parquet-oak",
+      "wall": "tile-wall-white"
+    },
+    "reduit": {
+      "floor": "parquet-oak"
+    },
+    "hall": {
+      "floor": "laminate-grey"
+    },
+    "chambre-2": {
+      "floor": "laminate-grey"
+    },
+    "chambre-3": {
+      "floor": "laminate-grey"
+    },
+    "dressing": {
+      "floor": "parquet-oak"
+    },
+    "salle-de-bains": {
+      "floor": "tile-grey",
+      "wall": "tile-wall-grey"
+    },
+    "douche": {
+      "floor": "tile-grey",
+      "wall": "tile-wall-grey"
+    },
+    "disponible": {
+      "floor": "parquet-oak"
+    },
+    "cave": {
+      "floor": "concrete-raw",
+      "wall": "concrete-block"
     }
   },
   "items": [
@@ -22,7 +56,8 @@
       "asset": {
         "procedural": "kitchenBlock",
         "params": {
-          "w": 320,
+          "w": 235,
+          "h": 90,
           "material": "wood-white",
           "accent": "stone-black"
         }
@@ -30,11 +65,75 @@
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
-        993,
-        560,
+        994,
+        573,
         0
       ],
       "rotationY": 270,
+      "scale": 1
+    },
+    {
+      "id": "kitchen-cooktop",
+      "asset": {
+        "procedural": "kitchenBlock",
+        "params": {
+          "w": 172,
+          "h": 90,
+          "material": "wood-white",
+          "accent": "stone-black"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        877,
+        660,
+        0
+      ],
+      "rotationY": 0,
+      "scale": 1
+    },
+    {
+      "id": "kitchen-peninsula",
+      "asset": {
+        "procedural": "kitchenBlock",
+        "params": {
+          "w": 119,
+          "h": 90,
+          "material": "wood-white",
+          "accent": "stone-black"
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        749,
+        631,
+        0
+      ],
+      "rotationY": 90,
+      "scale": 1
+    },
+    {
+      "id": "kitchen-island",
+      "asset": {
+        "procedural": "kitchenBlock",
+        "params": {
+          "w": 172,
+          "h": 90,
+          "material": "wood-white",
+          "accent": "stone-black",
+          "d": 62
+        }
+      },
+      "levelId": "rez",
+      "roomId": "sejour-cuisine",
+      "position": [
+        817,
+        418,
+        0
+      ],
+      "rotationY": 180,
       "scale": 1
     },
     {
@@ -51,7 +150,7 @@
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
-        760,
+        560,
         540,
         0
       ],
@@ -64,7 +163,7 @@
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
-        705,
+        505,
         462,
         0
       ],
@@ -77,7 +176,7 @@
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
-        760,
+        560,
         462,
         0
       ],
@@ -90,7 +189,7 @@
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
-        815,
+        615,
         462,
         0
       ],
@@ -103,7 +202,7 @@
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
-        705,
+        505,
         618,
         0
       ],
@@ -116,7 +215,7 @@
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
-        760,
+        560,
         618,
         0
       ],
@@ -129,7 +228,7 @@
       "levelId": "rez",
       "roomId": "sejour-cuisine",
       "position": [
-        815,
+        615,
         618,
         0
       ],

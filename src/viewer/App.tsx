@@ -5,6 +5,7 @@ import { publishPresets } from "./ready";
 import type { SunSettings } from "@/scene/components/Environment";
 import { EditorPanel } from "./EditorPanel";
 import { useEditor } from "./store";
+import { useDisplay, type RenderQuality } from "./display";
 import { Viewer, type CameraMode } from "./Viewer";
 
 const LEVEL_LABELS: Record<LevelMode, string> = {
@@ -43,7 +44,11 @@ export function App() {
   const [cameraMode, setCameraMode] = useState<CameraMode>("orbit");
   const [showLabels, setShowLabels] = useState(new URLSearchParams(window.location.search).get("labels") === "0" ? false : (initial.labels ?? true));
   const [showCeilings, setShowCeilings] = useState(isRoomView(initial));
-  const [sun, setSun] = useState<SunSettings>({ month: 6, hour: 15 });
+  const [sun, setSun] = useState<SunSettings>(() => {
+    const hour = Number(new URLSearchParams(window.location.search).get("hour"));
+    return { month: 6, hour: hour >= 5 && hour <= 21 ? hour : 15 };
+  });
+  const { lightsOn, setLightsOn, quality, setQuality } = useDisplay();
   // Remount the canvas when the camera must jump.
   const [epoch, setEpoch] = useState(0);
 
@@ -160,6 +165,16 @@ export function App() {
         </label>
         <label>
           <input type="checkbox" checked={showCeilings} onChange={(e) => setShowCeilings(e.target.checked)} /> Plafonds
+        </label>
+        <label>
+          <input type="checkbox" checked={lightsOn} onChange={(e) => setLightsOn(e.target.checked)} data-testid="lights-toggle" /> Lampes allumées
+        </label>
+        <label>
+          Rendu{" "}
+          <select value={quality} onChange={(e) => setQuality(e.target.value as RenderQuality)} data-testid="quality-select">
+            <option value="high">Réaliste (ombres de contact)</option>
+            <option value="low">Rapide (ordinateur lent)</option>
+          </select>
         </label>
         <label>
           Mois {sun.month}{" "}

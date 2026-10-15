@@ -35,26 +35,28 @@ export function SceneEnvironment({ sun, hdri = DEFAULT_HDRI }: { sun: SunSetting
   const position = sunPosition(sun.month, 15, sun.hour);
   const dir = sunDirection(position);
   const daylight = Math.max(0, Math.min(1, position.elevation / 20));
+  // Dusk and night: the sky and the fills fade with the sun, down to a faint blue night.
+  const sky = 0.04 + 0.96 * Math.max(0, Math.min(1, (position.elevation + 6) / 16));
   const lightPos: [number, number, number] = [dir[0] * 60 + 5, Math.max(dir[1], 0.05) * 60, dir[2] * 60 - 3.5];
   return (
     <>
       {hasHdri ? (
-        <DreiEnvironment files={url} background environmentIntensity={1.0} backgroundBlurriness={0} />
+        <DreiEnvironment files={url} background environmentIntensity={sky} backgroundIntensity={sky} backgroundBlurriness={0} />
       ) : (
         <>
           <Sky sunPosition={lightPos} turbidity={6} rayleigh={1.5} />
-          <hemisphereLight args={["#cfe0f5", "#6e6a5e", 0.9]} />
+          <hemisphereLight args={["#cfe0f5", "#6e6a5e", 0.9 * sky]} />
         </>
       )}
-      <ambientLight intensity={hasHdri ? 0.35 : 0.4} color="#fff6ea" />
+      <ambientLight intensity={(hasHdri ? 0.35 : 0.4) * sky} color="#fff6ea" />
       {/* Warm neutral fill for shaded walls and ceilings, which the blue sky HDRI tints otherwise. */}
-      <hemisphereLight args={["#fff1dd", "#efe4d4", hasHdri ? 0.85 : 0.55]} />
+      <hemisphereLight args={["#fff1dd", "#efe4d4", (hasHdri ? 0.85 : 0.55) * sky]} />
       <directionalLight
         position={lightPos}
         intensity={3.2 * daylight}
         color="#fff4e0"
         castShadow
-        shadow-mapSize={[1536, 1536]}
+        shadow-mapSize={[2048, 2048]}
         shadow-camera-left={-16}
         shadow-camera-right={16}
         shadow-camera-top={16}

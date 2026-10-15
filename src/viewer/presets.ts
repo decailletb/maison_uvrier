@@ -210,6 +210,14 @@ export function buildPresets(): CameraPreset[] {
     presets.push(levelTop(level));
     for (const room of level.rooms) presets.push(...roomPresets(room, level));
   }
+  // Hand-placed interior views of the stair and the entrée / kitchen corner (plan p. 4).
+  const eye = EYE * 0.01;
+  presets.push(
+    { name: "escalier", label: "Escalier depuis le séjour", position: [2.4, eye, -3.4], target: [4.7, 1.3, -1.4], level: "rez", roomId: "sejour-cuisine", fov: 60 },
+    { name: "cuisine", label: "Cuisine et îlot", position: [6.2, eye, -5.9], target: [9.4, 0.9, -4.8], level: "rez", roomId: "sejour-cuisine", fov: 60 },
+    { name: "couloir-entree", label: "Couloir d'entrée", position: [6.9, eye, -3.25], target: [10.3, 1.2, -3.25], level: "rez", roomId: "entree", fov: 60 },
+    { name: "escalier-etage", label: "Escalier depuis le hall", position: [5.2, 2.85 + eye, -4.3], target: [5.6, 1.9, -1.4], level: "etage", roomId: "hall", fov: 65 },
+  );
   return presets;
 }
 

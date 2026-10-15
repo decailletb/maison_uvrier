@@ -226,6 +226,42 @@
       "structural": false,
       "exterior": false,
       "note": "Between chambre 3 (south) and chambre 2 (north). No door."
+    },
+    {
+      "id": "wall-stair-central",
+      "points": [
+        [
+          521.5,
+          261
+        ],
+        [
+          521.5,
+          127
+        ]
+      ],
+      "thickness": 15,
+      "structural": false,
+      "exterior": false,
+      "note": "Central wall of the half-turn stair (p. 5)."
+    },
+    {
+      "id": "wall-stair-guard",
+      "points": [
+        [
+          414,
+          261
+        ],
+        [
+          514,
+          261
+        ]
+      ],
+      "thickness": 10,
+      "height": 100,
+      "structural": false,
+      "exterior": false,
+      "estimated": true,
+      "note": "Closed guard over the west flight, white, about 100 high (photo IMG_5503)."
     }
   ],
   "rooms": [
@@ -632,7 +668,7 @@
       "risers": 14,
       "direction": "down",
       "toLevel": "rez",
-      "note": "Steps printed 17 to 30 on this level (steps 1 to 16 are on the rez plan). Quarter-turn with winders, clear width 90 + 15 + 90 = 195. Step 30 arrives at the top right, onto the hall. Direction is down toward the rez; flight shape inside the polygon is not modelled.",
+      "note": "Half-turn stair (plans p. 3-5, section p. 9): two 91 cm flights separated by a 15 cm brique ciment central wall, 6 winders fanned around the wall end at the south, concrete steps with wood-look treads (photo IMG_5506). Étage: steps 17-20 west, winders 21-26, steps 27-30 east arriving on the hall (p. 5).",
       "estimated": true
     }
   ]

@@ -55,7 +55,7 @@ Contexte : projet « CONSTRUCTION DE 6 VILLAS JUMELLES », commune d'UVRIER, par
   - DISPONIBLE : 38.46 m2 ; sol dalle brute ; parois murs bruts ; plafond Schichtex. Dimensions internes env. 606 x 441 / 686.
   - CAVE : 12.52 m2 ; dalle brute ; murs bruts ; Schichtex. Env. 391 x 260 ; « tableau électrique » à proximité.
   - TECHNIQUE - BUANDERIE : 13.94 m2 ; sol carrelage ; parois béton + dispersion ; plafond Schichtex. Contient : bac à laver SANEO-TREND 55x45x23 cm, emplacements « laver » et « sécher », « Boiler », « chaudière à gaz », « Pompe de relevage », mention « réservation pour future piscine voir avec sanitaire ».
-  - Escalier d'accès vers le rez (volée 91 de large).
+  - Escalier d'accès vers le rez : demi-tour, 91 + 15 + 91 = 197 ; marches 1-5 volée ouest vers le sud (132.8), 6-11 balancées, 12-15 volée est vers le nord, palier rez = 16 (16 contremarches de 17.9).
 - Annotations : ventilations « cc + 0.20 » et « cc + 2.20 », isolation « UNITEX L-EPS type 3 10 cm fond coffrage », plaques drainantes, bitume, béton 20 cm, « porte peinte ».
 
 ### Page 4 — Plan : Rez de chaussée, Villa « F »
@@ -68,7 +68,7 @@ Contexte : projet « CONSTRUCTION DE 6 VILLAS JUMELLES », commune d'UVRIER, par
   - WC : 3.23 m2 ; carrelage / carrelage ; dispersion ; lavabo SANEO HARMONY FORM 62X15X50 CM, WC suspendu.
   - REDUIT : 4.42 m2 ; carrelage ; crépis ; dispersion.
   - La cartouche « 3.35 m2 » (carrelage / crépis / dispersion) est dans la marge droite, au-dessus de COUVERT, hors de l'emprise de la villa F (x ≈ 1470, y ≈ 745-800 cm) ; elle concerne probablement un local de la villa voisine au nord (bac douche 90x90x3 visible au-dessus du mur mitoyen) ; nom coupé par la feuille.
-  - Mur mitoyen avec isolation phonique (vert) = côté haut de la feuille (nord de la feuille, y = 724). Escalier x ≈ 415-640, y ≈ 20-270 cm contre le mur bas (sud de la feuille), « porte peinte » en tête de la volée vers le sous-sol (x ≈ 540-630, y ≈ 270). Entrée ouverte sur le séjour (pas de cloison dessinée). Terrasse côté gauche (x < 0), couvert côté droit (x > 1055).
+  - Mur mitoyen avec isolation phonique (vert) = côté haut de la feuille (nord de la feuille, y = 724). Escalier en U (demi-tour) contre le mur sud : vide 197 × 223 (x 430-627, y 43-266), deux volées de 91 séparées par un mur central de 15 (brique ciment) qui s'arrête à y ≈ 140, 6 marches balancées au sud autour de l'about du mur. Volée ouest : départ vers l'étage (marche 16 = rez, 17-20 en montant vers le sud), ouverte côté séjour entre y 100 et 205 (garde-corps à barreaux noirs sur limon fermé, photo IMG_5501). Volée est : arrivée du sous-sol (12-15 en montant vers le nord), « porte peinte » en tête (x ≈ 536-627, y ≈ 262). Entrée : couloir de ~125 entre le bloc réduit/WC (mur y ≈ 262) et l'îlot de cuisine (x 717-889, y 388-456, évier 34 + 4 portes 130 + joue 8), puis cloison plâtre 8 cm « styro 2 cm », 120 de long, de l'îlot au mur est (y ≈ 452), patères côté entrée. Cuisine : bar/péninsule nord x 708-769 y 572-707 (3 tabourets), plaque 4 feux contre le mur mitoyen, évier double contre le mur est, fenêtre 003. Terrasse côté gauche (x < 0), couvert côté droit (x > 1055).
   - Escalier vers l'étage et vers le sous-sol ; coffret alu UP 85x80x23 mm.
 - Fenêtres/portes : stores à lamelles, tablettes granit, seuils granit (repères 001 à 006), coulissante type GU côté séjour.
 
@@ -83,7 +83,7 @@ Contexte : projet « CONSTRUCTION DE 6 VILLAS JUMELLES », commune d'UVRIER, par
   - HALL : 3.76 m2 ; carrelage ; crépis ; dispersion.
   - CHAMBRE 3 : 11.18 m2 ; carrelage ; crépis ; dispersion.
   - Salle de bains (sans cartouche) : baignoire SANEO 180x80x43 cm, lavabo double SANEO HARMONY FORM 122X15X50 CM, WC suspendu, cuvette murale PRO UP, coupole 60x60 cm.
-  - Escalier (marches 17 à 30).
+  - Escalier (marches 17 à 30) : demi-tour à marches balancées, 90 + 15 + 90 = 195 ; 17-20 volée ouest vers le sud (124.8), 21-26 balancées au sud, 27-30 volée est vers le nord (104.8), arrivée sur le hall. Garde-corps plein blanc ~100 au palier (photo IMG_5503).
 - Remarque : les cartouches « sol : carrelage » à l'étage contrastent avec les photos (sol d'aspect bois).
 
 ### Page 6 — Élévation SUD, Villa « F »
@@ -109,7 +109,7 @@ Contexte : projet « CONSTRUCTION DE 6 VILLAS JUMELLES », commune d'UVRIER, par
 - Paysage, échelle 1-50, « COUPE F - F ». « VILLA " B " Mme et M. RENTMEISTER "LACAPELA" ». Date 01.10.2019, modif. 19.08.2020. Note : « 19.08.2020 : correction alt. réf. - niveau fond de fouille - emplacement tableau éléctique ext. ». « alt. réf. = 497.88 ».
 - Locaux coupés : CHAMBRE PARENTS, HALL, CHAMBRE 3 (étage, + 2.85, hauteur libre 250, acrotère + 6.06) ; SEJOUR, REDUIT, DOUCHE (rez, ± 0.00 = 497.72, hauteur libre 250) ; DISPONIBLE, TECHNIQUE - BUANDERIE (sous-sol - 2.86 / - 2.85, hauteur 240, fond de fouille - 3.11 alt. 494.61).
 - Compositions : toiture plate (gravier 6 cm, étanchéité EGV 3.5 flam + EPS 5 flam 1 cm, isolation 16 cm, pare-vapeur EGV 3.5 flam 1 cm, dalle béton 22 à 32 cm, gypsage 1 cm, revêtement) ; plancher étage (revêtement 1 cm, chape 7 cm, isolation 2+2 cm, dalle béton 22 cm, gypsage 1 cm) ; sol sous-sol (dalle béton 20 cm, béton maigre 5 cm) ; balcon (grès cérame 20 mm, étanchéité, dalle béton 24 à 20 cm) ; couvert d'entrée (gravier 3 cm, dalle 25 à 20 cm).
-- Cotes : balustrade + 3.80 (h. 100), balcon + 2.80, escalier marches 12 à 30, goudron pente 5 %, « Axe sortie écoulement Niveau -1.34 », coffret alu UP 85x80x23 mm.
+- Cotes : balustrade + 3.80 (h. 100), balcon + 2.80, escalier en béton armé (marches 4, 12-15, 19, 27-30 coupées, contremarche ~19), escalier marches 12 à 30, goudron pente 5 %, « Axe sortie écoulement Niveau -1.34 », coffret alu UP 85x80x23 mm.
 
 ## Photos (14)
 
@@ -158,3 +158,15 @@ Hypothèses de lecture, non vérifiées (les photos n'indiquent pas de quelle vi
 - Plans détaillés : villa F (p.3-8) et villa B (p.9). On ignore de quelle villa sont les photos.
 - Les photos montrent du sol d'aspect bois et du grand carrelage ; les cartouches de plan indiquent « carrelage » pour presque tous les sols : écart non élucidé (finitions peut-être modifiées).
 - Aucune photo de chantier : toutes en état fini.
+
+## Parcelle et site (RDPPF du 15.10.2026, capture Google Maps)
+
+- Immeuble **17030**, Sion (6266), E-GRID CH316658778312, **419 m²**, bâtiment 4499. Zone « Habitat individuel plaine (3) », zone archéologique, zone de sécurité de l'aéroport de Sion, degré de sensibilité au bruit II.
+- La villa est l'extrémité **sud** d'une rangée de villas accolées (voisine nord : bâtiment 4498, parcelle 17029). Axes tournés d'environ 8° (façade sud orientée ~8° vers l'est).
+- Distances approximatives (± 0.5 m) : mur ouest → limite 7 m (jardin, terrasse), façade sud → limite 7 m (jardin, muret le long de la route), mur est → limite 11 m (couvert, enrobé d'accès). Au sud : route (parcelle 7664), puis voie ferrée (capture Maps).
+- Photos : façade blanche à bandes anthracite, acrotère anthracite, menuiseries PVC blanches dedans / anthracite dehors, stores à lamelles anthracite, gravier gris clair et panneaux solaires sur le toit, garde-corps vitré, cabanon métal anthracite, haie brun-rouge.
+
+## Luminaires (photos)
+
+Entrée, séjour, WC, hall, dressing : plafonnier rond opale 30-38 cm. Cuisine et sous-sol : spots encastrés ronds ~9 cm. Chambre parents : suspension abat-jour tressé sombre ~30 cm. Chambre enfant : suspension boule plumes crème ~48 cm. Salle de bains : coupole 60 × 60 lumineuse + bandeau LED au miroir. WC : bandeau LED au miroir.
+
