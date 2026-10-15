@@ -164,9 +164,11 @@ export function proceduralParts(kind: ProceduralKind, params: ProceduralParams):
     }
     case "kitchenBlock": {
       parts.push(box(0, (h - 4) / 2, 0, w, h - 4, d - 2, m));
-      parts.push(box(0, h - 2, 0, w, 4, d, a));
-      parts.push(box(w / 4, h - 0.4, -5, 60, 0.8, 50, "metal-steel")); // hob
-      parts.push(box(-w / 4, h - 0.4, -5, 50, 0.8, 40, "metal-steel")); // sink
+      // Worktop top 6 mm under h so the fittings stand proud of it (coplanar faces flickered):
+      // a black glass hob on short runs, a steel sink on long ones.
+      parts.push(box(0, h - 2.6, 0, w, 4, d, a));
+      if (w >= 200) parts.push(box(-w / 4, h - 0.3, -5, 50, 0.6, 40, "metal-steel"));
+      else if (w >= 150) parts.push(box(w / 4, h - 0.3, -5, 60, 0.6, 50, "wood-black"));
       break;
     }
     case "rug":

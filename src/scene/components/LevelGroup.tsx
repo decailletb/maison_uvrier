@@ -135,6 +135,9 @@ function Floors({
   );
 }
 
+/** Ceilings sit just under the slab above, which starts exactly at the clear height (z-fighting otherwise). */
+const CEILING_GAP = 0.8;
+
 function Ceilings({ level, finishes }: { level: Level; finishes?: Record<string, RoomFinish> }) {
   return (
     <group>
@@ -143,7 +146,7 @@ function Ceilings({ level, finishes }: { level: Level; finishes?: Record<string,
         .map((room) => {
           const ceilingMaterial = finishes?.[room.id]?.ceiling ?? materialForFinish(room.ceilingFinish, "ceiling");
           return (
-            <mesh key={room.id} geometry={flatGeometry(room.polygon)} position={[0, (level.floorLevel + level.clearHeight) * CM, 0]}>
+            <mesh key={room.id} geometry={flatGeometry(room.polygon)} position={[0, (level.floorLevel + level.clearHeight - CEILING_GAP) * CM, 0]}>
               <MaterialNode id={ceilingMaterial} fallback="ceiling-white" side="double" />
             </mesh>
           );

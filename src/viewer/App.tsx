@@ -46,7 +46,7 @@ export function App() {
   const [showCeilings, setShowCeilings] = useState(isRoomView(initial));
   const [sun, setSun] = useState<SunSettings>(() => {
     const hour = Number(new URLSearchParams(window.location.search).get("hour"));
-    return { month: 6, hour: hour >= 5 && hour <= 21 ? hour : 15 };
+    return { month: 6, hour: hour >= 5 && hour <= 23 ? hour : 15 };
   });
   const { lightsOn, setLightsOn, quality, setQuality } = useDisplay();
   // Remount the canvas when the camera must jump.
@@ -54,10 +54,10 @@ export function App() {
 
   useEffect(() => publishPresets(CAMERA_PRESETS.map((p) => p.name)), []);
 
-  // `?scene=<name>` loads a scene file on start.
+  // The furnished base scene opens by default; `?scene=<name>` picks another, `?scene=vide` none.
   useEffect(() => {
-    const name = new URLSearchParams(window.location.search).get("scene");
-    if (name) void useEditor.getState().loadScene(name);
+    const name = new URLSearchParams(window.location.search).get("scene") ?? "base";
+    if (name !== "vide") void useEditor.getState().loadScene(name);
   }, []);
 
   // Keyboard shortcuts of the editor (ignored while typing in a field).
@@ -182,7 +182,7 @@ export function App() {
         </label>
         <label>
           Heure {sun.hour}h{" "}
-          <input type="range" min={5} max={21} step={0.5} value={sun.hour} onChange={(e) => setSun({ ...sun, hour: Number(e.target.value) })} />
+          <input type="range" min={5} max={23} step={0.5} value={sun.hour} onChange={(e) => setSun({ ...sun, hour: Number(e.target.value) })} />
         </label>
       </div>
     </div>

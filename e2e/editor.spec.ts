@@ -11,7 +11,7 @@ test.afterEach(() => {
 });
 
 test("places an item, moves it and saves the scene file", async ({ page }) => {
-  await page.goto("/?preset=chambre-parents");
+  await page.goto("/?preset=chambre-parents&scene=vide");
   await page.waitForFunction(ready, null, { timeout: 90_000 });
 
   await page.getByTestId("kind-select").selectOption("bed");

@@ -76,12 +76,12 @@ export function levelFixtures(level: Level): Fixture[] {
   for (const room of level.rooms) {
     if (EXTERIOR_ROOMS.has(room.id)) continue;
     const plans = PLANS[level.id]?.[room.id] ?? [{ kind: "disc" as const, size: 32 }];
-    for (const plan of plans) {
+    for (const [g, plan] of plans.entries()) {
       const points = plan.at ?? [polygonCentroid(room.polygon)];
       points.forEach((at, i) => {
         // One light per group of fixtures: the first lamp carries it, spots share it.
         const light = plan.kind !== "skylight" && i === 0;
-        out.push({ id: `${room.id}-${plan.kind}-${i}`, roomId: room.id, kind: plan.kind, at, size: plan.size, light });
+        out.push({ id: `${room.id}-${plan.kind}-${g}-${i}`, roomId: room.id, kind: plan.kind, at, size: plan.size, light });
       });
     }
   }

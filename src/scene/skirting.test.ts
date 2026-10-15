@@ -24,4 +24,10 @@ describe("skirting", () => {
     expect(crossing).toHaveLength(0);
     expect(x1).toBeGreaterThan(x0);
   });
+
+  it("leaves the open séjour / entrée boundary bare", () => {
+    const runs = levelSkirting(levelById("rez"));
+    const onBoundary = runs.filter((r) => Math.abs(r.start[0] - 730) < 1 && Math.abs(r.end[0] - 730) < 1);
+    expect(onBoundary).toHaveLength(0);
+  });
 });

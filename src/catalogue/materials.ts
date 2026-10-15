@@ -83,7 +83,7 @@ const defs: MaterialDef[] = [
   { id: "metal-black", kind: "metal", label: "Métal noir", color: "#2a2a2a", roughness: 0.4, metalness: 0.8 },
   { id: "metal-steel", kind: "metal", label: "Acier brossé", color: "#b8babd", roughness: 0.35, metalness: 0.9 },
   { id: "metal-brass", kind: "metal", label: "Laiton", color: "#c9a955", roughness: 0.35, metalness: 0.9 },
-  { id: "stone-black", kind: "stone", label: "Plan noir", color: "#1f1f1f", roughness: 0.3 },
+  { id: "stone-black", kind: "stone", label: "Plan noir", color: "#232427", roughness: 0.5 },
   { id: "stone-terracotta", kind: "stone", label: "Terre cuite", color: "#b8683f", roughness: 0.8 },
   { id: "stone-white", kind: "stone", label: "Plan blanc", color: "#e9e7e2", roughness: 0.3 },
   { id: "glass-clear", kind: "glass", label: "Verre", color: "#cfe3ee", roughness: 0.05, opacity: 0.35 },
