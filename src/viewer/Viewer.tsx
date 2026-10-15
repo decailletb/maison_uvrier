@@ -2,17 +2,16 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Stats } from "@react-three/drei";
 import { NeutralToneMapping } from "three";
 import { useEffect, useRef } from "react";
-import { FOOTPRINT_CM, levelById } from "@/data/house";
-import { flatGeometry } from "@/scene/shapes";
-import { EXTERIOR_ROOMS } from "@/scene/shell";
-import { useMemo } from "react";
+import { levelById } from "@/data/house";
 import { SceneEnvironment, type SunSettings } from "@/scene/components/Environment";
 import { Showcase } from "@/catalogue/components/Showcase";
 import { House } from "@/scene/components/House";
+import { Site } from "@/scene/components/Site";
 import { CM } from "@/scene/units";
 import type { CameraPreset, LevelMode } from "./presets";
 import { markSceneReady, resetSceneReady } from "./ready";
 import { WalkControls } from "./WalkControls";
+import { Effects } from "./Effects";
 
 export type CameraMode = "orbit" | "walk";
 
@@ -38,42 +37,6 @@ function ReadySignal() {
   return null;
 }
 
-/**
- * Terrain aménagé at −0.10 with holes for the house footprint, the terrasse (−0.17) and
- * the couvert (−0.14); lowered to the excavation floor when the sous-sol is viewed alone.
- */
-function Ground({ levelMode }: { levelMode: LevelMode }) {
-  const y = levelMode === "sous-sol" ? -3.11 : -0.1;
-  const geometry = useMemo(() => {
-    const half = 20000;
-    const cx = FOOTPRINT_CM.width / 2;
-    const cy = FOOTPRINT_CM.depth / 2;
-    const outer: [number, number][] = [
-      [cx - half, cy - half],
-      [cx + half, cy - half],
-      [cx + half, cy + half],
-      [cx - half, cy + half],
-    ];
-    const holes = [
-      [
-        [0, 0],
-        [FOOTPRINT_CM.width, 0],
-        [FOOTPRINT_CM.width, FOOTPRINT_CM.depth],
-        [0, FOOTPRINT_CM.depth],
-      ] as [number, number][],
-      ...levelById("rez").rooms.filter((r) => EXTERIOR_ROOMS.has(r.id)).map((r) => r.polygon),
-    ];
-    return flatGeometry(outer, levelMode === "sous-sol" ? [] : holes);
-  }, [levelMode]);
-  return (
-    <group>
-      <mesh geometry={geometry} position={[0, y, 0]} receiveShadow>
-        <meshStandardMaterial color="#6f8a5c" roughness={1} />
-      </mesh>
-    </group>
-  );
-}
-
 export interface ViewerProps {
   preset: CameraPreset;
   levelMode: LevelMode;
@@ -89,7 +52,7 @@ export function Viewer({ preset, levelMode, cameraMode, showLabels, showCeilings
   const eyeHeight = (levelById(walkLevel).floorLevel + EYE_HEIGHT_CM) * CM;
   return (
     <Canvas
-      shadows
+      shadows="soft"
       dpr={[1, 1.5]}
       // Orbit mode renders only when something changes; walking needs every frame.
       frameloop={cameraMode === "walk" ? "always" : "demand"}
@@ -103,11 +66,12 @@ export function Viewer({ preset, levelMode, cameraMode, showLabels, showCeilings
         <Showcase />
       ) : (
         <>
-          <Ground levelMode={levelMode} />
+          <Site levelMode={levelMode} showRoof={levelMode === "all"} />
           <House mode={levelMode} showLabels={showLabels} labelRoomId={showCeilings ? preset.roomId : undefined} showCeilings={showCeilings} />
         </>
       )}
       {cameraMode === "orbit" ? <OrbitControls makeDefault target={preset.target} /> : <WalkControls eyeHeight={eyeHeight} />}
+      <Effects />
       <ReadySignal />
       {showStats && <Stats />}
     </Canvas>

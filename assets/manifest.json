@@ -447,6 +447,83 @@
         "sejour"
       ],
       "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "leafy-grass",
+      "category": "material-floor",
+      "file": "textures/leafy_grass/leafy_grass_diff_1k.jpg",
+      "files": [
+        "textures/leafy_grass/leafy_grass_diff_1k.jpg",
+        "textures/leafy_grass/leafy_grass_nor_gl_1k.jpg",
+        "textures/leafy_grass/leafy_grass_rough_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leafy_grass/leafy_grass_diff_1k.jpg",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "sizeM": 2,
+      "tags": [
+        "exterieur",
+        "gazon"
+      ],
+      "fetchedAt": "2026-10-15"
+    },
+    {
+      "id": "asphalt-02",
+      "category": "material-floor",
+      "file": "textures/asphalt_02/asphalt_02_diff_1k.jpg",
+      "files": [
+        "textures/asphalt_02/asphalt_02_diff_1k.jpg",
+        "textures/asphalt_02/asphalt_02_nor_gl_1k.jpg",
+        "textures/asphalt_02/asphalt_02_rough_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/asphalt_02/asphalt_02_diff_1k.jpg",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "sizeM": 3,
+      "tags": [
+        "exterieur",
+        "goudron"
+      ],
+      "fetchedAt": "2026-10-15"
+    },
+    {
+      "id": "wood-floor-deck",
+      "category": "material-wood",
+      "file": "textures/wood_floor_deck/wood_floor_deck_diff_1k.jpg",
+      "files": [
+        "textures/wood_floor_deck/wood_floor_deck_diff_1k.jpg",
+        "textures/wood_floor_deck/wood_floor_deck_nor_gl_1k.jpg",
+        "textures/wood_floor_deck/wood_floor_deck_rough_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_floor_deck/wood_floor_deck_diff_1k.jpg",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "sizeM": 1.8,
+      "tags": [
+        "exterieur",
+        "terrasse",
+        "bois"
+      ],
+      "fetchedAt": "2026-10-15"
+    },
+    {
+      "id": "gravel",
+      "category": "material-floor",
+      "file": "textures/gravel/gravel_diff_1k.jpg",
+      "files": [
+        "textures/gravel/gravel_diff_1k.jpg",
+        "textures/gravel/gravel_nor_gl_1k.jpg",
+        "textures/gravel/gravel_rough_1k.jpg"
+      ],
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/gravel/gravel_diff_1k.jpg",
+      "source": "polyhaven",
+      "license": "CC0-1.0",
+      "sizeM": 2,
+      "tags": [
+        "exterieur",
+        "gravier"
+      ],
+      "fetchedAt": "2026-10-15"
     }
   ]
 }

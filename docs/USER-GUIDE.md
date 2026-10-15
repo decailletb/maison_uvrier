@@ -41,7 +41,18 @@ puis ouvrir http://localhost:5173. Options d'URL utiles :
 - **Niveau** : sous-sol, rez-de-chaussée, étage ou tous. En vue d'une pièce les
   plafonds sont dessinés ; décocher « Plafonds » pour regarder d'en haut.
 - **Soleil** : curseurs mois et heure. Orientation réelle (nord = haut des plans,
-  terrasse et balcon à l'ouest, entrée et couvert à l'est).
+  terrasse et balcon à l'ouest, entrée et couvert à l'est). Le soir (après 19 h en
+  juin), le ciel s'assombrit.
+- **Lampes allumées** : allume les luminaires vus sur les photos (plafonniers ronds,
+  spots de la cuisine et du sous-sol, suspensions des chambres). Avec l'heure à 21 h,
+  on voit l'ambiance du soir.
+- **Rendu** : « Réaliste » ajoute les ombres de contact dans les angles et sous les
+  meubles et un léger halo autour des lampes ; « Rapide » les retire si l'ordinateur
+  rame. Dans l'adresse : `?quality=low`, `?lights=1`, `?hour=21`.
+- **Vues ajoutées** : « Escalier depuis le séjour », « Cuisine et îlot », « Couloir
+  d'entrée », « Escalier depuis le hall ». Les vues extérieures montrent la parcelle
+  (jardin à l'ouest et au sud, enrobé à l'est, route et voie ferrée au sud) et les
+  villas voisines de la rangée.
 
 ## Meubler
 
